@@ -6,4 +6,9 @@
 		SET MEMBER_POINT =(MEMBER_POINT + ?)
 		WHERE MEMBER_NO = ?
 	</entry>
+	
+	<!-- 출석체크 도장 갯수 업데이트-->
+	<entry key="">
+	
+	</entry>
 </properties>

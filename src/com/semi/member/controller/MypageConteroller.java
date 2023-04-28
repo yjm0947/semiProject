@@ -34,11 +34,8 @@ public class MypageConteroller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-//		int memNo = Integer.parseInt(request.getParameter("memNo"));
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		int memNo = loginUser.getMemberNo();
-//		System.out.println(memNo);
 		
 		ArrayList<Coupon> clist = new MemberService().selectCoupon(memNo);
 		

@@ -183,6 +183,18 @@ public class ProductService {
 		return p2;
 	}
 	
+	//메인페이지 베스트도서 4개
+		public ArrayList<Product> selectBestAttachList() {
+
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> list = new ProductDao().selectBestAttachList(conn);
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
+		}
+	
 	//메인페이지 신간 도서 4개
 	public ArrayList<Product> newBookList() {
 		

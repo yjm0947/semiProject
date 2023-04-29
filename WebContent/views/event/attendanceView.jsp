@@ -138,22 +138,37 @@
         
         <script>
 	        function attendance(){
-	            /*도장변수에 담기.. img 인덱스 2~37번까지임*/
+	            /*도장변수에 담기.. img 인덱스 3~38번까지임*/
 	            var img = document.getElementsByTagName("img");
 	            var index = 0;
-	            //console.log(img[2]);
+	            console.log(img);
 	
-	            for(var i=2;i<38;i++){
+	            for(var i=3;i<39;i++){
 	                if(img[i].style.visibility=="hidden"){//visibility가 hidden일시 도장 보이도록
 	                	img[i].style.visibility="visible"
-	                	alert("출석이 완료되었습니다.");
-	                	if(i%6==0 && img[i].style.visibility=="visible"){
+	                	alert("출석이 완료되었습니다. 내일 또 도전해주세요!");
+	                	if((i==7 || i==13 || i==19 || i==25 || i==31 || i==37) && img[i].style.visibility=="visible"){
 	                        index = i;
 	                        //console.log(index);                    
 	                        img[index+1].style.visibility="visible"
 	                        alert("300원의 적립금이 지급되었습니다.");
 	                        break;
 	                    }
+	                	
+	                	
+	                	$(function(){
+	                		$.ajax({
+	                			url : "attendance.v",
+	                			type : "post",
+	                			success : function(){
+	                				console.log("성공");
+	                			},
+	                			complete : function(){
+	                				console.log("실행만됨")
+	                			}
+	                		});
+	                	});
+	                	
 	                	break;
 	                }
 	            }

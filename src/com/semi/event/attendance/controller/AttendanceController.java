@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.event.attendance.model.service.AttendanceService;
+
 /**
  * Servlet implementation class AttendanceController
  */
@@ -34,8 +36,9 @@ public class AttendanceController extends HttpServlet {
 			 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 			 */
 			protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				// TODO Auto-generated method stub
-				doGet(request, response);
+				
+				//출석체크일 업데이트해주기
+				new AttendanceService().adDate();
 			}
 
 		}

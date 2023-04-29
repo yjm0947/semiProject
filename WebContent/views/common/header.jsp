@@ -23,6 +23,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <style>
+        
         html,body{
             box-sizing: border-box;
         }
@@ -192,8 +193,6 @@
         }
         #book_li li{
         	background-color: white;
-        	position: relative;
-            z-index: 1;
         }
         #all_list li{
         	position: relative;
@@ -212,6 +211,8 @@
             width: 100%;
             height: 30px;
             margin: 0px;
+            position: relative;
+            z-index: 1;
         }
         #all_list_1,#customer_1{
             padding: 0px;
@@ -228,6 +229,8 @@
         }
         #customer_1 a:hover{
             background-color: white;
+            position: relative;
+            z-index: 3;
         }
         
         #ca_best_1, #ca_best_2{
@@ -336,11 +339,11 @@
                                 </li>
                                 <li><a href="<%=contextPath%>/item.list?currentPage=1">쇼핑</a></li>
                                 <li><a href="<%=contextPath %>/attendance.v"">출석체크</a></li>
-                                <li><a href="">고객센터</a>
+                                <li><a href="<%=contextPath%>/noti.ma?currentPage=1">고객센터</a>
                                     <ul id="customer_1">
-                                        <li><a href="" style="float: right; width: 206px; text-align:center;">공지사항</a></li>
-                                        <li><a href="" style="float: right; width: 206px; text-align:center;">자주묻는 질문</a></li>
-                                        <li><a href="" style="float: right; width: 206px; text-align:center;">1:1 문의</a></li>
+                                        <li><a href="<%=contextPath%>/noti.ma?currentPage=1" style="float: right; width: 206px; text-align:center;">공지사항</a></li>
+                                        <li><a href="<%=contextPath %>/mafaq.c" style="float: right; width: 206px; text-align:center;">자주묻는 질문</a></li>
+                                        <li><a href="<%=contextPath %>/main.qna" style="float: right; width: 206px; text-align:center;">1:1 문의</a></li>
                                         
                                     </ul>
                                 </li>
@@ -358,11 +361,11 @@
                         </li>
                         <li><a href="<%=contextPath%>/item.list?currentPage=1">쇼핑</a></li>
                         <li><a href="<%=contextPath %>/attendance.v">출석체크</a></li>
-                        <li id="customer"><a href="">고객센터</a>
+                        <li id="customer"><a href="<%=contextPath%>/noti.ma?currentPage=1">고객센터</a>
                             <ul id="customer_li">
-                                <li><a href="">공지사항</a></li>
-                                <li><a href="">자주묻는 질문</a></li>
-                                <li><a href="">1:1 문의</a></li>
+                                <li><a href="<%=contextPath%>/noti.ma?currentPage=1">공지사항</a></li>
+                                <li><a href="<%=contextPath%>/mafaq.c">자주묻는 질문</a></li>
+                                <li><a href="<%=contextPath%>/main.qna">1:1 문의</a></li>
                                 
                             </ul>
                         </li>
@@ -379,5 +382,6 @@
                 </div>
             </div>
         </div>
+        
 </body>
 </html>

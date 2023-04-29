@@ -461,9 +461,9 @@
         	//디테일 페이지 이동
             $(function(){
             	$("#book_2>table>tbody>#num").click(function(){
-            		console.log(this);
+            		//console.log(this);
             		var pno = $(this).children().eq(0).children("input[type=hidden]").val();
-            		console.log(pno);
+            		//console.log(pno);
             		location.href="<%=contextPath%>/book.de?pno="+pno;
             	});
             	/* $("#book_2").click(function(){

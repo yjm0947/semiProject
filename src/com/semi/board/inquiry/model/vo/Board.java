@@ -19,7 +19,15 @@ public class Board {
 		super();
 	}
 	
-	//FAQ 조회 생성자
+	//페이징처리된 메인에 보여줄 공지사항 리스트
+	public Board(int boardNo, String boardTitle, Date createDate) {
+		super();
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.createDate = createDate;
+	}
+
+		//FAQ 조회 생성자
 		public Board(int boardNo, String boardTitle, String boardContent, Date createDate) {
 			super();
 			this.boardNo = boardNo;

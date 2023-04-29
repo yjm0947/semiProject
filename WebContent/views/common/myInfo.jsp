@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.semi.member.model.vo.Member"%>
+    pageEncoding="UTF-8" import="com.semi.member.model.vo.Member,java.util.ArrayList,com.semi.member.model.vo.Coupon"%>
 <%
 	String contextPath2 = request.getContextPath();
 	Member loginMem = (Member)session.getAttribute("loginUser");
+	ArrayList<Coupon> couponList = (ArrayList)session.getAttribute("clist");
 %>
 <!DOCTYPE html>
 <html>
@@ -37,15 +38,16 @@
             display: flex;
         }
         #my_info p{
+        	color:white;
             width: 100%;
             text-align: center;
             font-size: 15px;
             margin: auto;
+            font-weight: bolder;
         }
         #my_benefit{
             width: 60%;
             height: 200px;
-            /* background-color: lightgreen; */
             border: 5px solid lightgrey;
             margin: 50px 30px 0px 0px;
             float: right;
@@ -73,7 +75,7 @@
             margin: 0px 100px;
         }
         #coupon i, #point i{
-            color: steelblue;
+            color: lightblue;
         }
         #coupon a, #point a{
             text-decoration: none;
@@ -86,12 +88,21 @@
 		String memberName = loginMem.getMemberName();
 		String memRole = "";
 		memRole = String.valueOf(loginMem.getMemberRole());
+		int memberPoint = loginMem.getMemberPoint();
 		
 		switch(memRole){
 		case "1" : memRole = "베이직"; break;
 		case "2" : memRole = "실버"; break;
 		case "3" : memRole = "골드"; break;
 		case "4" : memRole = "VIP"; break;
+		}
+		
+		int couponCount = 0;
+		
+		for(int i=0; i<couponList.size(); i++){
+			if(couponList.get(i).getStatus().charAt(0) == 'Y') {
+				couponCount += 1;		
+			}
 		}
 	%>
 	<div class="wrap">
@@ -101,11 +112,11 @@
 	                    <div id="benefit_wrapper">
 	                        <div id="coupon">
 	                            <i class="fa-solid fa-coins"></i> <br>
-	                            <a href="<%=contextPath2 %>/myCouponList.me">0</a>
+	                            <a href="<%=contextPath2 %>/myPointList.me"><%=memberPoint %></a> 
 	                        </div>
 	                        <div id="point">
 	                            <i class="fa-solid fa-ticket"></i> <br>
-	                            <a href="<%=contextPath2 %>/myPointList.me">0</a> 
+	                            <a href="<%=contextPath2 %>/myCouponList.me"><%=couponCount %></a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -118,5 +129,18 @@
                 </div>
 			</div>
 		</div>
+		
+		<script>
+			const infoBox = document.getElementById('my_info');
+			const infoBorder = document.getElementById('my_benefit');
+			const memRole = "<%=memRole%>";
+			
+			switch(memRole){
+			case '베이직' : infoBox.style.backgroundColor = "#74C01B"; infoBorder.style.border = "5px solid #74C01B"; break;
+			case "실버" : infoBox.style.backgroundColor = "#01A5DB"; infoBorder.style.border = "5px solid #01A5DB"; break;
+			case "골드" : infoBox.style.backgroundColor = "#DBB201"; infoBorder.style.border = "5px solid #DBB201"; break;
+			case "VIP" : infoBox.style.backgroundColor = "#DB471F"; infoBorder.style.border = "5px solid #DB471F"; break;
+			}
+		</script>
 </body>
 </html>

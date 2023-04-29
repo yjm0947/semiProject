@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
+import com.semi.board.review.model.vo.Review;
 import com.semi.common.JDBCTemplate;
 import com.semi.common.vo.PageInfo;
 import com.semi.member.model.vo.Coupon;
@@ -786,4 +787,78 @@ public class MemberDao {
 			
 			return result;
 		}
+
+		//회원 작성 리뷰 조회
+		public ArrayList<Review> selectMyReview(Connection conn, int memNo) {
+			
+			ArrayList<Review> rlist = new ArrayList<>();
+			ResultSet rset = null;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("selectMyReview");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, memNo);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					rlist.add(new Review(rset.getInt("REVIEW_NO")
+										,rset.getInt("MEMBER_NO")
+										,rset.getString("PRODUCT_NAME")
+										,rset.getInt("REVIEW_STAR")
+										,rset.getString("REVIEW_CONTENT")
+										,rset.getString("CREATE_DATE")
+										,rset.getString("STATUS")));
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return rlist;
+		}
+
+
+		public ArrayList<Review> selectReModal(Connection conn, int reviewNo) {
+			ArrayList<Review> list = new ArrayList<>();
+			ResultSet rset = null;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("selectReModal");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, reviewNo);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Review(rset.getInt("REVIEW_NO")
+										,rset.getInt("MEMBER_NO")
+										,rset.getString("PRODUCT_NAME")
+										,rset.getInt("REVIEW_STAR")
+										,rset.getString("REVIEW_CONTENT")
+										,rset.getString("CREATE_DATE")
+										,rset.getString("STATUS")));
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return list;
+		}
+
+
 }

@@ -29,7 +29,7 @@ public class ReviewService {
 		}
 
 		//댓글 목록 조회
-		public ArrayList<Review> selectReview(int productNo) {
+		public ArrayList<Review> selectReview(String productNo) {
 			
 			Connection conn = JDBCTemplate.getConnection();
 			
@@ -50,6 +50,22 @@ public class ReviewService {
 			JDBCTemplate.close(conn);
 			
 			return count;
+		}
+
+		//회원이 작성한 댓글 삭제하기
+		public int deleteMyReview(int memNo, int reviewNo) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int result = new ReviewDao().deleteMyReview(conn, memNo, reviewNo);
+			
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+			
+			return result;
 		}
 
 }

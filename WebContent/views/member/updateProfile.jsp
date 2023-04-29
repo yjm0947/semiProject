@@ -78,6 +78,7 @@
             border: none;
         }
         #update_myProfile button[type="reset"]{
+        	background-color: white;
             font-weight: 600;
             border: 2px solid rgb(184, 184, 184);
         }
@@ -167,6 +168,7 @@
 	        font-size: 15px;
         }
         .openModal{
+        	background-color:white;
             cursor: pointer;
         }
         .modal-btn-area{
@@ -189,7 +191,7 @@
             font-size: 15px;
         }
         .find-post-no{
-        	background-color: gray;
+        	background-color: white;
         	color: white;
         	font-weight: bold;
             border: none;

@@ -33,7 +33,7 @@ public class ReviewListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		int productNo = Integer.parseInt(request.getParameter("productNo"));
+		String productNo = request.getParameter("productNo");
 	
 		ArrayList<Review> rlist = new ReviewService().selectReview(productNo);
 		

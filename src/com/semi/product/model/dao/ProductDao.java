@@ -335,7 +335,7 @@ public class ProductDao {
 		return list;
 	}
 	
-	//도서 총 게시글 수
+	//도서 총 게시글 수입미다
 	public int selectListCount(Connection conn) {
 		
 		int listCount = 0;

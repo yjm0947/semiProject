@@ -69,8 +69,6 @@ public class MemberUpdateController extends HttpServlet {
 			email = email + "@" + dotCom;
 		}
 		
-		System.out.println(email);
-		
 		String birthYear = request.getParameter("birthYear");
 		String birthMonth = request.getParameter("birthMonth");
 		String birthDay = request.getParameter("birthDay");
@@ -92,11 +90,7 @@ public class MemberUpdateController extends HttpServlet {
 		
 		Member m = new Member(memberId, memberPwd, memberBirth, phone, email);
 		
-		System.out.println(m);
-		
 		Member memUpdate = new MemberService().updateMember(m);
-		
-		System.out.println(memUpdate);
 		
 		HttpSession session = request.getSession();
 		

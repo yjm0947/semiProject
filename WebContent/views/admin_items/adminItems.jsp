@@ -3,6 +3,7 @@
     
  <%
  	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+ 	int rel = (int)request.getAttribute("rel");
  %>
 <!DOCTYPE html>
 <html>
@@ -41,6 +42,9 @@
 						<button id="ms_img"></button>
 				</form>
 			</div>
+			<div id="noticeBtn">
+				<button onclick="location.href='<%=contextPath%>/book.regi'">상품 등록</button>
+			</div>
 		</div>
 		<div class="middle_left">
 			<div id="ml_table">
@@ -65,7 +69,7 @@
 							<th>재고수량</th>
 							<th>저자</th>
 							<th>등록일</th>
-							<th>상태값</th>
+							<th>삭제유무</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -100,7 +104,7 @@
 								<td><%=i.getProductText() %></td>
 								<td><%=i.getProductPrice() %></td>
 								<td><%=i.getProductSalesRate() %></td>
-								<td><%=i.getProductStock() %></td>
+								<td><%=i.getProductStock()-rel %></td>
 								<td><%=i.getAuthor() %></td>
 								<td><%=i.getCreateDate() %></td>
 								<td><%=i.getStatus() %></td>
@@ -269,7 +273,7 @@
 							$(".modal_body").children().children().eq(4).text(result.productText);
 							$(".modal_body").children().children().eq(5).text(result.productPrice);
 							$(".modal_body").children().children().eq(6).text(result.productSalesRate);
-							$(".modal_body").children().children().eq(7).text(result.productStock);
+							$(".modal_body").children().children().eq(7).text(result.productStock - <%=rel%>);
 							$(".modal_body").children().children().eq(8).text(result.author);
 							$(".modal_body").children().children().eq(9).text(result.createDate);
 							$(".modal_body").children().children().eq(10).text(result.status);

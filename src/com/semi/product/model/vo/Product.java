@@ -1,6 +1,5 @@
 package com.semi.product.model.vo;
 
-import java.sql.Connection;
 import java.sql.Date;
 
 public class Product {
@@ -23,10 +22,36 @@ public class Product {
 	public Product() {
 		super();
 	}
+	
+	
+	
+	//출고조회 리스트(관리자)
+	public Product(int productNo, String productCategory, String productName, int productStock, String author,
+			Date createDate) {
+		super();
+		this.productNo = productNo;
+		this.productCategory = productCategory;
+		this.productName = productName;
+		this.productStock = productStock;
+		this.author = author;
+		this.createDate = createDate;
+	}
+
+	//입고조회 리스트(관리자)
+	public Product(int productNo, String productCategory, String productName, int productStock, Date createDate) {
+		super();
+		this.productNo = productNo;
+		this.productCategory = productCategory;
+		this.productName = productName;
+		this.productStock = productStock;
+		this.createDate = createDate;
+	}
+	
 	public Product(String titleImg) {
 		super();
 		this.titleImg = titleImg;
 	}
+
 	//메인페이지 도서 쇼핑 리스트
 	public Product(int productNo, String productName, String productPublisher, int productPrice, int productSalesRate,
 			String titleImg) {

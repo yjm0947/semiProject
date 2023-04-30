@@ -1,11 +1,16 @@
 package com.semi.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.semi.product.model.service.ProductService;
+import com.semi.product.model.vo.Product;
 
 /**
  * Servlet implementation class releaseController
@@ -27,8 +32,10 @@ public class ReleaseAdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("views/admin_items/adminRelease.jsp").forward(request, response);
+		ArrayList<Product> list = new ProductService().selectReleaseAdmin();
 		
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/admin_items/adminRelease.jsp").forward(request, response);
 	}
 
 	/**

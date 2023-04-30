@@ -59,6 +59,30 @@
   top: 15px;
 }
 
+#noticeBtn{
+  position: relative;
+  display: flexbox;
+  vertical-align: middle;
+  justify-content: right;
+  float: right;
+  right: 130px;
+  top: 30px;
+}
+
+#noticeBtn>button{
+  background-color : rgb(52, 152, 219);
+  width: 100px;
+  height: 40px;
+  color: white;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+#noticeBtn>button:hover{
+  background-color: rgb(32, 112, 165);
+  cursor: pointer;  
+}
+
 #mid_search *{
   border-radius: 6px;
 }

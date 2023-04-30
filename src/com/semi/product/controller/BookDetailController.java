@@ -32,7 +32,7 @@ public class BookDetailController extends HttpServlet {
 		
 		//pno 받기
 		int pno = Integer.parseInt(request.getParameter("pno"));
-		//System.out.println(pno);
+//		System.out.println(pno);
 		
 		Product p = new ProductService().productDetail(pno);
 		Product p2 = new ProductService().productDetail2(pno);

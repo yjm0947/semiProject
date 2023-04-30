@@ -60,8 +60,7 @@
 					<tbody>
 						<%for(Order or : list) {%>
 							<tr>
-							<%--
-								<td><%=or.getOrderNo()%></td>zzzzzzzzzzzzzzzzzz
+								<td><%=or.getOrderNo()%></td>
 								<td><%=or.getMemberNo()%></td>
 								<td><%=or.getAddressName()%></td>
 								<td><%=or.getRoadAddress()%>+" "+<%=or.getDetailAddress%></td>
@@ -69,7 +68,6 @@
 								<td><%=or.getCreatedAt%></td>
 								<td><%=or.getPayment%></td>
 								<td><%=or.getState%></td>
-							--%>
 							</tr>
 						<%} %>
 					<%} %>

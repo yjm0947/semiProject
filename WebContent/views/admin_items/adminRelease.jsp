@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.product.model.vo.Product"%>
+<% 
+	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,14 +30,15 @@
 			<div id="mid_search">
 				<form action="" method="post">
 					<select name="ms_select" id="ms_select">
-						<option value="1">입고 번호</option>
-						<option value="2">상품 번호</option>
-						<option value="3">입고량</option>
-						<option value="4">입고상태</option>
-						<option value="5">회원아이디</option>
+						<option value="1">상품 번호</option>
+						<option value="2">상품 명</option>
+						<option value="3">상품 카테고리</option>
+						<option value="4">출고량</option>
+						<option value="5">주문자명</option>
+						<option value="6">출고일</option>
 					</select>
 						<input type="search" name="memberSearch" id="memberSearch">
-						<button id="ms_img"></button>
+						<button type="submit" id="ms_img"></button>
 				</form>
 			</div>
 		</div>
@@ -42,24 +46,55 @@
 			<div id="ml_table">
 				<table class="list-area">
 					<thead>
+					<%if(list.isEmpty()) {%>
+						<tr>
+							<th style="font-size: 18px;">
+							현재 출고된 상품이 없습니다.
+							</th>
+						</tr>
+					<%}else {%>
 						<tr id="ml_tr">
-							<th>입고 번호</th>
 							<th>상품 번호</th>
-							<th>주문 번호</th>
-							<th>입고량</th>
-							<th>입고 상태</th>
-							<th>회원 아이디</th>
+							<th>상품 명</th>
+							<th>상품 카테고리</th>
+							<th>출고량</th>
+							<th>주문자명</th>
+							<th>출고일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+						<%for(Product pr : list) {%>
+							<tr>
+								<td><%=pr.getProductNo()%></td>
+								<td><%=pr.getProductName()%></td>
+							<!-- 상품카테고리 문자열 처리 -->
+							<%
+								String category = "";
+							
+								switch(pr.getProductCategory()){
+									case "1" : category = "소설" ;
+										break;
+									case "2" : category = "에세이" ;
+										break;
+									case "3" : category = "자기계발" ;
+										break;
+									case "4" : category = "경제/경영" ;
+										break;
+									case "5" : category = "인문학" ;
+										break;
+									case "6" : category = "정치/사회" ;
+										break;
+									case "7" : category = "아이템" ;
+										break;
+								}
+							%>
+								<td><%=category%></td>
+								<td><%=pr.getProductStock()%></td>
+								<td><%=pr.getAuthor()%></td>
+								<td><%=pr.getCreateDate()%></td>
+							</tr>
+						<%} %>
+					<%} %>
 					</tbody>
 				</table>
 			</div>
@@ -71,6 +106,5 @@
 			
 		</div>
 	</div>	
-</div>
 </body>
 </html>

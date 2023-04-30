@@ -29,14 +29,22 @@
 		</div>
 		<div class="middle">
 			<div id="mid_search">
-				<form action="<%=contextPath%>/searchNotice.admin" method="get">
+				<form action="<%=contextPath%>/searchNotice.admin" method="get" onsubmit="return blankSearch()">
 					<select name="ms_select" id="ms_select">
 						<option value="1">게시글 번호</option>
-						<option value="2">제목</option>
+						<option value="2">제목+내용</option>
 					</select>
 						<input type="search" name="memberSearch" id="memberSearch">
 						<button type="submit" id="ms_img"></button>
 				</form>
+				<script>
+					function blankSearch(){
+						if($("#memberSearch").val().length == 0){
+							alert("다시 입력해주시길 바랍니다.");
+							return false;
+						}
+					};
+				</script>
 			</div>
 			<div id="noticeBtn">
 				<button onclick="location.href='<%=contextPath%>/insertNotice.admin'">공지사항 등록</button>

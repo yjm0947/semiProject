@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.semi.member.model.vo.Member,com.semi.board.inquiry.model.vo.Board,com.semi.product.model.vo.Attachment,java.util.ArrayList"
+    pageEncoding="UTF-8" import="com.semi.member.model.vo.Member,com.semi.board.model.vo.Board,com.semi.product.model.vo.Attachment,java.util.ArrayList"
 %>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");

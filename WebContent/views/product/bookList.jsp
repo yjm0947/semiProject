@@ -390,7 +390,7 @@
            
                 <table >
                     <tr id="num">
-                        <td rowspan="4" style="width: 150px; height: 250px;"><img src="<%=contextPath + p.getTitleImg() %>" alt="" width="135px" height="200px" id="imgthumb">
+                        <td rowspan="4" style="width: 150px; height: 250px;"><img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204);" width="135px" height="200px" id="imgthumb">
                         <input type="hidden" value="<%=p.getProductNo()%>">                       
                         </td>
                         <td id="title" style="font-size: 16px; font-weight: 600; position: relative; top: 45px;"><%=p.getProductName() %></td>
@@ -468,9 +468,9 @@
         	//디테일 페이지 이동
             $(function(){
             	$("#book_2>table>tbody>#num").click(function(){
-            		console.log(this);
+            		//console.log(this);
             		var pno = $(this).children().eq(0).children("input[type=hidden]").val();
-            		console.log(pno);
+            		//console.log(pno);
             		location.href="<%=contextPath%>/book.de?pno="+pno;
             	});
             	/* $("#book_2").click(function(){

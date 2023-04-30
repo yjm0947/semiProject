@@ -22,7 +22,7 @@
 	<!--  pna작성-->
 	<entry key="insertQna">
 		INSERT INTO BOARD(BOARD_NO,MEMBER_NO,PRODUCT_NO,BOARD_CATEGORY,BOARD_TITLE,BOARD_CONTENT)
-		VALUES (SEQ_BNO.NEXTVAL,?,?,3,?,?)
+		VALUES (SEQ_PNO.NEXTVAL,?,?,3,?,?)
 	</entry>
 	
 	<!-- 공지사항 조회 -->
@@ -38,13 +38,13 @@
 	<!-- 공지사항 등록 -->
 	<entry key="insertNotice">
 		INSERT INTO BOARD(BOARD_NO,MEMBER_NO,BOARD_CATEGORY,BOARD_TITLE,BOARD_CONTENT)
-			   VALUES (SEQ_BNO.NEXTVAL,?,2,?,?)
+			   VALUES (SEQ_PNO.NEXTVAL,?,2,?,?)
 	</entry>
 	
 	<!-- 공지사항 첨부파일 -->
 	<entry key="insertAttachment">
 		INSERT INTO ATTACHMENT(ATTACHMENT_ID,BOARD_NO,ATTACHMENT_NAME,ATTACHMENT_CHANGE,ATTACHMENT_PATH,FILE_LEVEL)
-			   VALUES (SEQ_ANO.NEXTVAL,SEQ_BNO.CURRVAL,?,?,?,?)
+			   VALUES (SEQ_ANO.NEXTVAL,SEQ_PNO.CURRVAL,?,?,?,?)
 	</entry>
 	
 	<!-- 공지사항 상세조회 -->
@@ -128,7 +128,7 @@
 	<!-- FAQ등록 -->
 	<entry key="insertFaqAdmin">
 		INSERT INTO BOARD (BOARD_NO,MEMBER_NO,BOARD_CATEGORY,BOARD_TITLE,BOARD_CONTENT)
-				VALUES(SEQ_BNO.NEXTVAL,?,4,?,?)
+				VALUES(SEQ_PNO.NEXTVAL,?,4,?,?)
 	</entry>
 	
 	<!-- FAQ 수정전 조회 -->
@@ -182,4 +182,15 @@
 		AND BOARD_CONTENT LIKE '%'||?||'%'
 	</entry>
 	
+	<!--페이징처리된 공지사항 리스트  -->
+	<entry key="mainMainNotice">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM,A.*
+		      FROM(SELECT BOARD_NO,BOARD_TITLE,CREATE_DATE
+					FROM BOARD B
+					WHERE BOARD_CATEGORY = 2
+					AND B.STATUS = 'N'
+					ORDER BY CREATE_DATE DESC)A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
 </properties>

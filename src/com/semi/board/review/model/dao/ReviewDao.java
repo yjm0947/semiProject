@@ -43,7 +43,7 @@ private Properties prop = new Properties();
 			try {
 				pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, r.getMemberNo());
-					pstmt.setInt(2, r.getProductNo());
+					pstmt.setString(2, r.getProductNo());
 					pstmt.setInt(3, r.getReviewStar());
 					pstmt.setString(4, r.getReviewContent());
 				
@@ -60,7 +60,7 @@ private Properties prop = new Properties();
 		}
 
 		//댓글 목록 조회
-		public ArrayList<Review> selectReview(Connection conn, int productNo) {
+		public ArrayList<Review> selectReview(Connection conn, String productNo) {
 			
 			ArrayList<Review> rlist = new ArrayList<>();
 			PreparedStatement pstmt = null;
@@ -70,7 +70,7 @@ private Properties prop = new Properties();
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, productNo);
+					pstmt.setString(1, productNo);
 					
 				rset = pstmt.executeQuery();
 				
@@ -119,6 +119,30 @@ private Properties prop = new Properties();
 				JDBCTemplate.close(pstmt);
 			}
 			return count;
+		}
+
+		//회원이 작성한 댓글 삭제하기
+		public int deleteMyReview(Connection conn, int memNo, int reviewNo) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("deleteMyReview");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, memNo);
+				pstmt.setInt(2, reviewNo);
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return result;
 		}
 
 }

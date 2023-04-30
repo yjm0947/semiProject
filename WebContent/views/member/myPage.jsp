@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.member.model.vo.Coupon"%>
 <%
-	ArrayList<Coupon> clist = (ArrayList<Coupon>)request.getAttribute("clist");
+	ArrayList<Coupon> clist = (ArrayList)session.getAttribute("clist");
 %>
 <!DOCTYPE html>
 <html>
@@ -119,7 +119,18 @@
         #p_info table th:last-child, table td:last-child {
             border-right: 0;
         }
-
+		
+		#non-text{
+			margin: 20px;
+		}
+		#non-text i{
+			margin:10px;
+			font-size: 25px;
+		}
+		#non-text h4{
+			margin:10px;
+			font-size: 20px;
+		}
 </style>
 </head>
 <body>
@@ -128,6 +139,22 @@
 	<%
 		int memberNo = loginUser.getMemberNo();
 		int memPoint = loginUser.getMemberPoint();
+		
+		int resultY = 0;
+		
+		for(int i=0; i<clist.size(); i++){
+			if(clist.get(i).getStatus().charAt(0) == 'Y') {
+				resultY += 1;		
+			}
+		}
+		
+		int resultN= 0;
+		
+		for(int i=0; i<clist.size(); i++){
+			if(clist.get(i).getStatus().charAt(0) == 'N') {
+				resultN += 1;		
+			}
+		}
 	%>
 	<div class="wrap">
 		<div id="content">
@@ -147,25 +174,26 @@
 			                            <th colspan="3">혜택</th>
 			                            <th colspan="3">유효기간</th>
 		                            </tr>
-	                            <%if(clist.isEmpty()) {%>
+                            	<%if(resultY < 1) {%>
 		                            <tr>
 		                                <td colspan="9">
-		                                    <i class="fa-solid fa-circle-exclamation"></i>
-		                                    <h4>사용 가능한 쿠폰이 없습니다.</h4>
+		                                	<div id="non-text">
+			                                    <i class="fa-solid fa-circle-exclamation"></i>
+			                                    <h4>사용 가능한 쿠폰이 없습니다.</h4>
+		                                	</div>
 		                                </td>
 	                            	</tr>
 	                           	<%}else {%>
 			                   		<%for(Coupon c : clist){  %>	
-			                   		 	<%if(c.getStatus().charAt(0)=='N') {%>			
+			                   		 	<%if(c.getStatus().charAt(0)=='Y') {%>			
 				                            <tr>
 				                                <td colspan="3"><%=c.getCouponName() %></td>
 				                                <td colspan="3"><%=c.getCouponDc() %>%</td>
 				                                <td colspan="3"><%=c.getCouponSdate() %> ~ <%=c.getCouponPeriod() %></td>
 				                            </tr>
 			                            <%}%>
-		                            	
 	                            	<%} %>
-	                    		<%} %>
+                            	<%} %>
 		                        </table>
 		                    </section>
 	                    <section id="unavailable_cont">
@@ -175,16 +203,16 @@
 	                                <th colspan="3">혜택</th>
 	                                <th colspan="3">유효기간</th>
 	                            </tr>
-	                           <%if(clist.isEmpty()) {%>
+                           <%if(resultN < 1) {%>
 	                            <tr>
 	                                <td colspan="9">
 	                                    <i class="fa-solid fa-circle-exclamation"></i>
 	                                    <h4>사용 만료된 쿠폰이 없습니다.</h4>
 	                                </td>
 	                           	</tr>
-	                          	<%}else {%>
+                          	<%}else {%>
 	                             <%for(Coupon c : clist){  %>	
-		                   		 	<%if(c.getStatus().charAt(0)=='Y') {%>			
+		                   		 	<%if(c.getStatus().charAt(0)=='N') {%>			
 		                            <tr>
 		                                <td colspan="3"><%=c.getCouponName() %></td>
 		                                <td colspan="3"><%=c.getCouponDc() %></td>
@@ -203,24 +231,13 @@
 	                    <section id="point_section">
 	                        <table border="1">
 	                        	<tr>
-		                            <th colspan="2">적립 날짜</th>
-		                            <th colspan="2">적립 마일리지</th>
-		                            <th colspan="2">총 마일리지</th>
+		                            <th colspan="2">적립금 내역</th>
+		                            <th colspan="2">총 적립금</th>
 	                        	</tr>
-	                       	<%if(memPoint == 0) {%>
-	                           	<tr>
-	                                <td colspan="12">
-	                                    <i class="fa-solid fa-circle-exclamation"></i>
-	                                    <h4>사용 가능한 적립금이 없습니다.</h4>
-	                                </td>
-	                           	</tr>
-	                           <%}else {%>
 	                            <tr>
-	                                <td colspan="2">2023/03/01</td>
-	                                <td colspan="2">30 <b>P</b></td>
-	                                <td colspan="2">1030 <b>P</b></td>
+	                                <td colspan="2">수정해야함 <b>P</b></td>
+	                                <td colspan="2"><%=memPoint %> <b>P</b></td>
 	                            </tr>
-	                           <%} %>
 	                        </table>
 	                    </section>
 	                </div>

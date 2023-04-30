@@ -6,13 +6,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
 import com.semi.board.inquiry.model.vo.Board;
 import com.semi.common.JDBCTemplate;
+import com.semi.common.vo.PageInfo;
 import com.semi.product.model.dao.ProductDao;
 import com.semi.product.model.vo.Attachment;
+import com.semi.product.model.vo.Product;
 
 public class BoardDao {
 	
@@ -443,14 +446,17 @@ public class BoardDao {
 
 		//FAQ조회
 		public ArrayList<Board> selectFaqAdmin(Connection conn) {
+			
 			ArrayList<Board> list = new ArrayList<>();
-			PreparedStatement pstmt = null;
+			Statement stmt = null;
 			ResultSet rset = null;
+			
 			String sql = prop.getProperty("selectFaqAdmin");
 			
 			try {
-				pstmt = conn.prepareStatement(sql);
-				rset = pstmt.executeQuery();
+				stmt = conn.createStatement();
+				
+				rset = stmt.executeQuery(sql);
 				
 				while(rset.next()) {
 					list.add(new Board(rset.getInt("BOARD_NO")
@@ -458,12 +464,12 @@ public class BoardDao {
 									  ,rset.getString("BOARD_CONTENT")
 									  ,rset.getDate("CREATE_DATE")));
 				}
-				
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				JDBCTemplate.close(rset);
-				JDBCTemplate.close(pstmt);
+				JDBCTemplate.close(stmt);
 			}
 			return list;
 		}
@@ -566,5 +572,39 @@ public class BoardDao {
 			return result;
 		}
 
+		//메인화면에서 출력할 페이징처리한 공지사항
+		public ArrayList<Board> mainMainNotice(Connection conn, PageInfo pi) {
+			
+			ArrayList<Board> list = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("mainMainNotice");
+			
+			try {
+				int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit()+1;
+				int endRow = (startRow+pi.getBoardLimit())-1;
+				
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, startRow);
+					pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Board(rset.getInt("BOARD_NO")
+									  ,rset.getString("BOARD_TITLE")
+									  ,rset.getDate("CREATE_DATE")));
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return list;
+		}
 
 }

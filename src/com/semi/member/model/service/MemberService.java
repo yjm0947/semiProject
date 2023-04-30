@@ -3,6 +3,7 @@ package com.semi.member.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.semi.board.review.model.vo.Review;
 import com.semi.common.JDBCTemplate;
 import com.semi.common.vo.PageInfo;
 import com.semi.member.model.dao.MemberDao;
@@ -266,4 +267,28 @@ public class MemberService {
 			
 			return updateAddr;
 		}
+
+		//회원 작성 리뷰 조회
+		public ArrayList<Review> selectMyReview(int memNo) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Review> rlist = new MemberDao().selectMyReview(conn, memNo);		
+			
+			JDBCTemplate.close(conn);
+			
+			return rlist;
+		}
+
+		public ArrayList<Review> selectReModal(int reviewNo) {
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Review> list = new MemberDao().selectReModal(conn, reviewNo);		
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
+		}
+
+
 }

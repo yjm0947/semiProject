@@ -6,7 +6,7 @@ public class Review {
 
 	private int reviewNo;			//	REVIEW_NO	NUMBER
 	private int memberNo;			//	MEMBER_NO	NUMBER
-	private int productNo;			//	PRODUCT_NO	NUMBER
+	private String productNo;			//	PRODUCT_NO	NUMBER
 	private int reviewStar;				//	REVIEW_STAR	NUMBER
 	private String reviewContent;	//	REVIEW_CONTENT	VARCHAR2(600 BYTE)
 	private String createDate;		//	CREATE_DATE	DATE
@@ -25,14 +25,14 @@ public class Review {
 		this.createDate = createDate;
 		this.userId = userId;
 	}
-	public Review(int memberNo, int productNo, int reviewStar, String reviewContent) {
+	public Review(int memberNo, String productNo, int reviewStar, String reviewContent) {
 		super();
 		this.memberNo = memberNo;
 		this.productNo = productNo;
 		this.reviewStar = reviewStar;
 		this.reviewContent = reviewContent;
 	}
-	public Review(int reviewNo, int memberNo, int productNo, int reviewStar, String reviewContent, String createDate,
+	public Review(int reviewNo, int memberNo, String productNo, int reviewStar, String reviewContent, String createDate,
 			String status) {
 		super();
 		this.reviewNo = reviewNo;
@@ -56,10 +56,10 @@ public class Review {
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
 	}
-	public int getProductNo() {
+	public String getProductNo() {
 		return productNo;
 	}
-	public void setProductNo(int productNo) {
+	public void setProductNo(String productNo) {
 		this.productNo = productNo;
 	}
 	public int getReviewStar() {

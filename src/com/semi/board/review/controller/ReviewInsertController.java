@@ -40,7 +40,7 @@ public class ReviewInsertController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		int productNo = Integer.parseInt(request.getParameter("productNo"));
+		String productNo = request.getParameter("productNo");
 		int reviewStar = Integer.parseInt(request.getParameter("reviewStar"));
 		String reviewContent = request.getParameter("reviewContent");
 		

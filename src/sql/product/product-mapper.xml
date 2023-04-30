@@ -86,7 +86,7 @@
 		            AND STATUS = 'Y'
 		            AND FILE_LEVEL = '1'
 		            AND PRODUCT_CATEGORY IN (1,2,3,4,5,6)
-                    WHERE CREATE_DATE BETWEEN TO_CHAR(ADD_MONTHS(SYSDATE,-3),'yyyy-mm-dd') AND TO_CHAR(SYSDATE)
+                    WHERE TO_CHAR(SYSDATE,'yyyy-mm-dd') BETWEEN TO_CHAR(ADD_MONTHS(SYSDATE,-3),'yyyy-mm-dd') AND TO_CHAR(SYSDATE,'yyyy-mm-dd')
 		            ORDER BY CREATE_DATE DESC)A)
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>

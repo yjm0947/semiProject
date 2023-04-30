@@ -358,10 +358,17 @@
                 	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
             </div>
+            <%if(loginUser!=null){ %>
             <div id="list_menu_3">
-                <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" >전체선택
+                <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" ><label for="checkbox">전체선택</label>
                 <button type="button">장바구니</button>
             </div>
+            <%}else{ %>
+            <div id="list_menu_3">
+                <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" ><label for="checkbox">전체선택</label>
+                <button type="button" onclick="q_btn_on()">장바구니</button>
+            </div>
+            <%} %>
          </div>
                
                 
@@ -376,8 +383,8 @@
             	
          <div id="book">
             <div id="book_1">
-                <label for="check"></label>
                 <input type="checkbox" id="check" name="cart" value="상품번호출력">
+                <input type="hidden" value="<%=p.getProductNo()%>">
             </div>
             <div id="book_2">
            
@@ -472,8 +479,15 @@
             });
         	
             <%if (loginUser!=null){%> //로그인 되어있으면
+           	//전체선택 옆에 장바구니 버튼 클릭시
+            $(function() {
+            	$("#book_3>#cart").click(function() {
+					
+				});
+			});	
+            	
+            //장바구니 버튼 클릭시
             $(function(){
-            	//장바구니 버튼 클릭시
             	$("#book_3>#cart").click(function(){
             		var productNo = $(this).parent().children("input[type=hidden]").val()
             		var cartNo = 0;

@@ -17,11 +17,13 @@
     <head>
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <style>
+        
         html,body{
             box-sizing: border-box;
         }
@@ -82,7 +84,6 @@
             position: relative;
             top: 84px;
             left: 190px;
-            z-index: 1;
         }
         /*------------------------메뉴바------------------------------*/
         #header_2>div{
@@ -130,6 +131,8 @@
         }
         #ca_1 a:hover{
             background-color: rgb(58, 40, 100);
+            position: relative;
+        	z-index: 10;
         }
         #ca_2{
             margin: 0px;
@@ -159,6 +162,8 @@
 
         #ca_2 a:hover,#all_list a:hover{
             background-color: rgb(227, 225, 230);
+            position: relative;
+        	z-index: 10;
         }
         /*안보이게하기=====================================*/
         #customer_li,#book_li,#all_list{
@@ -180,9 +185,13 @@
         }
         #ca_2>li>a:hover+ul,#ca_1>li>a:hover+ul{/*안보이게하기 2단계*/
             display: block;
+            position: relative;
+        	z-index: 10;
         }
         #ca_2>li>ul:hover,#ca_1>li>ul:hover{/*안보이게하기 3단계*/
             display: block;
+            position: relative;
+        	z-index: 10;
         }
         #book_li,#customer_li,#all_list{
             border-top-style: solid; /*메뉴바 하 선*/
@@ -191,12 +200,10 @@
         }
         #book_li li{
         	background-color: white;
-        	position: relative;
-            z-index: 1;
         }
-        #all_list li{
+        #all_list li:hover{
         	position: relative;
-        	z-index: 1;
+        	z-index: 10;
         }
         #all_list_1 a,#customer_1 a{
             font-size: 15px;
@@ -205,12 +212,14 @@
             /* background-color: aqua; */
            
         }
-        #all_list_1>li,#customer_1>li{
+        #all_list_1>li:hover,#customer_1>li:hover{
             /*border: 1px solid red;*/
             padding: 0px;
             width: 100%;
             height: 30px;
             margin: 0px;
+            position: relative;
+            z-index: 10;
         }
         #all_list_1,#customer_1{
             padding: 0px;
@@ -223,10 +232,14 @@
         }
         #all_list_1 a:hover{
             background-color: white;
+            position: relative;
+        	z-index: 10;
             
         }
         #customer_1 a:hover{
             background-color: white;
+            position: relative;
+            z-index: 10;
         }
         
         #ca_best_1, #ca_best_2{
@@ -329,17 +342,17 @@
                             <ul id="all_list">
                                 <li><a href="<%=contextPath %>/book.list?currentPage=1">도서</a>
                                     <ul id="all_list_1">
-                                        <li><a href="<%=contextPath %>/book.be?currentPage=1" id="ca_best_1">베스트 셀러</a></li>
-                                        <li><a href="<%=contextPath %>/book.new?currentPage=1" id="ca_best_2">신간 도서</a></li>
+                                        <li style="position: relative; left: -85px; width: 200px;"><a href="<%=contextPath %>/book.be?currentPage=1" id="ca_best_1" >베스트 셀러</a></li>
+                                        <li style="position: relative; left: -85px; width: 200px;"><a href="<%=contextPath %>/book.new?currentPage=1" id="ca_best_2">신간 도서</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="<%=contextPath%>/item.list?currentPage=1">쇼핑</a></li>
                                 <li><a href="<%=contextPath %>/attendance.v"">출석체크</a></li>
-                                <li><a href="">고객센터</a>
+                                <li><a href="<%=contextPath%>/noti.ma?currentPage=1">고객센터</a>
                                     <ul id="customer_1">
-                                        <li><a href="" style="float: right; width: 206px; text-align:center;">공지사항</a></li>
-                                        <li><a href="" style="float: right; width: 206px; text-align:center;">자주묻는 질문</a></li>
-                                        <li><a href="" style="float: right; width: 206px; text-align:center;">1:1 문의</a></li>
+                                        <li><a href="<%=contextPath%>/noti.ma?currentPage=1" style="float: right; width: 206px; text-align:center;">공지사항</a></li>
+                                        <li><a href="<%=contextPath %>/mafaq.c" style="float: right; width: 206px; text-align:center;">자주묻는 질문</a></li>
+                                        <li><a href="<%=contextPath %>/main.qna" style="float: right; width: 206px; text-align:center;">1:1 문의</a></li>
                                         
                                     </ul>
                                 </li>
@@ -357,19 +370,19 @@
                         </li>
                         <li><a href="<%=contextPath%>/item.list?currentPage=1">쇼핑</a></li>
                         <li><a href="<%=contextPath %>/attendance.v">출석체크</a></li>
-                        <li id="customer"><a href="">고객센터</a>
+                        <li id="customer"><a href="<%=contextPath%>/noti.ma?currentPage=1">고객센터</a>
                             <ul id="customer_li">
-                                <li><a href="">공지사항</a></li>
-                                <li><a href="">자주묻는 질문</a></li>
-                                <li><a href="">1:1 문의</a></li>
+                                <li><a href="<%=contextPath%>/noti.ma?currentPage=1">공지사항</a></li>
+                                <li><a href="<%=contextPath%>/mafaq.c">자주묻는 질문</a></li>
+                                <li><a href="<%=contextPath%>/main.qna">1:1 문의</a></li>
                                 
                             </ul>
                         </li>
                     </ul>
                 </div>
                 <div id="search_form_area">
-                    <form action="test.do" id="search_form">
-                        <input type="search" id="search_text" placeholder="도서, 상품 검색">
+                    <form action="<%=contextPath %>/search.bo?currentPage=1" id="search_form" method="post">
+                        <input type="search" name="search_text" id="search_text" placeholder="도서, 상품 검색">
                         <button type="submit" id="search_btn">
                         <img src="resources/돋보기.png" width="20px" height="20px" alt="" style="position: relative; left: 2px; top: 4px;">
                         	검색</button> <!--검색창에 보내기-->
@@ -378,5 +391,6 @@
                 </div>
             </div>
         </div>
+        
 </body>
 </html>

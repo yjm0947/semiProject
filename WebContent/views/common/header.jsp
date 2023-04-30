@@ -85,6 +85,17 @@
             top: 84px;
             left: 190px;
         }
+        /*------------------마이페이지 장바구니 로그아웃-------------------*/
+        #login_mem>a{
+            color: rgb(148, 146, 146);
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 6px;
+            position: relative;
+            top: 84px;
+            left: 190px;
+        }
         /*------------------------메뉴바------------------------------*/
         #header_2>div{
             height: 100%;
@@ -326,7 +337,7 @@
 					    location.href="<%=contextPath%>/member.admin?currentPage=1";
                     </script>
                 <%}else { %>
-                <div id="login_mem" style="background-color: blueviolet;">
+                <div id="login_mem">
                     <a href="<%=contextPath %>/myPage.me" id="login_btn">마이페이지</a>
                     <a href="<%=contextPath %>/list.sc" id="mem_btn">장바구니</a>
                     <a href="<%=contextPath %>/logout.me" id="mem_btn">로그아웃</a>

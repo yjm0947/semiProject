@@ -160,6 +160,30 @@ public class OrderService {
 		JDBCTemplate.close(conn);
 		
 		return result;
+		
+}	//주문 완료시 주문목록 상태 변경
+	public void completeOrder(String userNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new OrderDao().completeOrder(conn,userNo);
+		
+		if (result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		
+	}
+	
+	//주문완료 페이지 메소드
+	public String paymentSelect(int orderNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		String p = new OrderDao().paymentSelect(conn,orderNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return p;
 	}
 
 }

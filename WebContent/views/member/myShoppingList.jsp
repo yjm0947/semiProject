@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, com.semi.order.model.vo.Payment"%>
-<%
-	ArrayList<Payment> list = (ArrayList<Payment>)request.getAttribute("list");
-	ArrayList<Payment> plist = (ArrayList<Payment>)request.getAttribute("plist");
-%>
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,8 +68,8 @@
             margin: 5px 0px 10px 0px;
             text-align: center;
         }
-        #order_history a{
-            text-decoration: none;
+        #order_history p{
+        	margin: 0;
             color: tomato;
             font-size: 40px;
         }
@@ -183,6 +179,23 @@
 
 	<%@ include file = "../common/header.jsp" %>
 	<%@ include file = "../common/myInfo.jsp" %>
+	<%
+		int state1 = 0;
+		int state2 = 0;
+		int state3 = 0;
+		int state4 = 0;
+		int state5 = 0;
+		
+		for(int i=0; i<plist.size(); i++){
+			switch(plist.get(i).getState().charAt(0)){
+				case '1' : state1 = state1 + 1; break;
+				case '2' : state2 = state2 + 1; break;
+				case '3' : state3 = state3 + 1; break;
+				case '4' : state4 = state4 + 1; break;
+				case '5' : state5 = state5 + 1; break;
+			}
+		}
+	%>
 	<div class="wrap">
 		<div id="content">
             <div id="c_1">
@@ -192,11 +205,11 @@
                     <div id="order_history">
                         <table id="odh_table">
                         	<tr>
-	                            <th colspan="2"><a href="">0</a></th>
-	                            <th colspan="2"><a href="">0</a></th>
-	                            <th colspan="2"><a href="">0</a></th>
-	                            <th colspan="2"><a href="">0</a></th>
-	                            <th colspan="2"><a href="">0</a></th>
+	                            <th colspan="2"><p><%=state1 %></p></th>
+	                            <th colspan="2"><p><%=state2 %></p></th>
+	                            <th colspan="2"><p><%=state3 %></p></th>
+	                            <th colspan="2"><p><%=state4 %></p></th>
+	                            <th colspan="2"><p><%=state5 %></p></th>
                             </tr>
                             <tr>
                                 <td colspan="2"><h4>준비중</h4></td>
@@ -208,7 +221,7 @@
                         </table>
                     </div>
                     
-                    <%if(list.isEmpty()) {%>
+                    <%if(plist.isEmpty()) {%>
 						<div id="non_shopping_detail">
 	                        <div id="sh_detail">
 	                            <i class="fa-solid fa-circle-exclamation"></i>
@@ -230,12 +243,12 @@
 	                                </tr>
                                 </thead>
                     			<tbody>
-                   			<%for(Payment p : list) {%>
+                   			<%for(Payment p : plist) {%>
 	                                <tr>
 	                                    <td colspan="3"><%=p.getOrderNo() %></td>
 	                                    <td colspan="2"><%=p.getProductNo() %></td>
 	                                    <td colspan="2"><%=p.getDepositName() %></td>
-	                                    <td colspan="3"><%=p.getPayment() %></td>
+	                                    <td colspan="3"><%=p.getPayment()+p.getDeliveryCost() %></td>
 	                                    <td colspan="2">
 	                                    	<button type="button" class="openModal" data-toggle="modal" data-target="#myOrderModal">조회</button>
 	                                    </td>
@@ -266,7 +279,6 @@
 	                                <table id="bookDetail">
 	                                    <thead>
 	                                        <tr>
-	                                            <th>상품이미지</th>
 	                                            <th style="width:100px">상품명</th>
 	                                            <th>구매수량</th>
 	                                            <th>가격</th>
@@ -311,6 +323,14 @@
 	        				},
 	        			async: false,
 	        			success : function(p){
+	        				switch(p.state){
+	        				case "1" : p.state = "준비중"; break;
+	        				case "2" : p.state = "배송중"; break;
+	        				case "3" : p.state = "배송완료"; break;
+	        				case "4" : p.state = "교환"; break;
+	        				case "5" : p.state = "취소"; break;
+	        				}
+	        				
 	        				var basicStr = "<tr>"
 	                            +"<td>"+"주문번호"+"</td>"
 	                            +"<td>"+p.orderNo+"</td>"
@@ -347,10 +367,9 @@
 	                       	+"</tr>";
 	               			
 	               			var bookStr = "<tr>"
-	                            +"<td>"+"도서 이미지"+"</td>"
 	                            +"<td>"+p.productNo+"</td>"
-	                            +"<td>"+p.usePoint+"</td>"
-	                            +"<td>"+p.payment+"</td>"
+	                            +"<td>"+p.usePoint+" 권"+"</td>"
+	                            +"<td>"+p.payment+" 원"+"</td>"
 	                        "</tr>";
 	              			$("#basicInfo tbody").html(basicStr);
 	                       $("#bookDetail tbody").html(bookStr);
@@ -358,7 +377,7 @@
 	                       return p;
 	        			},
 	        			error : function(){
-	        				console.log(";-;");
+	        				console.log("error");
 	        				console.log(p);
 	        			}
 	        		});

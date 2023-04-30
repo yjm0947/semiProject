@@ -358,14 +358,8 @@
                 	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
             </div>
-            <div id="list_menu_3">
-                <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" >전체선택
-                <button type="button">장바구니</button>
-            </div>
+            
          </div>
-               
-                
-                
             	<%if(list.isEmpty()) {%>
             		<div id="none_div">
 			        	<div id="none_td">도서 목록이 존재하지 않습니다.</div>
@@ -374,10 +368,10 @@
             	
             	<%for(Product p : list) {%>
             	
-         <div id="book">
+         <div class="book_list" id="book">
             <div id="book_1">
-                <label for="check"></label>
-                <input type="checkbox" id="check" name="cart" value="상품번호출력">
+                <input type="checkbox" class="checkbox" id="check" name="cart" value="상품번호출력">
+                <input type="hidden" value="<%=p.getProductNo()%>">
             </div>
             <div id="book_2">
            
@@ -466,14 +460,12 @@
             		//console.log(pno);
             		location.href="<%=contextPath%>/book.de?pno="+pno;
             	});
-            	/* $("#book_2").click(function(){
-            		console.log("ddd");
-            	}); */
             });
         	
             <%if (loginUser!=null){%> //로그인 되어있으면
+            
+            //장바구니 버튼 클릭시
             $(function(){
-            	//장바구니 버튼 클릭시
             	$("#book_3>#cart").click(function(){
             		var productNo = $(this).parent().children("input[type=hidden]").val()
             		var cartNo = 0;

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.order.model.service.OrderService;
+import com.semi.order.model.vo.Payment;
+
 /**
  * Servlet implementation class OrderCompleteController
  */
@@ -26,6 +29,11 @@ public class OrderCompleteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+		String p = new OrderService().paymentSelect(orderNo); 
+		
+		request.setAttribute("payment", p);
+		
 		request.getRequestDispatcher("views/product/orderCompleteBank.jsp").forward(request, response);
 	}
 

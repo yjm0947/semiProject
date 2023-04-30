@@ -66,7 +66,7 @@
 <body>
         <div id="footer">
             <div id="f_1">
-                <a href="" ><img id="f_1_logo" src="resources/사이트이름.png" alt="logo"> </a> <!--메인사이트로-->
+                <a href="/SemiProject/" ><img id="f_1_logo" src="resources/사이트이름.png" alt="logo"> </a> <!--메인사이트로-->
                 <a href="" >이용약관</a>
                 <a href="" >개인정보처리방침</a>
                 <a href="" >청소년보호정책</a>

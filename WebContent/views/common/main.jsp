@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    
     <style>
         div{
             /* border: 1px solid black; */
@@ -20,12 +23,12 @@
             height: 500px;
             width: 1300px;
             margin: auto;
-            z-index: -2;
+            z-index: 0;
             position: relative;
         }
         #banner>img{
             /* background-color: aqua; */
-            z-index: -1;
+            z-index: 0;
             width: 1250px;
             height: 430px;
             display: block;
@@ -147,15 +150,14 @@
 
 
     <div id="content">
-        <div id="banner">
-            <img src="resources/배너예시.png" alt="">
+        <div id="banner" >
+            <img  src="resources/mainbanner0429.jpg" alt="" style="position: relative; z-index: 3; cursor: pointer;">        	
         </div>
         <div id="con_menu">
             <div><button type="button" onclick="location.href='/SemiProject/book.new?currentPage=1'" ><img src="resources/메인new.png" alt="" style="width: 25px; height: 25px; margin: auto;"></button>신간</div>
             <div><button onclick="location.href='/SemiProject/book.be?currentPage=1'"><img src="resources/best.png" alt="" style="width: 32px; height: 33px; margin: auto;"></button>베스트</div>
             <div><button onclick="location.href='/SemiProject/attendance.v'" type="button" onclick="location.href='/SemiProject/attendance.v'"><img src="resources/stamp.png" alt="" style="width: 40px; height: 45px; margin: auto;"></button>출석체크</div>
-            <div><button onclick="location.href=''"><img src="resources/postage-stamp.png" alt="" style="width: 38px; height: 40px; margin: auto;"></button>통합리뷰</div>
-            <div><button onclick="location.href=''"><img src="resources/location.png" alt="" style="width: 38px; height: 40px; margin: auto;"></button>매장찾기</div>
+            <div><button onclick="location.href='/SemiProject/map.co'"><img src="resources/location.png" alt="" style="width: 38px; height: 40px; margin: auto;"></button>매장찾기</div>
         </div>
         <div id="con_best">
             <div id="con_bt">
@@ -186,14 +188,24 @@
 
     </pre>
       
-      <div>
-      	추후 삭제 예정
-     	                    <a href="/SemiProject/map.co">찾아오시는 길</a>      	
-      </div>
-      
       	<script>
       	
-      	$(function(){//베스트도서 4개
+      	//배너 이미지 클릭시 해당 도서로 넘어가기
+      	$(function(){
+      		$("#banner>img").click(function(){
+      			//console.log(this);
+      			
+      			location.href = "/SemiProject/book.de?pno=12"
+      		});
+      	});
+      	
+      	function img(){
+      		$("#content").click(function(){
+      			console.log(this);	
+      		});
+      	};
+      	
+      	/* $(function(){//베스트도서 4개
       		$.ajax({
       			url : "main.be",
       			data : {currentPage : 1},
@@ -206,7 +218,7 @@
   						result += '<div id="con_bi_1">'
 		                      	+'<a href="/SemiProject/book.de?pno='+bestList[i].productNo+'">'
 		                      +'<div id="con_bi_1a">'
-		                          +'<img src="/SemiProject'+bestList[i].titleImg+'" alt="" id="con_pro_img" style="height: 160px; width: 130px; display: block; margin: auto;'
+		                          +'<img src="/SemiProject'+bestList[i].titleImg+'" alt="" id="con_pro_img" style="border: 1px solid rgb(204, 204, 204); height: 160px; width: 130px; display: block; margin: auto;'
 		                                              +'position: relative; top: 25px;">'
 		                      +'</div>'
 		                      +'<div id="con_text">'
@@ -222,7 +234,7 @@
 					$("#con_bi").html(result);
       			}
       		});
-      	});
+      	}); */
       	
       	$(function(){
   			$.ajax({
@@ -236,7 +248,7 @@
   						result += '<div id="con_bi_1">'
 		      		                      	+'<a href="/SemiProject/book.de?pno='+newBook[i].productNo+'">'
 		      		                      +'<div id="con_bi_1a">'
-		      		                          +'<img src="/SemiProject'+newBook[i].titleImg+'" alt="" id="con_pro_img" style="height: 160px; width: 130px; display: block; margin: auto;'
+		      		                          +'<img src="/SemiProject'+newBook[i].titleImg+'" alt="" id="con_pro_img" style="border: 1px solid rgb(204, 204, 204); height: 160px; width: 130px; display: block; margin: auto;'
 		      		                                              +'position: relative; top: 25px;">'
 		      		                      +'</div>'
 		      		                      +'<div id="con_text">'
@@ -267,7 +279,7 @@
       						result += '<div id="con_bi_1">'
       										+'<a href="/SemiProject/book.de?pno='+newPro[i].productNo+'">'
 			      		                      +'<div id="con_bi_1a">'
-			      		                          +'<img src="/SemiProject'+newPro[i].titleImg+'" alt="" id="con_pro_img" style="height: 160px; width: 130px; display: block; margin: auto;'
+			      		                          +'<img src="/SemiProject'+newPro[i].titleImg+'" alt="" id="con_pro_img" style="border: 1px solid rgb(204, 204, 204); height: 160px; width: 130px; display: block; margin: auto;'
 			      		                                              +'position: relative; top: 25px;">'
 			      		                      +'</div>'
 			      		                      +'<div id="con_text">'

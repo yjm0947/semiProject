@@ -83,7 +83,7 @@
 				     <!-- 보유 적립금 없을 때
 				     <div id="non_point">
 				         <div id="non_detail">
-				             <h4>보유한 적립금이 없습니다.</h4>
+				             <h4>적립금 사용 내역이 없습니다.</h4>
 				         </div>
 				     </div>  -->
 				     
@@ -93,8 +93,8 @@
 				         	<thead>
 						         <tr>
 						             <th colspan="2">적립날짜</th>
+						             <th colspan="2">내용</th>
 						             <th colspan="2">적립금 내역</th>
-						             <th colspan="2">받은 적립금</th>
 						             <th colspan="2">총 적립금</th>
 					             </tr>
 				             </thead>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.member.model.vo.Coupon"%>
 <%
-	ArrayList<Coupon> clist = (ArrayList<Coupon>)request.getAttribute("clist");
+	ArrayList<Coupon> clist = (ArrayList)session.getAttribute("clist");
 %>
 <!DOCTYPE html>
 <html>
@@ -87,19 +87,21 @@
 					     <!-- 조회 내용 없을 때 -->
 					     <div id="non_couopn">
 					         <div id="non_detail">
-					             <h4>보유하고 있는 쿠폰이 없습니다.</h4>
+					             <h4>쿠폰 조회 내역이 없습니다.</h4>
 					         </div>
 					     </div>
 				      <%}else {%>
 					     <!-- 조회 내용 있을 때 -->
 					     <div>
 					         <table border="1">
-					             <th colspan="2">쿠폰번호</th>
-					             <th colspan="3">쿠폰명</th>
-					             <th colspan="2">할인율</th>
-					             <th colspan="2">쿠폰 지급일</th>
-					             <th colspan="2">쿠폰 만료일</th>
-					             <th colspan="2">사용여부</th>
+					         	<tr>
+						             <th colspan="2">쿠폰번호</th>
+						             <th colspan="3">쿠폰명</th>
+						             <th colspan="2">할인율</th>
+						             <th colspan="2">쿠폰 지급일</th>
+						             <th colspan="2">쿠폰 만료일</th>
+						             <th colspan="2">사용여부</th>
+					             </tr>
 				             <%for(Coupon c : clist ) {%>
 					             <tr>
 					                 <td colspan="2"><%=c.getCouponNo() %></td>
@@ -109,9 +111,9 @@
 					                 <td colspan="2"><%=c.getCouponPeriod() %></td>
 				                 	 <td colspan="2">
 						                 <%if(c.getStatus().charAt(0)=='N') {%>
-						                 	미사용
+						                 	사용완료
 					                 	<%}else{ %>
-					                 		사용완료
+					                 		미사용
 					                 	<%} %>
 				                 	</td>
 					             </tr>

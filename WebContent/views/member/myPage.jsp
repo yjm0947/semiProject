@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.member.model.vo.Coupon"%>
-<%
-	ArrayList<Coupon> clist = (ArrayList)session.getAttribute("clist");
-%>
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -231,13 +228,15 @@
 	                    <section id="point_section">
 	                        <table border="1">
 	                        	<tr>
-		                            <th colspan="2">적립금 내역</th>
+		                            <th colspan="2">적립금 사용내역</th>
 		                            <th colspan="2">총 적립금</th>
 	                        	</tr>
+                       	<%for(int i=0; i<plist.size(); i++){ %>
 	                            <tr>
-	                                <td colspan="2">수정해야함 <b>P</b></td>
-	                                <td colspan="2"><%=memPoint %> <b>P</b></td>
+	                                <td colspan="2"><%=-plist.get(i).getUsePoint() %> <b>P</b></td>
+	                                <td colspan="2"><%=memPoint-=plist.get(i).getUsePoint() %> <b>P</b></td>
 	                            </tr>
+                        <%} %>
 	                        </table>
 	                    </section>
 	                </div>

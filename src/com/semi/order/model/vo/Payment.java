@@ -52,12 +52,15 @@ public class Payment {
 		this.usePoint = usePoint;
 	}
 	
-	public Payment(int orderNo, String productNo, String depositName, int payment) {
+	public Payment(int orderNo, String productNo, String depositName, int payment, int deliveryCost, int usePoint, String state) {
 		super();
 		this.orderNo = orderNo;
 		this.productNo = productNo;
 		this.depositName = depositName;
 		this.payment = payment;
+		this.deliveryCost = deliveryCost;
+		this.usePoint = usePoint;
+		this.state = state;
 	}
 	
 	public Payment(int orderNo, String memberNo, String productNo, int payment, String orderRequest, String bankName,

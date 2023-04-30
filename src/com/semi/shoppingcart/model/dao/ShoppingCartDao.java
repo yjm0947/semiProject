@@ -241,7 +241,6 @@ public class ShoppingCartDao {
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("selectUserCart");
-		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, usernum);

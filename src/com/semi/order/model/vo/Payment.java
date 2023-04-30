@@ -3,7 +3,7 @@ package com.semi.order.model.vo;
 import java.sql.Date;
 
 public class Payment {
-	private int paymentNumber;		//PAYMENT_NUMBER NUMBER 결제번호
+	private long paymentNumber;		//PAYMENT_NUMBER NUMBER 결제번호
 	private int orderNo;			//ORDER_NO NUMBER 주문번호
 	private String memberNo;			//MEMBER_NO NUMBER 회원번호
 	private String productNo;		//PRODUCT_NO NUMBER 상품번호
@@ -25,8 +25,13 @@ public class Payment {
 	public Payment() {
 		super();
 	}
+	
+	public Payment(long paymentNumber) {
+		super();
+		this.paymentNumber = paymentNumber;
+	}
 
-	public Payment(int paymentNumber, String memberNo, Date createdAt, int payment, String orderRequest, String bankName,
+	public Payment(long paymentNumber, String memberNo, Date createdAt, int payment, String orderRequest, String bankName,
 			String depositName, String addressName, String post, String roadAddress, String detailAddress, String state,
 			int deliveryCost, int orderNo, String productNo, int usePoint) {
 		this.paymentNumber = paymentNumber;
@@ -76,7 +81,7 @@ public class Payment {
 		this.deliveryCost = deliveryCost;
 	}
 
-	public Payment(int paymentNumber, int orderNo, String memberNo, String productNo, Date createdAt, int payment,
+	public Payment(long paymentNumber, int orderNo, String memberNo, String productNo, Date createdAt, int payment,
 			String orderRequest, String bankName, String depositName, int usePoint, String addressName, String phone,
 			String email, String post, String roadAddress, String detailAddress, String state, int deliveryCost) {
 		super();
@@ -100,11 +105,11 @@ public class Payment {
 		this.deliveryCost = deliveryCost;
 	}
 
-	public int getPaymentNumber() {
+	public long getPaymentNumber() {
 		return paymentNumber;
 	}
 
-	public void setPaymentNumber(int paymentNumber) {
+	public void setPaymentNumber(long paymentNumber) {
 		this.paymentNumber = paymentNumber;
 	}
 

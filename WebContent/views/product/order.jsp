@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- STEP 1 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
@@ -25,6 +26,11 @@
     		count += 1;
     	});
 		count = count - 1;
+		if (count == 0) {
+			name = name;
+		}else{
+			name = name+" 외 "+count+"개";
+		}
 		
 		//가맹점 식별코드
 		IMP.init('imp06731188');
@@ -32,7 +38,7 @@
 			pg : 'html5_inicis',
 			pay_method : 'card',
 			merchant_uid: "order_no_0001", // 상점에서 관리하는 주문 번호를 전달
-			name : name+" 외 "+count+"개",
+			name : name,
 			amount : price,
 			buyer_email : email,
 			buyer_name : userName,
@@ -41,7 +47,32 @@
 			buyer_postcode : post,
 			m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
 		}, function(rsp) { // callback 로직
-					//* ...중략 (README 파일에서 상세 샘플코드를 확인하세요)... *//
+			if ( rsp.success ) {
+				$.ajax({
+					url : "<%=request.getContextPath()%>/completePaymentCard.od",
+					data : {
+						imp_uid: rsp.imp_uid,            // 결제 고유번호
+				    	merchant_uid: rsp.merchant_uid   // 주문번호
+					},
+					type : "post",
+					success: function(){
+						location.replace("<%=request.getContextPath()%>/list.sc");
+					},
+					error : function(){
+						console.log("통신실패");
+					}
+				});
+				
+		        /* var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num; */
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+		    	alert(msg);
+		    }
 		});
 	}
 </script>
@@ -193,6 +224,9 @@
         }
         .book-info{
         	display: inline-block;
+        	margin-left: 20px;
+        	position: relative;
+        	top: -20px;
         }
         .goods_table_price_td{
             text-align: center;
@@ -202,11 +236,38 @@
         }
 
         /* 사용자 정보  */
+        .title-area{
+            font-size: 20px;
+            font-weight: bold;
+            width: 200px;
+            height: 150px;
+            margin-right: 120px;
+        }
+        .detail-area{
+        	width: 70%;
+        }
+        .input-container{
+        	
+        }
+        .title{
+        	float: left;
+        	width: 15%;
+        	align-items: center;
+        }
+        .input-area{
+        	float: left;
+        	width: 85%;
+        	margin-bottom: 10px;
+        }
+        .input-area input{
+        	width: 75%;
+        	height: 40px;
+        }
         .memberInfo_table{
             width: 100%;
             border-spacing: 0;
             border-top: 2px solid #363636;
-            border-bottom: 1px solid #b6b6b6; 
+            /*border-bottom: 1px solid #b6b6b6;*/ 
         }
         .member_info_div td{
             padding : 12px;
@@ -214,10 +275,9 @@
         }
         /* 사용자 주소 정보 */
         .addressInfo_div{
-            margin-top: 30px;
         }
         .addressInfo_input_div_wrap{
-            border-bottom: 1px solid #f3f3f3;
+            /*border-bottom: 1px solid #f3f3f3;*/
             height: 225px;
         }
         .address_btn {
@@ -235,6 +295,9 @@
         .address_btn:hover{
             background-color: #6a8fe0;
         }
+        .addressInfo_button_div{
+        	width: 60%;
+        }
         .addressInfo_button_div button:hover{
             background-color: #a8b6d4;
         }
@@ -248,6 +311,9 @@
 			text-align: left;
 			display: none;
 			line-height: 40px;
+		}
+		.addressInfo_input_div input{
+			width: 430px;
 		}
 		.addressInfo_input_div th{
 			border-color: transparent;
@@ -280,7 +346,7 @@
 
         /* 결제 영역 */
         .payment-frame{
-            margin-top: 400px;
+        	margin-top: 50px;
             margin-bottom: 100px;
             
         }
@@ -305,6 +371,9 @@
 
         .payment_btn:hover{
             background-color: #6a8fe0;
+        }
+        .paymentInfo_button_div{
+        	width: 50%;
         }
         .paymentInfo_button_div button:hover{
             background-color: #a8b6d4;
@@ -344,6 +413,15 @@
             line-height: 30px;
             color: #555;
             cursor: pointer;
+        }
+        .select-value select{
+			width: 435px; 
+		    padding: .8em .5em; 
+		    border: 1px solid #999;
+		    -webkit-appearance: none; 
+		    -moz-appearance: none;
+		    appearance: none;
+		    text-align: center;
         }
     </style>
 </head>
@@ -392,11 +470,11 @@
                         <%for(Order o : list){ %>
                             <tr class="book-data inserted">
                                 <td>
-                                    <div class="book-thumbnail-image"><img src="" width="50"></div>
+                                    <div class="book-thumbnail-image"><img src="<%=contextPath+o.getTitleImg() %>" width="50"></div>
                                     <div class="book-info" id="book-name"><%=o.getProductName() %></div>
                                 </td>
                                 <td>
-                                    <div class="sale-price"><span id="price"><%=o.getPrice()%></span>원</div>
+                                    <div class="sale-price"><span id="price"><input type="hidden" value="<%=o.getPrice()%>"> <fmt:formatNumber value="<%=o.getPrice()%>" pattern="#,###"/></span>원</div>
                                 </td>
                                 <td>
                                     <div class="select-amount">
@@ -421,9 +499,9 @@
                     productNo = productNo.replaceAll(",$", "");
                     %>
                     	<input type="hidden" name="productNum" value="<%=productNo%>">
-                        <div class="title-area">주문자 정보</div>
+                        <div class="title-area" style="float: left;">주문자 정보</div>
                         
-                        <div class="detail-area">
+                        <div class="detail-area" style="float: left;">
                             <div class="input-container">
                                 <div class="title">주문하신 분</div>
                                 <div class="input-area">
@@ -445,17 +523,20 @@
                                 </div>
                             </div>
                         </div>
-                    
+                        
+                        <div class="clearfix" style="border-bottom: 1px solid #e7e7e7;"></div>
+                        
                         <div class="input-frame">
-                            <div class="title-area">배송지 정보</div>
+                            <div class="title-area" style="height: 80px; float: left;">배송지 정보</div>
                             <div class="addressInfo_div">
-                                    <div class="title">배송지</div>
-                                    <div class="addressInfo_button_div">
+                                    <div class="title" style="width: 80px;">배송지</div>
+                                    <div class="addressInfo_button_div" style="float: left;">
                                         <button type="button" class="address_btn address_btn_1" onclick="showAddress('1')" style="background-color: #365fdd;">기본 주소</button>
                                         <button type="button" class="address_btn address_btn_2" onclick="showAddress('2')">새로운 주소</button>
                                     </div>
+                                    <div class="clearfix"></div>
                                     <div class="addressInfo_input_div_wrap">
-                                        <div class="addressInfo_input_div addressInfo_input_div_1" style="display: block;">
+                                        <div class="addressInfo_input_div addressInfo_input_div_1" style="display: block; position: relative; left: 310px;">
                                             
                                             <div class="input-container">
                                                 <div class="title">받으시는 분</div>
@@ -481,9 +562,9 @@
                                             <div class="input-container">
                                                 <div class="title">주소</div>
                                                 <div class="input-area with-right-button">
-													<input type="text" id="sample4_postcode" placeholder="우편번호" disabled="disabled">
-													<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-													<input type="text" id="sample4_roadAddress" placeholder="도로명주소" size="60" ><br>
+													<input type="text" id="sample4_postcode" placeholder="우편번호" disabled="disabled" style="width: 320px; margin-bottom: 10px;">
+													<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" style="width: 100px;"><br>
+													<input type="text" id="sample4_roadAddress" placeholder="도로명주소" size="60" style="margin-bottom: 10px;"><br>
 													<input type="hidden" id="sample4_jibunAddress" placeholder="지번주소" size="60">
 													<span id="guide" style="color:#999;display:none"></span>
 													<input type="text" id="sample4_detailAddress" placeholder="상세주소" size="60"><br>
@@ -493,7 +574,7 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="input-container">
+                                            <div class="input-container" style="position: relative; top: -40px;">
                                                 <div class="title">배송메세지</div>
                                                 <div class="input-area">
                                                     <input class="input-element input-msg" name="deliveryMsg" maxlength="300" placeholder="배송메세지를 입력해주세요." id="input-12">
@@ -501,8 +582,8 @@
                                             </div>
 
                                         </div>
-
-                                        <div class="addressInfo_input_div addressInfo_input_div_2">
+										<%------------------------ 새로운 주소 --------------------------%>
+                                        <div class="addressInfo_input_div addressInfo_input_div_2" style="position: relative; left: 310px;">
                                             
                                             <div class="input-container">
                                                 <div class="title">받으시는 분</div>
@@ -528,9 +609,9 @@
                                             <div class="input-container">
                                                 <div class="title">주소</div>
                                                 <div class="input-area with-right-button">
-													<input type="text" id="sample5_postcode" placeholder="우편번호" disabled="disabled">
-													<input type="button" onclick="sample5_execDaumPostcode()" value="우편번호 찾기"><br>
-													<input type="text" id="sample5_roadAddress" placeholder="도로명주소" size="60" ><br>
+													<input type="text" id="sample5_postcode" placeholder="우편번호" disabled="disabled" style="width: 320px; margin-bottom: 10px;">
+													<input type="button" onclick="sample5_execDaumPostcode()" value="우편번호 찾기"style="width: 100px;"><br>
+													<input type="text" id="sample5_roadAddress" placeholder="도로명주소" size="60" style="margin-bottom: 10px;"><br>
 													<input type="hidden" id="sample5_jibunAddress" placeholder="지번주소" size="60">
 													<span id="guide" style="color:#999;display:none"></span>
 													<input type="text" id="sample5_detailAddress" placeholder="상세주소" size="60"><br>
@@ -540,7 +621,7 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="input-container">
+                                            <div class="input-container" style="position: relative; top: -40px;">
                                                 <div class="title">배송메세지</div>
                                                 <div class="input-area">
                                                     <input class="input-element input-msg" name="deliveryMsg" maxlength="50" placeholder="배송메세지를 입력해주세요." id="input-16">
@@ -554,30 +635,30 @@
                                 </div>
 
                         </div>
-                    
+                        <div class="clearfix" style="border-bottom: 1px solid #e7e7e7;"></div>
+                        
                     <div class="payment-frame">
-                        <div class="title-area">결제정보</div>
-                        <div class="detail-area">
-                            <div class="paymentInfo_point_div">
+                        <div class="title-area" style="height: 80px; float: left;">결제정보</div>
+                        <div class="detail-area" style="margin-bottom: 10px;">
+                            <div class="paymentInfo_point_div" style="width: 100%;">
                                     <div class="title">포인트 사용</div>
-                                    <input type="number" class="input-element" name="inputPoint" id="input-point" value="0">
+                                    <input type="number" class="input-element" name="inputPoint" id="input-point" value="0" style="width: 100px; height: 30px; text-align: right; font-size: 16px; margin-left: 50px;">
                                     	보유 포인트 <span id="userPoint"><%=loginUser.getMemberPoint() %></span>원
                                 </div>
                             </div>
-                        <div class="detail-area">
-                            <div class="paymentInfo_button_div">
-                                    <div class="title">결제수단</div>
+                            <div class="title" style="width: 80px; margin-right: 80px;">결제수단</div>
+                            	<div class="paymentInfo_button_div" style="float: left;">
                                     <button type="button" class="payment_btn payment_btn_1" onclick="showPayment('1')" style="background-color: #365fdd;">무통장 입금</button>
                                     <button type="button" class="payment_btn payment_btn_2" onclick="showPayment('2')">신용카드</button>
                                 </div>
-                            </div>
-                            <div class="addressInfo_input_div_wrap">
+                            <div class="clearfix"></div>
+                            <div class="addressInfo_input_div_wrap" style="position: relative; left: 310px;">
                             <div class="paymentInfo_input_div paymentInfo_input_div_1" style="display: block;">
 
                                 <div class="title">입금자명</div>
                                 <div class="input-area">
                                     <div class="form-field-flex">
-                                        <input class="input-element" name="inputName" placeholder="입금자명을 입력해주세요." id="input-17">
+                                        <input class="input-element" name="inputName" placeholder="입금자명을 입력해주세요." id="input-17" style="width: 430px;">
                                         <span class="form-field-label-wrapper"></span>
                                     </div>
                                 </div>
@@ -602,7 +683,6 @@
                                 
                             </div>
                           </div>
-                            
                         </div>
                         <div hidden>
 					        <input type="checkbox" name="selectChk" checked="checked" id="sc1" >
@@ -931,7 +1011,7 @@
     		// 총 갯수
     		totalCount += parseInt($(element).find(".count-box").text());
     		// 총 가격
-    		indPrice = (parseInt($(element).find("#price").text()))*(parseInt($(element).find(".count-box").text()));
+    		indPrice = (parseInt($(element).find("#price").children("input[type=hidden]").val()))*(parseInt($(element).find(".count-box").text()));
     		totalPrice += indPrice;
     		// 총 종류
     		totalKind += 1;

@@ -58,17 +58,17 @@ public class BookNewController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
 		
 //		System.out.println("겟 옴..");
-		String cate = request.getParameter("cate");
+//		String cate = request.getParameter("cate");
 //		System.out.println(cate);
 		
 		ArrayList<Product> list = null;
 		
 		//페이지에 보여질 게시글 리스트
-		if(cate==null) {
+//		if(cate==null) {
 			list = new ProductService().selectNewAttachList(pi);
-		}else {
-			list = new ProductService().selectAttachmentCList(pi,cate);
-		}
+//		}else {
+//			list = new ProductService().selectAttachmentCList(pi,cate);
+//		}
 //		System.out.println(list);
 		
 		request.setAttribute("list", list);

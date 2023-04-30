@@ -29,15 +29,25 @@ public class QnainsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("포스트 옴");
+		
+		String boardTitle = request.getParameter("boardTitle");
+		String boardContent = request.getParameter("boardContent");
+		
+		System.out.println(boardTitle);
+		System.out.println(boardContent);
+		String memberNo = request.getParameter("mamberNo");
+		System.out.println(memberNo);
+		
+		request.getRequestDispatcher("views/board/mainQna.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		
+		//상품 페이지 상에서 상품 qna 등록
 		String memberNo = request.getParameter("memberNo");
 		int productNo = Integer.parseInt(request.getParameter("productNo"));
 		String boardTitle = request.getParameter("boardTitle");
@@ -52,6 +62,7 @@ public class QnainsertController extends HttpServlet {
 		int result = new BoardService().insertQna(b);
 		
 		response.getWriter().print(result);
+		
 	}
 
 }

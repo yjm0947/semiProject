@@ -335,7 +335,7 @@ public class ProductDao {
 		return list;
 	}
 	
-	//도서 총 게시글 수
+	//도서 총 게시글
 	public int selectListCount(Connection conn) {
 		
 		int listCount = 0;
@@ -362,9 +362,10 @@ public class ProductDao {
 		}
 		
 		return listCount;
-	}
+		}
 	
-	//카테고리별 도서 총 게시물 수
+
+		//카테고리별 도서 총 게시물 수
 	public int selectCListCount(Connection conn, String cate) {
 		
 		int listCount = 0;
@@ -392,9 +393,82 @@ public class ProductDao {
 		}
 		
 		return listCount;
-	}
+		}
+		
+		//검색 도서 리스트 수
+		public int searchCount(Connection conn, String search) {
+			
+			int listCount = 0;
+			ResultSet rset = null;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("searchCount");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, search);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					listCount = rset.getInt("COUNT");
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return listCount;
+			}
 	
-	//상품 총 게시글 수
+		//검색한 도서 리스트
+		public ArrayList<Product> searchBook(Connection conn, String search, PageInfo pi) {
+			
+			ArrayList<Product> list = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("searchBook");
+	
+			try {
+				int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit()+1;
+				int endRow = (startRow+pi.getBoardLimit())-1;
+				
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, search);
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Product(rset.getInt("PRODUCT_NO")
+										,rset.getString("PRODUCT_CATEGORY")
+										,rset.getString("PRODUCT_NAME")
+										,rset.getString("PRODUCT_PUBLISHER")
+										,rset.getString("PRODUCT_TEXT")
+										,rset.getInt("PRODUCT_PRICE")
+										,rset.getInt("PRODUCT_SALES_RATE")
+										,rset.getString("AUTHOR")
+										,rset.getDate("CREATE_DATE")
+										,rset.getString("titleImg")));
+				}
+	
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return list;
+		}
+
+		//상품 총 게시글 수
 		public int selectProListCount(Connection conn) {
 			
 			int listCount = 0;
@@ -745,5 +819,4 @@ public class ProductDao {
 			}
 			return rel;
 		}	
-
 }

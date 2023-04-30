@@ -51,15 +51,11 @@ public class ShoppingListController extends HttpServlet {
 		
 		ArrayList<Payment> plist = new MemberService().selectModal(orderNo);
 		
-//		System.out.println(plist.get(0).getOrderNo());
-//		if(plist.get(0).getOrderNo() == orderNo) {
-//			System.out.println("같슈");
-//		}
-		
 		response.setContentType("json/application; charset=UTF-8");
 		Gson gson = new Gson();
 		
 		Payment p = null;
+		
 		if(plist.get(0).getOrderNo() == orderNo) {
 			for(int i=0; i<plist.size(); i++) {
 				p = plist.get(i);

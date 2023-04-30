@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.semi.member.model.service.MemberService;
 import com.semi.member.model.vo.Coupon;
@@ -39,7 +40,9 @@ public class MypageConteroller extends HttpServlet {
 		
 		ArrayList<Coupon> clist = new MemberService().selectCoupon(memNo);
 		
-		request.setAttribute("clist", clist);
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("clist", clist);
 		request.getRequestDispatcher("views/member/myPage.jsp").forward(request, response);
 		
 	}

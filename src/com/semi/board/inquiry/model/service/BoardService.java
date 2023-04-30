@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import com.semi.board.inquiry.model.dao.BoardDao;
 import com.semi.board.inquiry.model.vo.Board;
 import com.semi.common.JDBCTemplate;
+import com.semi.common.vo.PageInfo;
+import com.semi.product.model.dao.ProductDao;
 import com.semi.product.model.vo.Attachment;
+import com.semi.product.model.vo.Product;
 
 public class BoardService {
 
@@ -271,5 +274,56 @@ public class BoardService {
 		
 		return result;
 	}
+
+	//메인 페이지에서 보여줄 공지사항 갯수
+	public int MainNotice() {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectNoticeList(conn);
+		
+		int listCount = list.size();
+		
+		JDBCTemplate.close(conn);
+		
+		return listCount;
+	}
+
+	//페이징처리한 공지사항 목록 조회
+	public ArrayList<Board> selectMainNotice(PageInfo pi) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Board> list = new BoardDao().mainMainNotice(conn,pi);
+		
+		JDBCTemplate.close(conn);
+		
+		return list;
+	}
+
+	//메인 공지사항 디테일
+	public Board NoticeDetail(int bno) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		Board b = new BoardDao().detailBoardAdmin(conn,bno);
+		
+		JDBCTemplate.close(conn);
+		
+		return b;
+	}
+
+	//메인페이지 Faq 조회
+	public ArrayList<Board> MainFaq() {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Board> b = new BoardDao().selectFaqAdmin(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return b;
+	}
+
 
 }

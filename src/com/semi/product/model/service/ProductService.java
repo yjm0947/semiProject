@@ -3,6 +3,7 @@ package com.semi.product.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.semi.board.inquiry.model.vo.Board;
 import com.semi.board.review.model.vo.Review;
 import com.semi.common.JDBCTemplate;
 import com.semi.common.vo.PageInfo;
@@ -74,6 +75,30 @@ public class ProductService {
 		return list;
 	}
 	
+		//도서 검색시 보여줄 리스트 수
+		public int searchCount(String search) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int listCount = new ProductDao().searchCount(conn,search);
+			
+			JDBCTemplate.close(conn);
+			
+			return listCount;
+		}
+		
+		//도서 검색
+		public ArrayList<Product> searchBook(String search, PageInfo pi) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> list = new ProductDao().searchBook(conn,search,pi);
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
+		}
+		
 	//베스트 도서 리스트 조회(출고순)
 	public ArrayList<Product> selectBestAttachList(PageInfo pi) {
 
@@ -160,7 +185,7 @@ public class ProductService {
 		return listCount;
 	}
 
-		//도서,상품 상세 페이지
+	//도서,상품 상세 페이지
 	public Product productDetail(int pno) {
 		
 		Connection conn = JDBCTemplate.getConnection();

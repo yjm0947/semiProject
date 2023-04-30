@@ -75,7 +75,8 @@ public class OrderDao {
 								  ,rset.getString("PHONE")
 								  ,rset.getString("EMAIL")
 								  ,rset.getString("ADDRESS")
-								  ,rset.getInt("MEMBER_POINT")));
+								  ,rset.getInt("MEMBER_POINT")
+								  ,rset.getString("TITLE_IMG")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -107,13 +108,12 @@ public class OrderDao {
 			pstmt.setString(7, p.getDepositName());
 			pstmt.setInt(8, p.getUsePoint());
 			pstmt.setString(9, p.getAddressName());
-			pstmt.setString(10, p.getPost());
-			pstmt.setString(11, p.getRoadAddress());
-			pstmt.setString(12, p.getDetailAddress());
-			pstmt.setInt(13, p.getDeliveryCost());
-			pstmt.setString(14, p.getPhone());
-			pstmt.setString(15, p.getEmail());
-
+			pstmt.setString(10, p.getPhone());
+			pstmt.setString(11, p.getEmail());
+			pstmt.setString(12, p.getPost());
+			pstmt.setString(13, p.getRoadAddress());
+			pstmt.setString(14, p.getDetailAddress());
+			pstmt.setInt(15, p.getDeliveryCost());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -189,6 +189,53 @@ public class OrderDao {
 		}
 	
 		return result;
+	}
+
+	//주문 완료시 주문목록 상태 변경
+	public int completeOrder(Connection conn, String userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("completeOrder");
+		
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, userNo);
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+		return result;
+	}
+
+	//주문완료 페이지 메소드
+	public String paymentSelect(Connection conn, int orderNo) {
+		String p = "";
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("paymentSelect");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				p = rset.getString("PAYMENT_NUMBER");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return p;
 	}
 
 }

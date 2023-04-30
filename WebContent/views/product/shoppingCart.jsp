@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <style>
 	.basketdiv {
 	    width: 1100px;
@@ -253,7 +253,7 @@
 	    <input type="hidden" name="cmd" value="order">
 	    <div class="basketdiv" id="basket" style="margin: auto;">
 	        <div class="row head" >
-	            <div class="subdiv">
+	            <div class="subdiv" style="height: 64px;">
 	                <div class="check" style="width: 70px;"><input type="checkbox" id="allchk" value="260" checked="" onclick="javascript:basket.checkAllItem();">&nbsp;&nbsp;<label for="allchk">전체</label></div>
 	                
 	                <div class="pname">상품명</div>
@@ -263,25 +263,24 @@
 	                <div class="num">수량</div>
 	                <div class="sum">합계<br>(할인가)</div>
 	            </div>
-	            <div class="subdiv">
-	
+	            <div class="subdiv" style="height: 64px;">
 	                <div class="basketcmd">삭제</div>
 	            </div>
 	            <div class="split"></div>
 	        </div>
 			<%if(scList!=null && scList.isEmpty()){ %>
 		        <div class="row data" style="display: flex; justify-content: center; margin: 50px 0;">
-					<h3>장바구니에 상품이 없습니다.</h3>
+					<h3 style="position: relative; top: -20px;">장바구니에 상품이 없습니다.</h3>
 				</div>
 	        <%}else{int i = 1; %> 
 	            <%for(ShoppingCart sc : scList){ %>
-	            	<div class="row data">
+	            	<div class="row data" style="height: 120px;">
 			            <div class="subdiv">
-			                <div class="check"><input type="checkbox" name="buy" checked="" onclick="javascript:basket.checkItem();">&nbsp;<input type="hidden" id="product<%=i%>" value="<%=sc.getProductNo()%>"></div>
-			                <div class="img"><img src="<%=contextPath+sc.getTitleImg() %>" width="50"></div>
-			                <div class="pname"><span><%=sc.getBookName() %></span></div>
+			                <div class="check" style="position: relative; top: -10px;"><input type="checkbox" name="buy" checked="" onclick="javascript:basket.checkItem();">&nbsp;<input type="hidden" id="product<%=i%>" value="<%=sc.getProductNo()%>"></div>
+			                <div class="img"><img src="<%=contextPath+sc.getTitleImg() %>" width="50" height="50" style="position: relative; top: 0px; left: -20px;"></div>
+			                <div class="pname" style="position: relative; top: 10px;"><span><%=sc.getBookName() %></span></div>
 			            </div>
-			            <div class="subdiv">
+			            <div class="subdiv" style="position: relative; left: 20px;">
 			                <div class="basketprice"><input type="hidden" name="p_price" id="p_price1" class="p_price" value="<%=sc.getBookPrice()%>"><span style="text-decoration: line-through;"><fmt:formatNumber value="<%=sc.getBookPrice() %>" pattern="#,###"/>원</span>(<%=(int)(sc.getBookDc())%>%)</div>
 			                <div class="num">
 			                	<input type="hidden" id="bookDc" value="<%=sc.getBookDc()%>">
@@ -294,8 +293,8 @@
 			                </div>
 			                <div class="sum"><fmt:formatNumber value="<%=sc.getTotalPrice() %>" pattern="#,###"/>원</div>
 			            </div>
-			            <div class="subdiv">
-			                <div class="basketcmd"><a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delItem();">삭제</a><input type="hidden" id="productnum3" value="<%=sc.getProductNo()%>"></div>
+			            <div class="subdiv" style="position: relative; left: 30px;">
+			                <div class="basketcmd"><a href="javascript:void(0)" class="btn btn-outline-secondary" onclick="javascript:basket.delItem();">삭제</a><input type="hidden" id="productnum3" value="<%=sc.getProductNo()%>"></div>
 			            </div>
 	            		<input type="hidden" id="productNo" value="<%=sc.getProductNo()%>">
 	            		<input type="hidden" id="usernum" value="<%=loginUser.getMemberNo()%>">
@@ -303,13 +302,13 @@
 			        
             	<%i++;} %>
             	<div class="basketrowcmdall" style="width: 100px;">
-            	    <div class="right-align basketrowcmd" style="clear: both; width: 1200px; display: inline-block; margin-top: 30px;">
-			        <a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delCheckedItem();">선택상품삭제</a>
-			        <a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delAllItem();">장바구니비우기</a>
+            	    <div class="left-align basketrowcmd" style=" width: 350px; display: inline-block; margin-top: 10px;">
+			        <a href="javascript:void(0)" class="btn btn-outline-secondary" onclick="javascript:basket.delCheckedItem();">선택상품삭제</a>
+			        <a href="javascript:void(0)" class="btn btn-outline-secondary" onclick="javascript:basket.delAllItem();">장바구니비우기</a>
 				    </div>
-				
-				    <div class="bigtext right-align sumcount" id="sum_p_num" style="width: 1200px; display: inline-block;">상품갯수: 0개</div>
-				    <div class="bigtext right-align box blue summoney" id="sum_p_price" style="width: 1200px; display: inline-block;">합계금액: 0원</div>
+					
+				    <div class="bigtext right-align sumcount" id="sum_p_num" style="width: 1200px; display: inline-block; position: relative; top: -60px;">상품갯수: 0개</div>
+				    <div class="bigtext right-align box blue summoney" id="sum_p_price" style="width: 1200px; display: inline-block; position: relative; top: -60px;">합계금액: 0원</div>
 				</div>
             <%} %>
 	    </div>
@@ -328,7 +327,6 @@
 		totalCount: 0, 
 		totalPrice: 0,
 
-	    //체크두번
 	    //체크한 장바구니 상품 비우기
 	    delCheckedItem: function(){
 	    	var productNums = [];

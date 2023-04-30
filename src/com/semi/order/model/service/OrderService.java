@@ -90,7 +90,78 @@ public class OrderService {
 		JDBCTemplate.close(conn);
 	}
 
-	//주문 완료시 주문목록 상태 변경
+	//주문관리 리스트(관리자)
+	public ArrayList<Payment> selectOrderAdmin() {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Payment> list = new OrderDao().selectOrderAdmin(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return list;
+	}
+
+	//주문관리 상세조회 (관리자)
+	public Payment detailOrderAdmin(int ono) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+			
+		Payment pay = new OrderDao().detailOrderAdmin(conn,ono);
+		
+		JDBCTemplate.close(conn);
+		
+		return pay;
+	}
+
+	//주문번호로 회원조회(관리자) - 적립금
+	public int chkMemberNoAdmin(int orderNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int memberNo = new OrderDao().chkMemberNoAdmin(conn,orderNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return memberNo;
+	}
+
+	//결제상태 변경(관리자) - 'Y'
+	public int chkPayUpdateAdmin(int orderNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new OrderDao().chkPayUpdateAdmin(conn,orderNo);
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	//결제상태 변경(관리자) - 'S'
+	public int chkPayUpdate2Admin(int orderNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new OrderDao().chkPayUpdate2Admin(conn,orderNo);
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+		
+}	//주문 완료시 주문목록 상태 변경
 	public void completeOrder(String userNo) {
 		Connection conn = JDBCTemplate.getConnection();
 		int result = new OrderDao().completeOrder(conn,userNo);

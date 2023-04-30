@@ -29,14 +29,22 @@
 		</div>
 		<div class="middle">
 			<div id="mid_search">
-				<form action="<%=contextPath%>/searchNotice.admin" method="get">
+				<form action="<%=contextPath%>/searchNotice.admin" method="get" onsubmit="return blankSearch()">
 					<select name="ms_select" id="ms_select">
 						<option value="1">게시글 번호</option>
-						<option value="2">제목</option>
+						<option value="2">제목+내용</option>
 					</select>
 						<input type="search" name="memberSearch" id="memberSearch">
 						<button type="submit" id="ms_img"></button>
 				</form>
+				<script>
+					function blankSearch(){
+						if($("#memberSearch").val().length == 0){
+							alert("다시 입력해주시길 바랍니다.");
+							return false;
+						}
+					};
+				</script>
 			</div>
 			<div id="noticeBtn">
 				<button onclick="location.href='<%=contextPath%>/insertNotice.admin'">공지사항 등록</button>
@@ -207,7 +215,6 @@
 					});
 					
 					//결과에 따른 조회값 뿌리기 (모달 상세조회)
-						console.log("ajax밖" + bno);
 					$.ajax({
 						
 						
@@ -216,9 +223,7 @@
 						type : "get",
 						
 						success : function(result){
-							console.log($(".modal_body").children().children().eq(0).text());
 							$(".modal_body").children().children().eq(0).text(result.boardNo);
-							console.log("success : " + $(".modal_body").children().children().eq(0).text());
 							$(".modal_body").children().children().eq(1).text(result.memberNo);
 							$(".modal_body").children().children().eq(2).text(result.boardTitle);
 							$("#noticeText").text(result.boardContent);

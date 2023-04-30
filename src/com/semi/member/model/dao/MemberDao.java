@@ -863,5 +863,51 @@ public class MemberDao {
 			return list;
 		}
 
+		//결제한 회원 적립금 올려주기(관리자)
+		public int upPointAdmin(Connection conn, int memberNo, int pay) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("upPointAdmin");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pay);
+				pstmt.setInt(2, memberNo);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally{
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return result;
+		}
+
+		//결제한 회원 적립금 회수하기(관리자)
+		public int downPointAdmin(Connection conn, int memberNo, int pay) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("downPointAdmin");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pay);
+				pstmt.setInt(2, memberNo);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally{
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return result;
+		}
+
 
 }

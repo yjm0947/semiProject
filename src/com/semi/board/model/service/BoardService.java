@@ -275,4 +275,28 @@ public class BoardService {
 		
 		return list;
 	}
+
+	//1:1문의 키워드 검색 리스트
+	public ArrayList<Board> searchInquireAdmin(int num, String search) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Board> list = new BoardDao().searchInquireAdmin(conn,num,search);
+		
+		JDBCTemplate.close(conn);
+		
+		return list;
+	}
+
+	//FAQ 키워드 검색 리스트
+	public ArrayList<Board> searchFaqAdmin(int num, String search) {
+		
+		 Connection conn = JDBCTemplate.getConnection();
+		 
+		 ArrayList<Board> list = new BoardDao().searchFaqAdmin(conn,num,search);
+		
+		 JDBCTemplate.close(conn);
+		 
+		return list;
+	}
 }

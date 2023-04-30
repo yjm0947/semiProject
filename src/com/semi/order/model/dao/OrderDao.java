@@ -191,6 +191,150 @@ public class OrderDao {
 		return result;
 	}
 
+	//주문관리 리스트(관리자)
+	public ArrayList<Payment> selectOrderAdmin(Connection conn) {
+		
+		ArrayList<Payment> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectOrderAdmin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Payment(rset.getInt("ORDER_NO")
+									,rset.getString("MEMBER_NAME")
+									,rset.getDate("CREATED_AT")
+									,rset.getInt("PAYMENT")
+									,rset.getString("ORDER_REQUEST")
+									,rset.getString("ADDRESS_NAME")
+									,rset.getString("ROAD_ADDRESS")
+									,rset.getString("DETAIL_ADDRESS")
+									,rset.getString("CHECK_PAY")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	//주문관리 상세조회 (관리자)
+	public Payment detailOrderAdmin(Connection conn, int ono) {
+		
+		Payment pay = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("detailOrderAdmin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ono);
+			rset = pstmt.executeQuery();
+					
+			if(rset.next()) {
+				pay = new Payment(rset.getInt("ORDER_NO")
+							 	 ,rset.getString("MEMBER_NAME")
+							 	 ,rset.getString("PRODUCT_NAME")
+							 	 ,rset.getDate("CREATED_AT")
+							 	 ,rset.getInt("PAYMENT")
+							 	 ,rset.getString("ORDER_REQUEST")
+							 	 ,rset.getString("BANK_NAME")
+							 	 ,rset.getString("DEPOSIT_NAME")
+							 	 ,rset.getInt("USE_POINT")
+							 	 ,rset.getString("ADDRESS_NAME")
+							 	 ,rset.getString("PHONE")
+							 	 ,rset.getString("EMAIL")
+							 	 ,rset.getString("ROAD_ADDRESS")
+							 	 ,rset.getString("DETAIL_ADDRESS")
+							 	 ,rset.getInt("DELIVERY_COST")
+							 	,rset.getString("CHECK_PAY"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return pay;
+	}
+
+	//주문번호로 회원조회(관리자) - 적립금
+	public int chkMemberNoAdmin(Connection conn, int orderNo) {
+		int memberNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("chkMemberNoAdmin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				memberNo = rset.getInt("MEMBER_NO");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return memberNo;
+	}
+
+	//결제상태 변경(관리자) - 'Y'
+	public int chkPayUpdateAdmin(Connection conn, int orderNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("chkPayUpdateAdmin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	//결제상태 변경(관리자) - 'S'
+	public int chkPayUpdate2Admin(Connection conn, int orderNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("chkPayUpdate2Admin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, orderNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+}
 	//주문 완료시 주문목록 상태 변경
 	public int completeOrder(Connection conn, String userNo) {
 		int result = 0;

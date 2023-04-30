@@ -268,5 +268,39 @@ public class ProductService {
 			return item;
 		}
 
+		//입고조회 리스트
+		public ArrayList<Product> selectReceiveAdmin() {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> list = new ProductDao().selectReceiveAdmin(conn);
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
+		}
 
+		//출고조회 리스트
+		public ArrayList<Product> selectReleaseAdmin() {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> list = new ProductDao().selectReleaseAdmin(conn);
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
+		}
+
+		//출고량 추출
+		public int relAdminProduct() {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int rel = new ProductDao().relAdminProduct(conn);
+			
+			JDBCTemplate.close(conn);
+			
+			return rel;
+		}
 }

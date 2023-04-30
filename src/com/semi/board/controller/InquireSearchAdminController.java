@@ -1,4 +1,4 @@
-package com.semi.product.controller;
+package com.semi.board.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.product.model.service.ProductService;
-import com.semi.product.model.vo.Product;
+import com.semi.board.model.service.BoardService;
+import com.semi.board.model.vo.Board;
 
 /**
- * Servlet implementation class receiveController
+ * Servlet implementation class InquireSearchAdminController
  */
-@WebServlet("/receive.admin")
-public class ReceiveAdminController extends HttpServlet {
+@WebServlet("/searchInquire.admin")
+public class InquireSearchAdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReceiveAdminController() {
+    public InquireSearchAdminController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,10 +32,18 @@ public class ReceiveAdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<Product> list = new ProductService().selectReceiveAdmin();
-
-		request.setAttribute("list", list);
-		request.getRequestDispatcher("views/admin_items/adminReceive.jsp").forward(request, response);
+		int num = Integer.parseInt(request.getParameter("ms_select"));
+		String search = request.getParameter("memberSearch");
+		
+		ArrayList<Board> list = new BoardService().searchInquireAdmin(num,search);
+		
+		if(list.isEmpty()) {
+			request.getSession().setAttribute("alertMsg", "해당하는 문의가 없습니다.");
+			response.sendRedirect(request.getContextPath()+"/inquire.admin");
+		}else {
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("views/admin_board/adminInquire.jsp").forward(request, response);
+		}
 		
 	}
 

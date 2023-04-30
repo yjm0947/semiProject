@@ -147,15 +147,25 @@
 			                            <th colspan="3">혜택</th>
 			                            <th colspan="3">유효기간</th>
 		                            </tr>
-		                   		 <%for(Coupon c : clist){  %>	
-		                   		 	<%if(c.getStatus().charAt(0)=='N') {%>			
+	                            <%if(clist.isEmpty()) {%>
 		                            <tr>
-		                                <td colspan="3"><%=c.getCouponName() %></td>
-		                                <td colspan="3"><%=c.getCouponDc() %></td>
-		                                <td colspan="3"><%=c.getCouponSdate() %> ~ <%=c.getCouponPeriod() %></td>
-		                            </tr>
-		                            <%} %>
-	                    		<%}%>
+		                                <td colspan="9">
+		                                    <i class="fa-solid fa-circle-exclamation"></i>
+		                                    <h4>사용 가능한 쿠폰이 없습니다.</h4>
+		                                </td>
+	                            	</tr>
+	                           	<%}else {%>
+			                   		<%for(Coupon c : clist){  %>	
+			                   		 	<%if(c.getStatus().charAt(0)=='N') {%>			
+				                            <tr>
+				                                <td colspan="3"><%=c.getCouponName() %></td>
+				                                <td colspan="3"><%=c.getCouponDc() %>%</td>
+				                                <td colspan="3"><%=c.getCouponSdate() %> ~ <%=c.getCouponPeriod() %></td>
+				                            </tr>
+			                            <%}%>
+		                            	
+	                            	<%} %>
+	                    		<%} %>
 		                        </table>
 		                    </section>
 	                    <section id="unavailable_cont">
@@ -165,6 +175,14 @@
 	                                <th colspan="3">혜택</th>
 	                                <th colspan="3">유효기간</th>
 	                            </tr>
+	                           <%if(clist.isEmpty()) {%>
+	                            <tr>
+	                                <td colspan="9">
+	                                    <i class="fa-solid fa-circle-exclamation"></i>
+	                                    <h4>사용 만료된 쿠폰이 없습니다.</h4>
+	                                </td>
+	                           	</tr>
+	                          	<%}else {%>
 	                             <%for(Coupon c : clist){  %>	
 		                   		 	<%if(c.getStatus().charAt(0)=='Y') {%>			
 		                            <tr>
@@ -174,6 +192,7 @@
 		                            </tr>
 		                            <%} %>
 	                    		<%}%>
+	                   		<%} %>
 	                        </table>
 	                    </section>
 	                </div>
@@ -183,27 +202,25 @@
 	
 	                    <section id="point_section">
 	                        <table border="1">
-	                            <th colspan="2">적립 날짜</th>
-	                            <th colspan="3">내용</th>
-	                            <th colspan="3">유효기간</th>
-	                            <th colspan="2">적립 마일리지</th>
-	                            <th colspan="2">총 마일리지</th>
-                            <%if(memPoint == 0) {%>
-                            	<tr>
+	                        	<tr>
+		                            <th colspan="2">적립 날짜</th>
+		                            <th colspan="2">적립 마일리지</th>
+		                            <th colspan="2">총 마일리지</th>
+	                        	</tr>
+	                       	<%if(memPoint == 0) {%>
+	                           	<tr>
 	                                <td colspan="12">
 	                                    <i class="fa-solid fa-circle-exclamation"></i>
 	                                    <h4>사용 가능한 적립금이 없습니다.</h4>
 	                                </td>
-                            	</tr>
-                            <%}else {%>
+	                           	</tr>
+	                           <%}else {%>
 	                            <tr>
 	                                <td colspan="2">2023/03/01</td>
-	                                <td colspan="3">도서 3권 구매</td>
-	                                <td colspan="3">2023/03/01 ~ 2023/04/01</td>
-	                                <td colspan="2">30</td>
-	                                <td colspan="2">1030</td>
+	                                <td colspan="2">30 <b>P</b></td>
+	                                <td colspan="2">1030 <b>P</b></td>
 	                            </tr>
-                            <%} %>
+	                           <%} %>
 	                        </table>
 	                    </section>
 	                </div>

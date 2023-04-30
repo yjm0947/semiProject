@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.semi.member.model.vo.Member"%>
 <%
+	String contextPath2 = request.getContextPath();
 	Member loginMem = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
@@ -83,7 +84,15 @@
 <body>
 	<%
 		String memberName = loginMem.getMemberName();
-		int memRole = loginMem.getMemberRole();
+		String memRole = "";
+		memRole = String.valueOf(loginMem.getMemberRole());
+		
+		switch(memRole){
+		case "1" : memRole = "베이직"; break;
+		case "2" : memRole = "실버"; break;
+		case "3" : memRole = "골드"; break;
+		case "4" : memRole = "VIP"; break;
+		}
 	%>
 	<div class="wrap">
 		<div id="content">
@@ -92,11 +101,11 @@
 	                    <div id="benefit_wrapper">
 	                        <div id="coupon">
 	                            <i class="fa-solid fa-coins"></i> <br>
-	                            <a href="">0</a>
+	                            <a href="<%=contextPath2 %>/myCouponList.me">0</a>
 	                        </div>
 	                        <div id="point">
 	                            <i class="fa-solid fa-ticket"></i> <br>
-	                            <a href="">0</a> 
+	                            <a href="<%=contextPath2 %>/myPointList.me">0</a> 
 	                        </div>
 	                    </div>
 	                </div>

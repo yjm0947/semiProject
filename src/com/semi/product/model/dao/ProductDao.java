@@ -485,6 +485,44 @@ public class ProductDao {
 		}
 		return p2;
 	}
+	
+	//메인페이지 베스트 도서 4개
+	public ArrayList<Product> selectBestAttachList(Connection conn) {
+			
+			ArrayList<Product> list = new ArrayList<>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("mainBestBook");
+	
+			try {
+				stmt = conn.createStatement();
+				
+				rset = stmt.executeQuery(sql);
+				
+				while(rset.next()) {
+					list.add(new Product(rset.getInt("PRODUCT_NO")
+							,rset.getString("PRODUCT_CATEGORY")
+							,rset.getString("PRODUCT_NAME")
+							,rset.getString("PRODUCT_PUBLISHER")
+							,rset.getString("PRODUCT_TEXT")
+							,rset.getInt("PRODUCT_PRICE")
+							,rset.getInt("PRODUCT_SALES_RATE")
+							,rset.getString("AUTHOR")
+							,rset.getDate("CREATE_DATE")
+							,rset.getString("titleImg")));
+				}
+	
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(stmt);
+			}
+			return list;
+			
+		}	
 
 	//메인페이지 신간 도서 리스트 4개
 	public ArrayList<Product> newBookList(Connection conn) {

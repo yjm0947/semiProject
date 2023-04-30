@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.semi.member.model.vo.Member"%>
 <%
 	///SemiProject 
 	String contextPath1 = request.getContextPath();
-	
+	Member loginMember = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -84,7 +84,7 @@
 	                <div id="pro_img">
 	                    <img src="resources/profile_img.jpg">
 	                </div>
-	                <h3 id="userName">홍길동</h3>
+	                <h3 id="userName"><%=loginMember.getMemberName() %></h3>
 	            </div>
 	
 	            <div id="c_3">

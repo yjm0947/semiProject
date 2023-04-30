@@ -415,14 +415,14 @@
             </div>
             <%if(loginUser!=null){ %>
             <div id="book_3">
-                <button id="cart" type="button" onclick="selectCart();">장바구니</button>
+                <button id="cart" type="button">장바구니</button>
                 <input type="hidden" value="<%=p.getProductNo()%>"> 
-                <button id="direct" type="button" onclick="directOrder();">바로구매</button>
+                <button id="direct" type="button">바로구매</button>
             </div>
             <%}else{ %>
             <div id="book_3">
-                <button type="button" onclick="">장바구니</button>
-                <button type="button" onclick="">바로구매</button>
+                <button type="button" onclick="q_btn_on()">장바구니</button>
+                <button type="button" onclick="q_btn_on()">바로구매</button>
             </div>
             <%} %>
         </div>
@@ -450,7 +450,7 @@
        </form>
         
         <script>
-        	//체크박스 전체 선택
+        	/* 체크박스 전체 선택 */
             function selectAll(selectAll){
                 var checkboxes = document.getElementsByName('cart');
                 /*console.log(checkboxes)*/
@@ -473,100 +473,117 @@
         	
             <%if (loginUser!=null){%> //로그인 되어있으면
             $(function(){
+            	//장바구니 버튼 클릭시
             	$("#book_3>#cart").click(function(){
-            		console.log(this);
+            		var productNo = $(this).parent().children("input[type=hidden]").val()
+            		var cartNo = 0;
+            		selectCart(productNo);
+            		
+            		//장바구니 조회
+            		function selectCart() {
+            			$.ajax({
+            				url : "<%=request.getContextPath()%>/select.sc",
+            				data : {
+            					usernum:<%=loginUser.getMemberNo()%>,
+            					productnum:	productNo
+            					},
+            				type : "get",
+            				success: function(result){
+            					if (result != null && result.productNo==productNo ) {
+            						cartNo = result.cartId;
+            						if (confirm("선택한 상품이 이미 장바구니에 있습니다.\n수량을 추가하시겠습니까?")) {
+            							plusQty(result.productNo);
+            						}
+            					}else {
+            						addCart(productNo);
+            					}
+            				},
+            				error : function(result){
+            					console.log("통신실패");
+            				}
+            			});
+            		 }
+            		
+            		//장바구니 수량 추가
+            		function plusQty() {
+            			$.ajax({
+            				url : "<%=request.getContextPath()%>/plusQty.sc",
+            				data : { 
+            					cartId:cartNo,
+            					productNo:productNo,
+            					cnt:1
+            				},
+            				type : "post",
+            				success: function(result){
+            					if (confirm("장바구니로 이동하시겠습니까?")) {
+            						location.replace("<%=request.getContextPath()%>/list.sc");
+            					}
+            				},
+            				error : function(result){
+            					console.log("통신실패");
+            				}
+            			});
+            		}
+            		
+            		//장바구니 추가
+            		function addCart() {
+            			$.ajax({
+            				url : "<%=request.getContextPath()%>/insert.sc",
+            				data : {
+            					usernum:<%=loginUser.getMemberNo()%>,
+            					productnum:productNo,
+            					cnt:1
+            				},
+            				type : "post",
+            				success: function(result){
+            					if (confirm("장바구니로 이동하시겠습니까?")) {
+            						location.replace("<%=request.getContextPath()%>/list.sc");
+            					}
+            				},
+            				error : function(result){
+            					console.log("통신실패");
+            				}
+            			});
+            		}
+            		
             	});
-            });	
             	
-            var cartNo = 0;
-    		//장바구니 조회
-    		function selectCart() {
-    			<%-- $.ajax({
-    				url : "<%=request.getContextPath()%>/select.sc",
-    				data : {
-    					usernum:<%=loginUser.getMemberNo()%>,
-    					productnum:	$("#book_3")
-    					},
-    				type : "get",
-    				success: function(result){
-    					if (result != null && result.productNo== ) {
-    						cartNo = result.cartId;
-    						if (confirm("선택한 상품이 이미 장바구니에 있습니다.\n수량을 추가하시겠습니까?")) {
-    							plusQty();
-    						}
-    					}else {
-    						addCart();
-    					}
-    				},
-    				error : function(result){
-    					console.log("통신실패");
-    				}
-    			}); --%>
-    		}
+            	//바로구매 버튼 클릭시
+            	$("#book_3>#direct").click(function() {
+            		var productNo = $(this).parent().children("input[type=hidden]").val()
+            		
+            		directOrder(productNo);
+            		
+            		//바로구매
+            		function directOrder(){
+            	        
+            	        //AJAX 서버 업데이트 전송
+            			$.ajax({
+            				url : "<%=request.getContextPath()%>/directOrder.od",
+            				data : {
+            					userNo:<%=loginUser.getMemberNo()%>,
+            					productNo:productNo
+            					},
+            				type : "post",
+            				success: function(result){
+            					location.replace("<%=request.getContextPath()%>/order.od");
+            				},
+            				error : function(result){
+            					console.log("통신실패");
+            				}
+            			});
+            			
+            		}
+				});
+            	
+            });	
     		
-    		<%-- 
-    		//장바구니 수량 추가
-    		function plusQty() {
-    			$.ajax({
-    				url : "<%=request.getContextPath()%>/plusQty.sc",
-    				data : { 
-    					cartId:cartNo,
-    					productNo:<%=p.getProductNo()%>,
-    					cnt:$("input[name=result]").val()
-    				},
-    				type : "post",
-    				success: function(result){
-    					if (confirm("장바구니로 이동하시겠습니까?")) {
-    						location.replace("<%=request.getContextPath()%>/list.sc");
-    					}
-    				},
-    				error : function(result){
-    					console.log("통신실패");
-    				}
-    			});
-    		}
-    		
-    		//장바구니 추가
-    		function addCart() {
-    			$.ajax({
-    				url : "<%=request.getContextPath()%>/insert.sc",
-    				data : {
-    					usernum:<%=loginUser.getMemberNo()%>,
-    					productnum:<%=p.getProductNo()%>,
-    					cnt:$("input[name=result]").val()
-    				},
-    				type : "post",
-    				success: function(result){
-    					if (confirm("장바구니로 이동하시겠습니까?")) {
-    						location.replace("<%=request.getContextPath()%>/list.sc");
-    					}
-    				},
-    				error : function(result){
-    					console.log("통신실패");
-    				}
-    			});
-    		}
-    		
-    		//바로구매
-    		function directOrder(){
-    	        
-    	        //AJAX 서버 업데이트 전송
-    			$.ajax({
-    				url : "<%=request.getContextPath()%>/directOrder.od",
-    				data : {
-    					userNo:<%=loginUser.getMemberNo()%>,
-    					productNo:<%=p.getProductNo()%>
-    					},
-    				type : "post",
-    				success: function(result){
-    					location.replace("<%=request.getContextPath()%>/order.od");
-    				},
-    				error : function(result){
-    					console.log("통신실패");
-    				}
-    			});
-    			
-    		} --%>
+    		<%}else{%>
+    			/*로그인 페이지로 이동*/
+          		function q_btn_on(){
+   					alert("로그인 후 이용이 가능합니다."); 
+   					location.href = "<%=contextPath%>/logform.me"
+      			};
     		<%}%>
           </script>
         

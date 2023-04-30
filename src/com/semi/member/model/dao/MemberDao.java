@@ -614,7 +614,10 @@ public class MemberDao {
 				list.add(new Payment(rset.getInt("ORDER_NO"),
 									 rset.getString("PRODUCT_NAME"),
 									 rset.getString("DEPOSIT_NAME"),
-									 rset.getInt("PAYMENT")));
+									 rset.getInt("PAYMENT"),
+									 rset.getInt("DELIVERY_COST"),
+									 rset.getInt("USE_POINT"),
+									 rset.getString("STATE")));
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

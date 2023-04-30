@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.semi.member.model.vo.Member,java.util.ArrayList,com.semi.member.model.vo.Coupon"%>
+    pageEncoding="UTF-8" import="com.semi.member.model.vo.Member,java.util.ArrayList,com.semi.member.model.vo.Coupon
+    ,com.semi.order.model.vo.Payment"%>
 <%
 	String contextPath2 = request.getContextPath();
 	Member loginMem = (Member)session.getAttribute("loginUser");
-	ArrayList<Coupon> couponList = (ArrayList)session.getAttribute("clist");
+	ArrayList<Coupon> clist = (ArrayList<Coupon>)session.getAttribute("clist");
+	ArrayList<Payment> plist = (ArrayList<Payment>)session.getAttribute("pList");
 %>
 <!DOCTYPE html>
 <html>
@@ -61,18 +63,18 @@
             margin: 0 auto;
         }
         #coupon{
-            width: 10%;
+            width: 20%;
             text-align: center;
             float: left;
             font-size: 50px;
-            margin: 0px 100px;
+            margin: 0px 70px;
         }
         #point {
             display: inline-block;
-            width: 10%;
+            width: 20%;
             text-align: center;
             font-size: 50px;
-            margin: 0px 100px;
+            margin: 0px 70px;
         }
         #coupon i, #point i{
             color: lightblue;
@@ -99,10 +101,14 @@
 		
 		int couponCount = 0;
 		
-		for(int i=0; i<couponList.size(); i++){
-			if(couponList.get(i).getStatus().charAt(0) == 'Y') {
+		for(int i=0; i<clist.size(); i++){
+			if(clist.get(i).getStatus().charAt(0) == 'Y') {
 				couponCount += 1;		
 			}
+		}
+		
+		for(int i=0; i<plist.size(); i++){
+			memberPoint -= plist.get(i).getUsePoint();
 		}
 	%>
 	<div class="wrap">
@@ -111,12 +117,12 @@
 	                <div id="my_benefit">
 	                    <div id="benefit_wrapper">
 	                        <div id="coupon">
-	                            <i class="fa-solid fa-coins"></i> <br>
-	                            <a href="<%=contextPath2 %>/myPointList.me"><%=memberPoint %></a> 
-	                        </div>
-	                        <div id="point">
 	                            <i class="fa-solid fa-ticket"></i> <br>
 	                            <a href="<%=contextPath2 %>/myCouponList.me"><%=couponCount %></a>
+	                        </div>
+	                        <div id="point">
+	                            <i class="fa-solid fa-coins"></i> <br>
+	                            <a href="<%=contextPath2 %>/myPointList.me"><%=memberPoint %>P</a> 
 	                        </div>
 	                    </div>
 	                </div>

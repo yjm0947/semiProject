@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.semi.member.model.service.MemberService;
@@ -34,12 +35,6 @@ public class ShoppingListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
-		int memNo = loginUser.getMemberNo();
-		
-		ArrayList<Payment> list = new MemberService().selectShoppingList(memNo);
-		
-		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/member/myShoppingList.jsp").forward(request, response);
 	}
 

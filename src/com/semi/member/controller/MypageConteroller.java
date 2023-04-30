@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import com.semi.member.model.service.MemberService;
 import com.semi.member.model.vo.Coupon;
 import com.semi.member.model.vo.Member;
+import com.semi.order.model.vo.Payment;
 
 
 /**
@@ -39,9 +40,11 @@ public class MypageConteroller extends HttpServlet {
 		int memNo = loginUser.getMemberNo();
 		
 		ArrayList<Coupon> clist = new MemberService().selectCoupon(memNo);
+		ArrayList<Payment> plist = new MemberService().selectShoppingList(memNo);
 		
 		HttpSession session = request.getSession();
 		
+		session.setAttribute("pList", plist);
 		session.setAttribute("clist", clist);
 		request.getRequestDispatcher("views/member/myPage.jsp").forward(request, response);
 		

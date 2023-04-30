@@ -215,7 +215,6 @@
 					});
 					
 					//결과에 따른 조회값 뿌리기 (모달 상세조회)
-						console.log("ajax밖" + bno);
 					$.ajax({
 						
 						
@@ -224,9 +223,7 @@
 						type : "get",
 						
 						success : function(result){
-							console.log($(".modal_body").children().children().eq(0).text());
 							$(".modal_body").children().children().eq(0).text(result.boardNo);
-							console.log("success : " + $(".modal_body").children().children().eq(0).text());
 							$(".modal_body").children().children().eq(1).text(result.memberNo);
 							$(".modal_body").children().children().eq(2).text(result.boardTitle);
 							$("#noticeText").text(result.boardContent);

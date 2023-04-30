@@ -21,9 +21,49 @@ public class Payment {
 	private String detailAddress;	//DETAIL_ADDRESS VARCHAR2(100 BYTE) 상세주소
 	private String state;			//STATE VARCHAR2(30 BYTE) 배송상태
 	private int deliveryCost;		//DELIVERY_COST NUMBER 배송비
+	private String checkPay;		//CHECK_PAY	CHAR(2 BYTE) 입금확인
 	
 	public Payment() {
 		super();
+	}
+	
+	
+	//주문관리 상세조회 (관리자)
+	public Payment(int orderNo, String memberNo, String productNo, Date createdAt, int payment, String orderRequest,
+			String bankName, String depositName, int usePoint, String addressName, String phone, String email,
+			String roadAddress, String detailAddress, int deliveryCost, String checkPay) {
+		super();
+		this.orderNo = orderNo;
+		this.memberNo = memberNo;
+		this.productNo = productNo;
+		this.createdAt = createdAt;
+		this.payment = payment;
+		this.orderRequest = orderRequest;
+		this.bankName = bankName;
+		this.depositName = depositName;
+		this.usePoint = usePoint;
+		this.addressName = addressName;
+		this.phone = phone;
+		this.email = email;
+		this.roadAddress = roadAddress;
+		this.detailAddress = detailAddress;
+		this.deliveryCost = deliveryCost;
+		this.checkPay = checkPay;
+	}
+
+	//주문관리 리스트(관리자)
+	public Payment(int orderNo, String memberNo, Date createdAt, int payment, String orderRequest, String addressName,
+			String roadAddress, String detailAddress, String checkPay) {
+		super();
+		this.orderNo = orderNo;
+		this.memberNo = memberNo;
+		this.createdAt = createdAt;
+		this.payment = payment;
+		this.orderRequest = orderRequest;
+		this.addressName = addressName;
+		this.roadAddress = roadAddress;
+		this.detailAddress = detailAddress;
+		this.checkPay = checkPay;
 	}
 
 	public Payment(int paymentNumber, String memberNo, Date createdAt, int payment, String orderRequest, String bankName,
@@ -243,6 +283,15 @@ public class Payment {
 	public void setDeliveryCost(int deliveryCost) {
 		this.deliveryCost = deliveryCost;
 	}
+	
+	public String getCheckPay() {
+		return checkPay;
+	}
+
+
+	public void setCheckPay(String checkPay) {
+		this.checkPay = checkPay;
+	}
 
 	@Override
 	public String toString() {
@@ -251,7 +300,7 @@ public class Payment {
 				+ orderRequest + ", bankName=" + bankName + ", depositName=" + depositName + ", usePoint=" + usePoint
 				+ ", addressName=" + addressName + ", phone=" + phone + ", email=" + email + ", post=" + post
 				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + ", state=" + state
-				+ ", deliveryCost=" + deliveryCost + "]";
+				+ ", deliveryCost=" + deliveryCost + ", checkPay=" + checkPay + "]";
 	}
 	
 }

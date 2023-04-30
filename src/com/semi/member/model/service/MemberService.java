@@ -290,5 +290,41 @@ public class MemberService {
 			return list;
 		}
 
+		//결제한 회원 적립금 올려주기(관리자)
+		public int upPointAdmin(int memberNo, int pay) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int result = new MemberDao().upPointAdmin(conn,memberNo,pay);
+			
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+			
+			JDBCTemplate.close(conn);
+			
+			return result;
+		}
+
+		//결제한 회원 적립금 회수하기(관리자)
+		public int downPointAdmin(int memberNo, int pay) {
+
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int result = new MemberDao().downPointAdmin(conn,memberNo,pay);
+			
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+			
+			JDBCTemplate.close(conn);
+			
+			return result;
+		}
+
 
 }

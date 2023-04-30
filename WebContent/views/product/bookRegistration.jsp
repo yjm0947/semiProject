@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div class="wrap">
-		<%@include file = "../common/header.jsp" %>
+		<%@include file="/views/common/admin_Category.jsp" %>
 		<%-- <%@include file="/views/common/admin_Category.jsp" %> --%>
         <div id="content">
             <div id="con_1">상품등록</div>

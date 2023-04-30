@@ -263,6 +263,7 @@
         JOIN MEMBER M ON (PO.MEMBER_NO = M.MEMBER_NO)
 </entry>
 
+<!-- 출고총합  -->
 <entry key="relAdminProduct">
 	SELECT SUM(QUANTITY) QUANTITY
 	FROM P_ORDER

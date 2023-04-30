@@ -47,9 +47,40 @@
 		VALUES((SELECT TO_CHAR(SYSDATE, 'YYMMDD') || LPAD(TRUNC(DBMS_RANDOM.VALUE(0, 99999)), 5, '0') AS RANDOM_NUM FROM DUAL),?,?,?,?,?,?,?,?,?,?,?,?,'배송 준비중',?,?,?)
 	</entry>
 	
-	<!-- 관리자 주문관리 리스트 조회 -->
+	<!-- 주문관리 리스트 조회(관리자) -->
 	<entry key="selectOrderAdmin">
-		SELECT *
-		FROM PAYMENT
+		SELECT ORDER_NO,MEMBER_NAME,CREATED_AT,PAYMENT,ORDER_REQUEST,ADDRESS_NAME,ROAD_ADDRESS,DETAIL_ADDRESS,CHECK_PAY
+		FROM PAYMENT PAY
+		JOIN MEMBER USING (MEMBER_NO)
+	</entry>
+	
+	<!-- 주문관리 상세조회 (관리자) -->
+	<entry key="detailOrderAdmin">
+		SELECT ORDER_NO,MEMBER_NAME,PRODUCT_NAME,CREATED_AT,PAYMENT,ORDER_REQUEST,BANK_NAME,DEPOSIT_NAME,USE_POINT,ADDRESS_NAME,PAY.PHONE,PAY.EMAIL,ROAD_ADDRESS,DETAIL_ADDRESS,DELIVERY_COST,CHECK_PAY
+		FROM PAYMENT PAY
+		JOIN MEMBER M USING (MEMBER_NO) 
+		JOIN PRODUCT P USING (PRODUCT_NO)
+		WHERE ORDER_NO = ?
+	</entry>
+	
+	<!-- 주문번호로 회원조회(관리자) - 적립금 -->
+	<entry key="chkMemberNoAdmin">
+		SELECT MEMBER_NO
+		FROM P_ORDER
+		WHERE ORDER_NO = ?
+	</entry>
+	
+	<!-- 결제상태 변경(관리자) - 'Y' -->
+	<entry key="chkPayUpdateAdmin">
+		UPDATE PAYMENT
+		SET CHECK_PAY = 'Y'
+		WHERE ORDER_NO = ?
+	</entry>
+	
+	<!-- 결제상태 변경(관리자) - 'S' -->
+	<entry key="chkPayUpdate2Admin">
+	UPDATE PAYMENT
+	SET CHECK_PAY = 'S'
+	WHERE ORDER_NO = ?
 	</entry>
 </properties>

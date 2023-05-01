@@ -254,4 +254,12 @@
 					ORDER BY CREATE_DATE DESC)A)
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	
+	<!-- 나의 리뷰 삭제 -->
+	<entry key="deleteMyReview">
+		UPDATE REVIEW
+		SET STATUS = 'N'
+		WHERE MEMBER_NO = ?
+		AND REVIEW_NO = ?
+	</entry>
 </properties>

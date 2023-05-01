@@ -26,6 +26,8 @@ public class MyPointListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		request.getRequestDispatcher("views/member/myPointList.jsp").forward(request, response);
 	}
 

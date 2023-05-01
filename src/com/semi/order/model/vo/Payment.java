@@ -23,10 +23,40 @@ public class Payment {
 	private int deliveryCost;		//DELIVERY_COST NUMBER 배송비
 	private String checkPay;		//CHECK_PAY	CHAR(2 BYTE) 입금확인
 	
+	//결제내역 리스트랑 같이 조회할 구매 수량
+	private int quantity;
+	
 	public Payment() {
 		super();
 	}
 	
+	public Payment(long paymentNumber, int orderNo, String memberNo, String productNo, Date createdAt, int payment,
+			String orderRequest, String bankName, String depositName, int usePoint, String addressName, String phone,
+			String email, String post, String roadAddress, String detailAddress, String state, int deliveryCost,
+			String checkPay, int quantity) {
+		super();
+		this.paymentNumber = paymentNumber;
+		this.orderNo = orderNo;
+		this.memberNo = memberNo;
+		this.productNo = productNo;
+		this.createdAt = createdAt;
+		this.payment = payment;
+		this.orderRequest = orderRequest;
+		this.bankName = bankName;
+		this.depositName = depositName;
+		this.usePoint = usePoint;
+		this.addressName = addressName;
+		this.phone = phone;
+		this.email = email;
+		this.post = post;
+		this.roadAddress = roadAddress;
+		this.detailAddress = detailAddress;
+		this.state = state;
+		this.deliveryCost = deliveryCost;
+		this.checkPay = checkPay;
+		this.quantity = quantity;
+	}
+
 	//주문관리 상세조회 (관리자)
 	public Payment(int orderNo, String memberNo, String productNo, Date createdAt, int payment, String orderRequest,
 			String bankName, String depositName, int usePoint, String addressName, String phone, String email,
@@ -91,17 +121,6 @@ public class Payment {
 		this.usePoint = usePoint;
 	}
 	
-	public Payment(int orderNo, String productNo, String depositName, int payment, int deliveryCost, int usePoint, String state,Date createdAt) {
-		super();
-		this.orderNo = orderNo;
-		this.productNo = productNo;
-		this.depositName = depositName;
-		this.payment = payment;
-		this.deliveryCost = deliveryCost;
-		this.usePoint = usePoint;
-		this.state = state;
-		this.createdAt = createdAt;
-	}
 	
 	public Payment(int orderNo, String memberNo, String productNo, int payment, String orderRequest, int usePoint,
 			String addressName, String phone, String email, String post, String roadAddress, String detailAddress,
@@ -165,6 +184,15 @@ public class Payment {
 		this.detailAddress = detailAddress;
 		this.state = state;
 		this.deliveryCost = deliveryCost;
+	}
+
+	
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public long getPaymentNumber() {

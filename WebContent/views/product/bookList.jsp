@@ -3,6 +3,7 @@
 <%
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
 	/* int cate = Integer.parseInt(String.valueOf((request.getAttribute("cate")))); */
 %>
 <!DOCTYPE html>
@@ -314,58 +315,6 @@
         cursor : pointer;
         background-color: white;
         }
-        
-        /*카테고리 목록 추가================================*/
-        #all_content{
-            width: 1400px;
-            margin: auto;
-            /* background-color: aqua; */
-         	height: 2730px;
-        }
-        #all_content>div{
-            float: left;
-        }
-        #all_content_1{
-            width: 200px;
-            /* height: 1000px; */
-            /* background-color: blue; */
-        }
-        #all_content_2{
-            width: 1200px;
-            /*height: 1000px;*/
-            /* background-color: brown; */
-        }
-        #all_content_2>*{
-        	position: relative;
-        	left : -105px
-        }
-        #all_none{
-            width: 200px;
-            /* background-color: yellowgreen; */
-            height: 205px;
-        }
-        #all_cate{
-            width: 170px;
-            border: 1px solid rgb(167, 167, 167);
-            /* height: 400px; */
-            border-radius: 8px;
-            font-size: 20px;
-            margin: auto;
-            font-weight: 600;
-            color: rgb(44, 44, 65);
-            position: fixed;
-            /* box-sizing: border-box; */
-            padding: 9px;
-            /* box-shadow: 0 1rem 5rem -2rem rgba(black,0.5); */
-            /* transition: transform 100ms linear; */
-            /* background-color: rgb(207, 218, 228); */
-        }
-        #all_cate a{
-            text-decoration: none;
-            color: rgb(86, 86, 95);
-            font-size: 15px;
-            font-weight: 500;
-        }
         </style>
 </head>
 <body>
@@ -421,7 +370,7 @@
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
                 	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
-<<<<<<< HEAD
+
                           
                         </div>
                         <div id="list_menu_3">
@@ -431,19 +380,18 @@
                     </div>
                     
                     <%if(list.isEmpty()) {%>
-=======
+
             </div>
             
          </div>
             	<%if(list.isEmpty()) {%>
->>>>>>> refs/remotes/origin/main
             		<div id="none_div">
 			        	<div id="none_td">도서 목록이 존재하지 않습니다.</div>
 			        </div>
             	<%} else {%>
             	
             	<%for(Product p : list) {%>
-<<<<<<< HEAD
+
                             
                      <div id="book">
                         <div id="book_1">
@@ -453,7 +401,7 @@
                         <div id="book_2">
                        
                             <table id="con_table">
-=======
+
             	
          <div class="book_list" id="book">
             <div id="book_1">
@@ -463,10 +411,24 @@
             <div id="book_2">
            
                 <table >
->>>>>>> refs/remotes/origin/main
                     <tr id="num">
                         <td rowspan="4" style="width: 150px; height: 250px;"><img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204);" width="135px" height="200px" id="imgthumb">
-                        <input type="hidden" value="<%=p.getProductNo()%>">                       
+                        <div style="position: relative; left: 0px;">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        </div>
+                        <div  style="position: relative; top: -21px; left: -2px;">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1; left: -1px;" width="21px" height="21px" class="star" hidden="">
+                        </div>
+                        <input type="hidden" id="star" value="<%=p.getStarAvg()%>">
+                        <input type="hidden" value="<%=p.getProductNo()%>">
                         </td>
                         <td id="title" style="font-size: 16px; font-weight: 600; position: relative; top: 45px;"><%=p.getProductName() %></td>
                     </tr>
@@ -534,6 +496,8 @@
     </div>
         
         <script>
+        	//별점 표시
+            
         
 		      //스크롤 부드럽게 따라오게 하기
 		        $(document).ready(function(){

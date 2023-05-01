@@ -383,4 +383,36 @@ public class OrderDao {
 		return p;
 	}
 
+	//결제정보 입력 메소드
+	public int orderCard(Connection conn, Payment p) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("orderCard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p.getOrderNo());
+			pstmt.setString(2, p.getMemberNo());
+			pstmt.setString(3, p.getProductNo());
+			pstmt.setInt(4, p.getPayment());
+			pstmt.setString(5, p.getOrderRequest());
+			pstmt.setInt(6, p.getUsePoint());
+			pstmt.setString(7, p.getAddressName());
+			pstmt.setString(8, p.getPhone());
+			pstmt.setString(9, p.getEmail());
+			pstmt.setString(10, p.getPost());
+			pstmt.setString(11, p.getRoadAddress());
+			pstmt.setString(12, p.getDetailAddress());
+			pstmt.setInt(13, p.getDeliveryCost());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }

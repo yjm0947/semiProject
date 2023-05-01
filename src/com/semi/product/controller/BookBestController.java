@@ -58,12 +58,12 @@ public class BookBestController extends HttpServlet {
 				
 		PageInfo pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
 				
-		String cate = request.getParameter("cate");
+		int cate = Integer.parseInt(request.getParameter("cate"));
 				
 		ArrayList<Product> list = null;
 				
 		//페이지에 보여질 게시글 리스트
-		if(cate==null) {
+		if(cate==0) {
 			list = new ProductService().selectBestAttachList(pi);
 		}else {
 			list = new ProductService().selectAttachmentCList(pi,cate);

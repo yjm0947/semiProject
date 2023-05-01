@@ -290,20 +290,20 @@
         #tr_3_1{
             color: rgb(120, 171, 196);
             height: 100%;
-            width: 30px;
+            width: 35px;
         }
         #tr_3_2{
             height: 100%;
-            width: 50px;
+            width: 55px;
         }
         #tr_3_3{
             height: 100%;
-            width: 50px;
+            width: 55px;
             color: rgb(148, 146, 146);
         }
         #tr_3_4{
             height: 100%;
-            width: 50px;
+            width: 55px;
             color: rgb(148, 146, 146);
         }
         
@@ -387,9 +387,9 @@
                     </tr>
                     <tr>
                         <td id="tr_3">
-                        	<div id="tr_3_1"><%=p.getProductSalesRate() %>%</div>
-                            <div id="tr_3_2"><%=Math.round((1-(p.getProductSalesRate()*0.01))*p.getProductPrice()) %>원</div>
-                            <div id="tr_3_3"><s><%=p.getProductPrice() %>원</s></div>
+                        	<div id="tr_3_1"><%=p.getProductSalesRate() %>%&nbsp;</div>
+                            <div id="tr_3_2"><fmt:formatNumber value="<%=Math.round((1-(p.getProductSalesRate()*0.01))*p.getProductPrice()) %>" pattern="#,###"/>원&nbsp;</div>
+                            <div id="tr_3_3"><s><fmt:formatNumber value="<%=p.getProductPrice() %>" pattern="#,###"/>원</s>&nbsp;</div>
                             <div id="tr_3_4"><%=Math.round(((1-(p.getProductSalesRate()*0.01))*p.getProductPrice())*0.01) %>p</div>
                         </td>
                     </tr>

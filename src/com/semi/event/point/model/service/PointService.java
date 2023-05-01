@@ -22,4 +22,5 @@ public class PointService {
 		
 		JDBCTemplate.close(conn);
 	}
+
 }

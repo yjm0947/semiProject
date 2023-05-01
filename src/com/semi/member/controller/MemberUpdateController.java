@@ -95,9 +95,9 @@ public class MemberUpdateController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		if(memUpdate != null) {
-			session.setAttribute("alertMsg", "회원 정보가 수정되었습니다.");
 			session.setAttribute("loginUser", memUpdate);
 			response.sendRedirect(request.getContextPath()+"/myPage.me");
+			session.setAttribute("alertMsg", "회원 정보가 수정되었습니다.");
 		}else {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}

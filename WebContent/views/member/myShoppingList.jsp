@@ -168,9 +168,25 @@
             color: white;
             font-weight: bolder;
             font-size: 15px;
+            cursor: pointer;
             }
         .openModal .closeModal{
             cursor: pointer;
+        }
+        #refund-btn{
+        	float: left;
+            height: 40px;
+            border-radius: 10px;
+            border: 2px solid rgb(62, 130, 255);
+            background-color: white;
+            font-size: 15px;
+        }
+        #refund-btn:hover {
+        	border: none;
+        	background-color: rgb(62, 130, 255);
+        	color: white;
+            font-weight: bolder;
+            font-size: 15px;
         }
         
 </style>
@@ -267,32 +283,35 @@
 	                            <!-- modal body -->
 	                           <div class="modal-body">
 	                                <h2 class="modal-title">주문 상세 조회</h2>
-	            
+	                                
 	                                <h4>기본정보</h4>
-	                                <table id="basicInfo">
-	                                    <tbody>
-	                                    	
-	                                    </tbody>
-	                                </table>
-	            
-	                                <h4>주문 도서 정보</h4>
-	                                <table id="bookDetail">
-	                                    <thead>
-	                                        <tr>
-	                                            <th style="width:100px">상품명</th>
-	                                            <th>구매수량</th>
-	                                            <th>가격</th>
-	                                        </tr>
-	                                    </thead>
-	                                    <tbody>
-	                                    
-	                                    </tbody>
-	                                </table>
+	                                <input type="hidden" name="hideOno"> 
+		                                <table id="basicInfo">
+		                                    <tbody>
+		                                    	
+		                                    </tbody>
+		                                </table>
+		            
+		                                <h4>주문 도서 정보</h4>
+		                                <table id="bookDetail">
+		                                    <thead>
+		                                        <tr>
+		                                            <th style="width:100px">상품명</th>
+		                                            <th>구매수량</th>
+		                                            <th>가격</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                    
+		                                    </tbody>
+		                                </table>
+		                             
+		                            <div class="modal-footer">
+		                            	<button type="submit" id="refund-btn" data-dismiss="modal">환불하기</button>
+		                                <button type="button" class="closeModal" data-dismiss="modal">닫기</button>
+		                            </div>
 	                            </div>
 	                            
-	                            <div class="modal-footer">
-	                                <button type="button" class="closeModal" data-dismiss="modal">닫기</button>
-	                            </div>
 	                        </div>
 	                    </div>
 	                </div>
@@ -371,9 +390,11 @@
 	                            +"<td>"+p.usePoint+" 권"+"</td>"
 	                            +"<td>"+p.payment+" 원"+"</td>"
 	                        "</tr>";
+	                        
+	                        $('input[name=hideOno]').attr('value',p.orderNo);
 	              			$("#basicInfo tbody").html(basicStr);
-	                       $("#bookDetail tbody").html(bookStr);
-	                       console.log(p);
+	                       	$("#bookDetail tbody").html(bookStr);
+	                       	console.log(p);
 	                       return p;
 	        			},
 	        			error : function(){
@@ -381,6 +402,34 @@
 	        				console.log(p);
 	        			}
 	        		});
+	            });
+	            $("#refund-btn").on("click",function(){
+	            	
+	            	var myOno =  $('input[name=hideOno]').val();
+	            	
+	            	$.ajax({
+	        			
+	        			url : "myPayList.me",
+	        			type : "post",
+	        			data : {
+	        				hideOno : myOno 
+	        				},
+	        			success : function(data){
+	        				
+	        				if(data > 0){
+	        					alert("환불 신청이 완료되었습니다.");
+	        					window.location.href = "<%=contextPath%>/myPage.me";
+	        				}else{
+	        					alert("환불 신청을 실패했습니다.");
+	        				}
+	        				
+	        			},
+	        			error : function(){
+	        				console.log("error");
+	        			}
+	        		});
+	            	
+	            	$(".modal").css("display","none");
 	            });
 	      });
 	</script>

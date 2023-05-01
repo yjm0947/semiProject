@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
+import com.semi.board.model.vo.Board;
 import com.semi.board.review.model.vo.Review;
 import com.semi.common.JDBCTemplate;
 import com.semi.common.vo.PageInfo;
@@ -617,7 +618,8 @@ public class MemberDao {
 									 rset.getInt("PAYMENT"),
 									 rset.getInt("DELIVERY_COST"),
 									 rset.getInt("USE_POINT"),
-									 rset.getString("STATE")));
+									 rset.getString("STATE"),
+									 rset.getDate("CREATED_AT")));
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -828,7 +830,7 @@ public class MemberDao {
 			return rlist;
 		}
 
-
+		//리뷰 조회 모달
 		public ArrayList<Review> selectReModal(Connection conn, int reviewNo) {
 			ArrayList<Review> list = new ArrayList<>();
 			ResultSet rset = null;
@@ -907,6 +909,70 @@ public class MemberDao {
 			}
 			
 			return result;
+		}
+
+
+		public int refundMyOrder(Connection conn, int memNo, int ono) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("refundMyOrder");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1,memNo);
+				pstmt.setInt(2,ono);
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return result;
+		}
+
+
+		public ArrayList<Board> selectMyQna(Connection conn, int memNo) {
+			
+			ArrayList<Board> blist = new ArrayList<Board>();
+			ResultSet rset = null;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("selectMyQna");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, memNo);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					blist.add(new Board(rset.getInt("BOARD_NO"),
+									   rset.getString("MEMBER_NO"),
+									   rset.getString("PRODUCT_NO"),
+									   rset.getInt("BOARD_CATEGORY"),
+									   rset.getString("BOARD_TITLE"),
+									   rset.getString("BOARD_CONTENT"),
+									   rset.getString("BOARD_ANSWERED"),
+									   rset.getInt("BOARD_COUNT"),
+									   rset.getDate("CREATE_DATE"),
+									   rset.getString("STATUS")));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return blist;
 		}
 
 

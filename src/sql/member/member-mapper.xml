@@ -241,7 +241,7 @@
 	
 	<!-- 주문 조회 -->
 	<entry key="selectShoppingList">
-		SELECT ORDER_NO, PRODUCT_NAME, DEPOSIT_NAME, PAYMENT
+		SELECT ORDER_NO, PRODUCT_NAME, DEPOSIT_NAME, PAYMENT, DELIVERY_COST,USE_POINT,STATE
 		FROM PAYMENT P
 		JOIN PRODUCT PD USING (PRODUCT_NO)
 		WHERE P.MEMBER_NO= ?
@@ -308,4 +308,19 @@
 		JOIN PRODUCT P USING (PRODUCT_NO)
 		WHERE REVIEW_NO = ?
 	</entry>
+	
+	<!-- 결제한 회원 적립금 올려주기(관리자) -->
+	<entry key="upPointAdmin">
+		UPDATE MEMBER
+		SET MEMBER_POINT = MEMBER_POINT + ?
+		WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 결제한 회원 적립금 회수하기(관리자) -->
+	<entry key="downPointAdmin">
+		UPDATE MEMBER
+		SET MEMBER_POINT = MEMBER_POINT - ?
+		WHERE MEMBER_NO = ?
+	</entry>
+	
 </properties>

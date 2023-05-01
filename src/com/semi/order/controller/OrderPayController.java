@@ -40,6 +40,7 @@ public class OrderPayController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
 		int orderNo = Integer.parseInt(request.getParameter("orderNum"));
 		String userNo = Integer.toString(((Member)(request.getSession().getAttribute("loginUser"))).getMemberNo());
 		String productNo = request.getParameter("productNum");
@@ -69,10 +70,11 @@ public class OrderPayController extends HttpServlet {
 //		System.out.println(p);
 		
 		if (result>0) {
+			new OrderService().completeOrder(userNo);
 			for (int i = 0; i < productNums.length; i++) {
 				new ShoppingCartService().delChecked(productNums[i],Integer.parseInt(userNo));
 			}
-			response.sendRedirect(request.getContextPath()+"/orderCp.od");
+			response.sendRedirect(request.getContextPath()+"/orderCp.od?orderNo="+orderNo);
 		}else {
 			System.out.println("결제실패");
 			

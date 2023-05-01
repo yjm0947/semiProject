@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.board.inquiry.model.vo.Board"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.board.model.vo.Board"%>
 <%
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 %>
@@ -28,13 +28,23 @@
 		</div>
 		<div class="middle">
 			<div id="mid_search">
+			<form action="<%=contextPath%>/searchFaq.admin" method="get" onsubmit="return blankSearch()">
 				<select name="ms_select" id="ms_select">
-					<option value="">게시글 번호</option>
-					<option value="">제목</option>
-					<option value="">작성일</option>
+					<option value="1">제목+내용</option>
 				</select>
 				<input type="search" name="memberSearch" id="memberSearch">
-				<button id="ms_img"></button>
+				<button type="submit" id="ms_img"></button>
+			</form>
+			
+			<script>
+				function blankSearch(){
+					if($("#memberSearch").val().length == 0){
+						alert("다시 입력해주시길 바랍니다.");
+						return false;
+					}
+				};
+			</script>
+			
 			</div>
 			<div id="noticeBtn">
 				<button onclick="location.href='<%=contextPath%>/faqInsert.admin'">FAQ 등록</button>

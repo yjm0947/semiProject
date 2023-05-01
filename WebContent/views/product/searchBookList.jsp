@@ -356,10 +356,19 @@
                             <%} %>
                     </div>
                 </div>
-                <div id="con_btn">
-                    <button>장바구니</button>
-                    <button>바로구매</button>
-                </div>
+                <%if(loginUser!=null){ %>
+	            <div id="con_btn">
+	                <button id="cart" type="button">장바구니</button>
+	                <input type="hidden" value="<%=p.getProductNo()%>"> 
+	                <button id="direct" type="button">바로구매</button>
+	            </div>
+	            <%}else{ %>
+	            <div id="con_btn">
+	                <button type="button" onclick="q_btn_on()">장바구니</button>
+	                <button type="button" onclick="q_btn_on()">바로구매</button>
+	            </div>
+	            <%} %>
+                
             </div>
             <div id="con_3"></div><!--추후 별점 들어갈 예정-->
         </div>
@@ -412,6 +421,122 @@
         		location.href="<%=contextPath%>/book.de?pno="+pno;
         	});
         });
+        
+        <%if (loginUser!=null){%> //로그인 되어있으면
+        
+        //장바구니 버튼 클릭시
+        $(function(){
+        	$("#con_btn>#cart").click(function(){
+        		var productNo = $(this).parent().children("input[type=hidden]").val()
+        		var cartNo = 0;
+        		selectCart(productNo);
+        		
+        		//장바구니 조회
+        		function selectCart() {
+        			$.ajax({
+        				url : "<%=request.getContextPath()%>/select.sc",
+        				data : {
+        					usernum:<%=loginUser.getMemberNo()%>,
+        					productnum:	productNo
+        					},
+        				type : "get",
+        				success: function(result){
+        					if (result != null && result.productNo==productNo ) {
+        						cartNo = result.cartId;
+        						if (confirm("선택한 상품이 이미 장바구니에 있습니다.\n수량을 추가하시겠습니까?")) {
+        							plusQty(result.productNo);
+        						}
+        					}else {
+        						addCart(productNo);
+        					}
+        				},
+        				error : function(result){
+        					console.log("통신실패");
+        				}
+        			});
+        		 }
+        		
+        		//장바구니 수량 추가
+        		function plusQty() {
+        			$.ajax({
+        				url : "<%=request.getContextPath()%>/plusQty.sc",
+        				data : { 
+        					cartId:cartNo,
+        					productNo:productNo,
+        					cnt:1
+        				},
+        				type : "post",
+        				success: function(result){
+        					if (confirm("장바구니로 이동하시겠습니까?")) {
+        						location.replace("<%=request.getContextPath()%>/list.sc");
+        					}
+        				},
+        				error : function(result){
+        					console.log("통신실패");
+        				}
+        			});
+        		}
+        		
+        		//장바구니 추가
+        		function addCart() {
+        			$.ajax({
+        				url : "<%=request.getContextPath()%>/insert.sc",
+        				data : {
+        					usernum:<%=loginUser.getMemberNo()%>,
+        					productnum:productNo,
+        					cnt:1
+        				},
+        				type : "post",
+        				success: function(result){
+        					if (confirm("장바구니로 이동하시겠습니까?")) {
+        						location.replace("<%=request.getContextPath()%>/list.sc");
+        					}
+        				},
+        				error : function(result){
+        					console.log("통신실패");
+        				}
+        			});
+        		}
+        		
+        	});
+        	
+        	//바로구매 버튼 클릭시
+        	$("#con_btn>#direct").click(function() {
+        		var productNo = $(this).parent().children("input[type=hidden]").val()
+        		
+        		directOrder(productNo);
+        		
+        		//바로구매
+        		function directOrder(){
+        	        
+        	        //AJAX 서버 업데이트 전송
+        			$.ajax({
+        				url : "<%=request.getContextPath()%>/directOrder.od",
+        				data : {
+        					userNo:<%=loginUser.getMemberNo()%>,
+        					productNo:productNo
+        					},
+        				type : "post",
+        				success: function(result){
+        					location.replace("<%=request.getContextPath()%>/order.od");
+        				},
+        				error : function(result){
+        					console.log("통신실패");
+        				}
+        			});
+        			
+        		}
+			});
+        	
+        });	
+		
+		<%}else{%>
+			/*로그인 페이지로 이동*/
+      		function q_btn_on(){
+					alert("로그인 후 이용이 가능합니다."); 
+					location.href = "<%=contextPath%>/logform.me"
+  			};
+		<%}%>
     </script>
 
 	<%@include file = "../common/footer.jsp" %>

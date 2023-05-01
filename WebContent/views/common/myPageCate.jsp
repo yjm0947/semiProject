@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.semi.member.model.vo.Member"%>
 <%
-	///SemiProject 
 	String contextPath1 = request.getContextPath();
 	Member loginMember = (Member)session.getAttribute("loginUser");
 %>
@@ -31,15 +30,14 @@
             padding: 10px 0px;
             border-right: 1px solid lightgray;
         }
-        #pro_img {
-            margin: 0%;
-        }
-        #c_2 img{
-            width: 130px;
-            height: 130px;
-            border: 1px solid white;
-            border-radius: 50%;
-            margin: 10px 0px 0px 0px;
+        #pro_icon i{
+        	border: 5px solid black;
+        	border-radius: 50%;
+        	padding: 20px 30px;
+        	margin: 10px 0;
+            font-size: 80px;
+            text-align:center;
+            color: black;
         }
         #userName{
             margin: 10px 0px 0px 0px;
@@ -77,12 +75,23 @@
 </style>
 </head>
 <body>
+	<%
+		String memberRole = "";
+		memberRole = String.valueOf(loginMember.getMemberRole());
+		
+		switch(memberRole){
+		case "1" : memberRole = "베이직"; break;
+		case "2" : memberRole = "실버"; break;
+		case "3" : memberRole = "골드"; break;
+		case "4" : memberRole = "VIP"; break;
+		}
+	%>
 	<div class="wrap">
 		<div id="content">
 			<div id="c_2"> <!--마이페이지 메인-->
 	                <h2>마이페이지</h2>
-	                <div id="pro_img">
-	                    <img src="resources/profile_img.jpg">
+	                <div id="pro_icon">
+	                    <i class="fa-solid fa-user" id="proIcon"></i>
 	                </div>
 	                <h3 id="userName"><%=loginMember.getMemberName() %></h3>
 	            </div>
@@ -114,7 +123,7 @@
 	                   <li>
 	                       <li><h3>고객센터</h3></li>
 	                        <ul>
-	                            <li><a href="">나의 문의 내역</a></li>
+	                            <li><a href="<%=contextPath1%>/myQna.me">나의 문의 내역</a></li>
 	                            <li><a href="">FAQ</a></li>
 	                            <li><a href="">공지사항</a></li>
 	                        </ul>
@@ -123,5 +132,17 @@
 	            </div>
 		</div>
 	</div>
+	
+	<script>
+		const icon = document.getElementById('proIcon');
+		const memberRole = "<%=memberRole%>";
+		
+		switch(memberRole){
+			case '베이직' : icon.style.color = "#74C01B"; icon.style.border = "5px solid #74C01B"; break;
+			case "실버" : icon.style.color = "#01A5DB"; icon.style.border = "5px solid #01A5DB"; break;
+			case "골드" : icon.style.color = "#DBB201"; icon.style.border = "5px solid #DBB201"; break;
+			case "VIP" : icon.style.color = "#DB471F"; icon.style.border = "5px solid #DB471F"; break;
+		}
+	</script>
 </body>
 </html>

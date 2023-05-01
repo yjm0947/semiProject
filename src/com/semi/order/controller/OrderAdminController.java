@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.order.model.service.OrderService;
-import com.semi.order.model.vo.Order;
+import com.semi.order.model.vo.Payment;
 
 /**
  * Servlet implementation class orderController
@@ -32,15 +32,10 @@ public class OrderAdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		ArrayList<Order> list = new OrderService().selectOrderAdmin();
-//		
-//		if(list.isEmpty()) {
-//			request.setAttribute("list", list);
-//			request.getRequestDispatcher("views/admin_order/adminOrder.jsp").forward(request, response);
-//		}else {
-//			request.setAttribute("errorMsg", "주문내역 리스트 조회 실패");
-//			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-//		}
+		ArrayList<Payment> list = new OrderService().selectOrderAdmin();
+		
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/admin_order/adminOrder.jsp").forward(request, response);
 	}
 
 	/**

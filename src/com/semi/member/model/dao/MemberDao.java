@@ -614,7 +614,10 @@ public class MemberDao {
 				list.add(new Payment(rset.getInt("ORDER_NO"),
 									 rset.getString("PRODUCT_NAME"),
 									 rset.getString("DEPOSIT_NAME"),
-									 rset.getInt("PAYMENT")));
+									 rset.getInt("PAYMENT"),
+									 rset.getInt("DELIVERY_COST"),
+									 rset.getInt("USE_POINT"),
+									 rset.getString("STATE")));
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -858,6 +861,52 @@ public class MemberDao {
 				JDBCTemplate.close(pstmt);
 			}
 			return list;
+		}
+
+		//결제한 회원 적립금 올려주기(관리자)
+		public int upPointAdmin(Connection conn, int memberNo, int pay) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("upPointAdmin");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pay);
+				pstmt.setInt(2, memberNo);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally{
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return result;
+		}
+
+		//결제한 회원 적립금 회수하기(관리자)
+		public int downPointAdmin(Connection conn, int memberNo, int pay) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("downPointAdmin");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pay);
+				pstmt.setInt(2, memberNo);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally{
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return result;
 		}
 
 

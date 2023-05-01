@@ -351,7 +351,7 @@ public class BoardDao {
 			while(rset.next()) {
 				list.add(new Board(rset.getInt("BOARD_NO")
 								  ,rset.getString("MEMBER_ID")
-								  ,rset.getInt("PRODUCT_NO")
+								  ,rset.getString("PRODUCT_NAME")
 								  ,rset.getString("BOARD_TITLE")
 								  ,rset.getString("BOARD_CONTENT")
 								  ,rset.getString("BOARD_ANSWERED")
@@ -602,6 +602,87 @@ public class BoardDao {
 								  ,rset.getString("BOARD_CONTENT")
 								  ,rset.getInt("BOARD_COUNT")
 								  ,rset.getDate("CREATE_DATE")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
+	//1:1문의 키워드 검색 리스트
+	public ArrayList<Board> searchInquireAdmin(Connection conn, int num, String search) {
+		
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = "";
+		
+		switch(num) {
+			case 1 : sql = prop.getProperty("searchInquireBno");
+				break;
+			case 2 : sql = prop.getProperty("searchInquirePno");
+				break;
+			case 3 : sql = prop.getProperty("searchInquireTitle");
+				break;
+			case 4 : sql = prop.getProperty("searchInquireWriter");
+				break;
+			case 5 : sql = prop.getProperty("searchInquireDate");
+				break;
+		}
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			if(num == 3) {
+				pstmt.setString(1, search);
+				pstmt.setString(2, search);
+			}else {
+				pstmt.setString(1, search);
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt("BOARD_NO")
+								  ,rset.getString("MEMBER_ID")
+								  ,rset.getString("PRODUCT_NO")
+								  ,rset.getString("BOARD_TITLE")
+								  ,rset.getString("BOARD_CONTENT")
+								  ,rset.getString("BOARD_ANSWERED")
+								  ,rset.getDate("CREATE_DATE")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
+	//FAQ 키워드 검색 리스트
+	public ArrayList<Board> searchFaqAdmin(Connection conn, int num, String search) {
+		
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("searchFaqAdmin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getString("BOARD_TITLE")
+								  ,rset.getString("BOARD_CONTENT")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

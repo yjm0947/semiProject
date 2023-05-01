@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.member.model.vo.Coupon"%>
 <%
-	ArrayList<Coupon> clist = (ArrayList)session.getAttribute("clist");
+	ArrayList<Coupon> cplist = (ArrayList<Coupon>)session.getAttribute("clist");
 %>
 <!DOCTYPE html>
 <html>
@@ -83,7 +83,7 @@
 				<div id="my_coupon">
 			     	<h2>나의 쿠폰</h2>
 				     
-				     <%if(clist == null) {%>
+				     <%if(cplist == null) {%>
 					     <!-- 조회 내용 없을 때 -->
 					     <div id="non_couopn">
 					         <div id="non_detail">
@@ -102,7 +102,7 @@
 						             <th colspan="2">쿠폰 만료일</th>
 						             <th colspan="2">사용여부</th>
 					             </tr>
-				             <%for(Coupon c : clist ) {%>
+				             <%for(Coupon c : cplist ) {%>
 					             <tr>
 					                 <td colspan="2"><%=c.getCouponNo() %></td>
 					                 <td colspan="3"><%=c.getCouponName() %></td>

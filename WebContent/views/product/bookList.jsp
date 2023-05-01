@@ -421,6 +421,7 @@
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
                 	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
+<<<<<<< HEAD
                           
                         </div>
                         <div id="list_menu_3">
@@ -430,12 +431,19 @@
                     </div>
                     
                     <%if(list.isEmpty()) {%>
+=======
+            </div>
+            
+         </div>
+            	<%if(list.isEmpty()) {%>
+>>>>>>> refs/remotes/origin/main
             		<div id="none_div">
 			        	<div id="none_td">도서 목록이 존재하지 않습니다.</div>
 			        </div>
             	<%} else {%>
             	
             	<%for(Product p : list) {%>
+<<<<<<< HEAD
                             
                      <div id="book">
                         <div id="book_1">
@@ -445,6 +453,17 @@
                         <div id="book_2">
                        
                             <table id="con_table">
+=======
+            	
+         <div class="book_list" id="book">
+            <div id="book_1">
+                <input type="checkbox" class="checkbox" id="check" name="cart" value="상품번호출력">
+                <input type="hidden" value="<%=p.getProductNo()%>">
+            </div>
+            <div id="book_2">
+           
+                <table >
+>>>>>>> refs/remotes/origin/main
                     <tr id="num">
                         <td rowspan="4" style="width: 150px; height: 250px;"><img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204);" width="135px" height="200px" id="imgthumb">
                         <input type="hidden" value="<%=p.getProductNo()%>">                       
@@ -524,14 +543,6 @@
 		                $("#all_cate").stop().animate({"top":position+currentPosition+"px"},1000);
 		            });
 	            });
-		      
-        	/* 체크박스 전체 선택 */
-            function selectAll(selectAll){
-                var checkboxes = document.getElementsByName('cart');
-                /*console.log(checkboxes)*/
-
-                checkboxes.forEach((checkboxes)=>checkboxes.checked=selectAll.checked);
-            }
         	
         	//디테일 페이지 이동
             $(function(){
@@ -541,14 +552,12 @@
             		//console.log(pno);
             		location.href="<%=contextPath%>/book.de?pno="+pno;
             	});
-            	/* $("#book_2").click(function(){
-            		console.log("ddd");
-            	}); */
             });
         	
             <%if (loginUser!=null){%> //로그인 되어있으면
+            
+            //장바구니 버튼 클릭시
             $(function(){
-            	//장바구니 버튼 클릭시
             	$("#book_3>#cart").click(function(){
             		var productNo = $(this).parent().children("input[type=hidden]").val()
             		var cartNo = 0;
@@ -659,6 +668,7 @@
    					alert("로그인 후 이용이 가능합니다."); 
    					location.href = "<%=contextPath%>/logform.me"
       			};
+    		<%}%>
     		<%}%>
           </script>
         

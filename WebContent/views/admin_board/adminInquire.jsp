@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.board.inquiry.model.vo.Board"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.board.model.vo.Board"%>
     
 <%
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
@@ -29,15 +29,27 @@
 		</div>
 		<div class="middle">
 			<div id="mid_search">
+			<form action="<%=contextPath%>/searchInquire.admin" method="get" onsubmit="return blankSearch()">
 				<select name="ms_select" id="ms_select">
-					<option value="">게시글 번호</option>
-					<option value="">상품번호</option>
-					<option value="">제목</option>
-					<option value="">작성자(아이디)</option>
-					<option value="">작성일</option>
+					<option value="1">게시글 번호</option>
+					<option value="2">상품번호</option>
+					<option value="3">제목+내용</option>
+					<option value="4">작성자(아이디)</option>
+					<option value="5">작성일</option>
 				</select>
 				<input type="search" name="memberSearch" id="memberSearch">
-					<button id="ms_img"></button>
+					<button type="submit" id="ms_img"></button>
+			</form>
+			
+			<script>
+				function blankSearch(){
+					if($("#memberSearch").val().length == 0){
+						alert("다시 입력해주시길 바랍니다.");
+						return false;
+					}
+				};
+			</script>
+			
 			</div>
 		</div>
 		<div class="middle_left">
@@ -54,7 +66,7 @@
 					
 						<tr id="ml_tr">
 							<th>게시글 번호</th>
-							<th>상품번호</th>
+							<th>상품명</th>
 							<th>제목</th>
 							<th>문의 내용</th>
 							<th>작성자(아이디)</th>
@@ -71,7 +83,12 @@
 							<td><%=b.getBoardTitle() %></td>
 							<td><%=b.getBoardContent() %></td>
 							<td><%=b.getMemberNo() %></td>
-							<td><%=b.getBoardAnswered() %></td>
+							<td>
+							<%if(b.getBoardAnswered() == null) {%>
+							<%}else {%>
+								<%=b.getBoardAnswered() %>
+							<%} %>
+							</td>
 							<td><%=b.getCreateDate() %></td>
 							
 							<%if(b.getBoardAnswered() != null) {%>

@@ -1,0 +1,218 @@
+.wrap{
+    position: relative;
+    width: 1400px;
+    height: 1300px;
+    margin-left: 249px;
+    margin-right: 0px;
+    display: block;
+  }
+
+/*-----------------콘텐츠------------------------*/
+#content{
+    position: relative;
+    width: 1000px;
+    height: 1300px;
+    margin: auto;
+    right: 180px;
+} 
+#con_1{
+    width: 1000px;
+    height: 100px;
+    font-size: 36px;
+    padding: 30px;
+}
+.inputArea{
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 550;
+}
+/*바------------------------------------------------------*/
+#con_2{
+    width: 1000px;
+    height: 70px;
+}
+#con_2_book{
+    display: block;
+    float: left;
+    width: 145px;
+    height: 50px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 550;
+    color: rgb(44, 43, 43);
+    line-height: 50px;
+    border: 1px solid rgb(44, 43, 43);
+    border-bottom-style: none; /*검색 우 선*/
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+#con_2_pro{
+    display: block;
+    float: left;
+    width: 145px;
+    height: 50px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 550;
+    color: rgb(190, 187, 187);
+    line-height: 50px;
+    border: 1px solid rgb(221, 219, 219);
+    border-bottom: 0px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+/*form 상자-----------------------------------*/
+#con_3{
+    width: 1000px;
+    height: 1080px;
+    position: relative;
+    top: -20px;
+    border: 1px solid black;
+}
+
+#con_3 *{
+    text-align: left;
+}
+
+#category1{
+    position: relative;
+    top: -3px;
+    left: 75px;
+    width: 100px;
+    height: 33px;
+}
+#pro_Name1{
+    position: relative;
+    top: -22px;
+}
+#pro_Name2{
+    position: relative;
+    top: -25px;
+    left: 57px;
+    width: 200px;
+    height: 30px;
+}
+#pro_Publisher1{
+    position: relative;
+    top: -45px;
+}
+#pro_Publisher2{
+    position: relative;
+    top: -45px;
+    left: 57px;
+    width: 200px;
+    height: 30px;
+}
+#pro_author1{
+    position: relative;
+    top: -70px;
+}
+#pro_author2{
+    position: relative;
+    top: -70px;
+    left: 75px;
+    width: 200px;
+    height: 30px;
+}
+#pro_Price1{
+    position: relative;
+    top: -95px;
+}
+#pro_Price2{
+    position: relative;
+    top: -95px;
+    left: 8px;
+    width: 200px;
+    height: 30px;
+}
+#pro_sales1{
+    position: relative;
+    top: -120px;
+}
+#pro_sales2{
+    position: relative;
+    top: -120px;
+    left: 30px;
+    width: 200px;
+    height: 30px;
+}
+#pro_Stock1{
+    position: relative;
+    top: -145px;
+}
+#pro_Stock2{
+    position: relative;
+    top: -145px;
+    left: 40px;
+    width: 200px;
+    height: 30px;
+}
+#pro_Des1{
+    position: relative;
+    top: -280px;
+}
+#pro_Des2{
+    position: relative;
+    top: -170px;
+    left: 40px;
+    width: 200px;
+    height: 30px;
+    width: 500px;
+    height: 200px;
+}
+#thum1{
+    position: relative;
+    top: -280px;
+}
+#thum2{
+    position: relative;
+    top: -195px;
+    left: 20px;
+    width: 200px;
+    height: 200px;
+}
+#img{
+    position: relative;
+    top: -280px;
+}
+#contentImg1{
+    position: relative;
+    top: -220px;
+    left: 20px;
+}
+#contentImg2{
+    position: relative;
+    top: -220px;
+    left: 20px;
+}
+#contentImg3{
+    position: relative;
+    top: -220px;
+    left: 20px;
+}
+#register_Btn{
+    position: relative;
+    top: -200px;
+    left: 380px;
+    width: 90px;
+    height: 40px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid rgb(123, 119, 119);
+}
+#back{
+    position: relative;
+    top: -200px;
+    left: 380px;
+    width: 90px;
+    height: 40px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid rgb(123, 119, 119);
+}
+
+#register_Btn,#back{
+    text-align: center;
+}

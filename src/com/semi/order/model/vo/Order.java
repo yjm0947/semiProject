@@ -13,6 +13,7 @@ public class Order {
 	private String email;
 	private String address;
 	private int point;
+	private String titleImg;
 	
 //	PRODUCT_NAME,(PRODUCT_PRICE-PRODUCT_PRICE*PRODUCT_SALES_RATE) PRICE,QUANTITY,PRODUCT_PUBLISHER,MEMBER_NAME,PHONE,EMAIL,ADDRESS
 //	상품이미지 이름 판매가 수량 판매자 배송비
@@ -23,8 +24,6 @@ public class Order {
 		super();
 	}
 	
-
-
 public Order(String productName, int price, int quantity, String productPub, String memberName, String phone,
 			String email, String address, int point) {
 		super();
@@ -38,8 +37,6 @@ public Order(String productName, int price, int quantity, String productPub, Str
 		this.address = address;
 		this.point = point;
 	}
-
-
 
 public Order(int orderNo, int memberNo, int productNo, String productName, int price, int quantity, String productPub,
 		String memberName, String phone, String email, String address) {
@@ -57,7 +54,6 @@ public Order(int orderNo, int memberNo, int productNo, String productName, int p
 	this.address = address;
 }
 
-
 public Order(int orderNo, int memberNo, int productNo, String productName, int price, int quantity, String productPub,
 		String memberName, String phone, String email, String address, int point) {
 	super();
@@ -73,6 +69,24 @@ public Order(int orderNo, int memberNo, int productNo, String productName, int p
 	this.email = email;
 	this.address = address;
 	this.point = point;
+}
+
+public Order(int orderNo, int memberNo, int productNo, String productName, int price, int quantity, String productPub,
+		String memberName, String phone, String email, String address, int point, String titleImg) {
+	super();
+	this.orderNo = orderNo;
+	this.memberNo = memberNo;
+	this.productNo = productNo;
+	this.productName = productName;
+	this.price = price;
+	this.quantity = quantity;
+	this.productPub = productPub;
+	this.memberName = memberName;
+	this.phone = phone;
+	this.email = email;
+	this.address = address;
+	this.point = point;
+	this.titleImg = titleImg;
 }
 
 
@@ -173,15 +187,20 @@ public void setPoint(int point) {
 	this.point = point;
 }
 
+public String getTitleImg() {
+	return titleImg;
+}
+
+public void setTitleImg(String titleImg) {
+	this.titleImg = titleImg;
+}
+
 @Override
 public String toString() {
 	return "Order [orderNo=" + orderNo + ", memberNo=" + memberNo + ", productNo=" + productNo + ", productName="
 			+ productName + ", price=" + price + ", quantity=" + quantity + ", productPub=" + productPub
 			+ ", memberName=" + memberName + ", phone=" + phone + ", email=" + email + ", address=" + address
-			+ ", point=" + point + "]";
+			+ ", point=" + point + ", titleImg=" + titleImg + "]";
 }
 
-
-	
-	
 }

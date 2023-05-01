@@ -525,13 +525,7 @@
 		            });
 	            });
 		      
-        	/* 체크박스 전체 선택 */
-            function selectAll(selectAll){
-                var checkboxes = document.getElementsByName('cart');
-                /*console.log(checkboxes)*/
-
-                checkboxes.forEach((checkboxes)=>checkboxes.checked=selectAll.checked);
-            }
+        	
         	
         	//디테일 페이지 이동
             $(function(){

@@ -19,7 +19,7 @@ public class Board {
 	
 	private int boardNo;
 	private String memberNo;
-	private int productNo;
+	private String productNo;
 	private int boardCategory;
 	private String boardTitle;
 	private String boardContent;
@@ -30,6 +30,14 @@ public class Board {
 	
 	public Board() {
 		super();
+	}
+	
+	
+	//FAQ 키워드 검색 생성자
+	public Board(String boardTitle, String boardContent) {
+		super();
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
 	}
 
 	//FAQ 조회 생성자
@@ -51,7 +59,7 @@ public class Board {
 	}
 
 	//1:1 문의 조회 생성자
-	public Board(int boardNo, String memberNo, int productNo, String boardTitle, String boardContent,
+	public Board(int boardNo, String memberNo, String productNo, String boardTitle, String boardContent,
 			String boardAnswered, Date createDate) {
 		super();
 		this.boardNo = boardNo;
@@ -88,7 +96,7 @@ public class Board {
 		this.createDate = createDate;
 	}
 
-	public Board(int boardNo, String memberNo, int productNo, int boardCategory, String boardTitle, String boardContent,
+	public Board(int boardNo, String memberNo, String productNo, int boardCategory, String boardTitle, String boardContent,
 			String boardAnswered, int boardCount, Date createDate, String status) {
 		super();
 		this.boardNo = boardNo;
@@ -119,11 +127,11 @@ public class Board {
 		this.memberNo = memberNo;
 	}
 
-	public int getProductNo() {
+	public String getProductNo() {
 		return productNo;
 	}
 
-	public void setProductNo(int productNo) {
+	public void setProductNo(String productNo) {
 		this.productNo = productNo;
 	}
 

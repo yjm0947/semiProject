@@ -3,7 +3,7 @@ package com.semi.order.model.vo;
 import java.sql.Date;
 
 public class Payment {
-	private int paymentNumber;		//PAYMENT_NUMBER NUMBER 결제번호
+	private long paymentNumber;		//PAYMENT_NUMBER NUMBER 결제번호
 	private int orderNo;			//ORDER_NO NUMBER 주문번호
 	private String memberNo;			//MEMBER_NO NUMBER 회원번호
 	private String productNo;		//PRODUCT_NO NUMBER 상품번호
@@ -21,12 +21,56 @@ public class Payment {
 	private String detailAddress;	//DETAIL_ADDRESS VARCHAR2(100 BYTE) 상세주소
 	private String state;			//STATE VARCHAR2(30 BYTE) 배송상태
 	private int deliveryCost;		//DELIVERY_COST NUMBER 배송비
+	private String checkPay;		//CHECK_PAY	CHAR(2 BYTE) 입금확인
 	
 	public Payment() {
 		super();
 	}
+	
+	//주문관리 상세조회 (관리자)
+	public Payment(int orderNo, String memberNo, String productNo, Date createdAt, int payment, String orderRequest,
+			String bankName, String depositName, int usePoint, String addressName, String phone, String email,
+			String roadAddress, String detailAddress, int deliveryCost, String checkPay) {
+		super();
+		this.orderNo = orderNo;
+		this.memberNo = memberNo;
+		this.productNo = productNo;
+		this.createdAt = createdAt;
+		this.payment = payment;
+		this.orderRequest = orderRequest;
+		this.bankName = bankName;
+		this.depositName = depositName;
+		this.usePoint = usePoint;
+		this.addressName = addressName;
+		this.phone = phone;
+		this.email = email;
+		this.roadAddress = roadAddress;
+		this.detailAddress = detailAddress;
+		this.deliveryCost = deliveryCost;
+		this.checkPay = checkPay;
+	}
 
-	public Payment(int paymentNumber, String memberNo, Date createdAt, int payment, String orderRequest, String bankName,
+	//주문관리 리스트(관리자)
+	public Payment(int orderNo, String memberNo, Date createdAt, int payment, String orderRequest, String addressName,
+			String roadAddress, String detailAddress, String checkPay) {
+		super();
+		this.orderNo = orderNo;
+		this.memberNo = memberNo;
+		this.createdAt = createdAt;
+		this.payment = payment;
+		this.orderRequest = orderRequest;
+		this.addressName = addressName;
+		this.roadAddress = roadAddress;
+		this.detailAddress = detailAddress;
+		this.checkPay = checkPay;
+	}
+	
+	public Payment(long paymentNumber) {
+		super();
+		this.paymentNumber = paymentNumber;
+	}
+
+	public Payment(long paymentNumber, String memberNo, Date createdAt, int payment, String orderRequest, String bankName,
 			String depositName, String addressName, String post, String roadAddress, String detailAddress, String state,
 			int deliveryCost, int orderNo, String productNo, int usePoint) {
 		this.paymentNumber = paymentNumber;
@@ -47,12 +91,15 @@ public class Payment {
 		this.usePoint = usePoint;
 	}
 	
-	public Payment(int orderNo, String productNo, String depositName, int payment) {
+	public Payment(int orderNo, String productNo, String depositName, int payment, int deliveryCost, int usePoint, String state) {
 		super();
 		this.orderNo = orderNo;
 		this.productNo = productNo;
 		this.depositName = depositName;
 		this.payment = payment;
+		this.deliveryCost = deliveryCost;
+		this.usePoint = usePoint;
+		this.state = state;
 	}
 	
 	public Payment(int orderNo, String memberNo, String productNo, int payment, String orderRequest, String bankName,
@@ -76,7 +123,7 @@ public class Payment {
 		this.deliveryCost = deliveryCost;
 	}
 
-	public Payment(int paymentNumber, int orderNo, String memberNo, String productNo, Date createdAt, int payment,
+	public Payment(long paymentNumber, int orderNo, String memberNo, String productNo, Date createdAt, int payment,
 			String orderRequest, String bankName, String depositName, int usePoint, String addressName, String phone,
 			String email, String post, String roadAddress, String detailAddress, String state, int deliveryCost) {
 		super();
@@ -100,11 +147,11 @@ public class Payment {
 		this.deliveryCost = deliveryCost;
 	}
 
-	public int getPaymentNumber() {
+	public long getPaymentNumber() {
 		return paymentNumber;
 	}
 
-	public void setPaymentNumber(int paymentNumber) {
+	public void setPaymentNumber(long paymentNumber) {
 		this.paymentNumber = paymentNumber;
 	}
 
@@ -243,6 +290,15 @@ public class Payment {
 	public void setDeliveryCost(int deliveryCost) {
 		this.deliveryCost = deliveryCost;
 	}
+	
+	public String getCheckPay() {
+		return checkPay;
+	}
+
+
+	public void setCheckPay(String checkPay) {
+		this.checkPay = checkPay;
+	}
 
 	@Override
 	public String toString() {
@@ -251,7 +307,7 @@ public class Payment {
 				+ orderRequest + ", bankName=" + bankName + ", depositName=" + depositName + ", usePoint=" + usePoint
 				+ ", addressName=" + addressName + ", phone=" + phone + ", email=" + email + ", post=" + post
 				+ ", roadAddress=" + roadAddress + ", detailAddress=" + detailAddress + ", state=" + state
-				+ ", deliveryCost=" + deliveryCost + "]";
+				+ ", deliveryCost=" + deliveryCost + ", checkPay=" + checkPay + "]";
 	}
 	
 }

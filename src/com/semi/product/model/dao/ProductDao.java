@@ -753,6 +753,7 @@ public class ProductDao {
 									  ,rset.getDate("CREATE_DATE")
 									  ,rset.getString("STATUS")));
 				}
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -800,7 +801,61 @@ public class ProductDao {
 			return item;
 		}
 
+		//입고조회 리스트
+		public ArrayList<Product> selectReceiveAdmin(Connection conn) {
+			
+			ArrayList<Product> list = new ArrayList<>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("selectReceiveAdmin");
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(sql);
+				
+				while(rset.next()) {
+					list.add(new Product(rset.getInt("PRODUCT_NO")
+										,rset.getString("PRODUCT_CATEGORY")
+										,rset.getString("PRODUCT_NAME")
+										,rset.getInt("PRODUCT_STOCK")
+										,rset.getDate("CREATE_DATE")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(stmt);
+			}
+			return list;
+		}
 
-
-
+		//출고조회 리스트
+		public ArrayList<Product> selectReleaseAdmin(Connection conn) {
+			
+			ArrayList<Product> list = new ArrayList<>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("selectReleaseAdmin");
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(sql);
+				while(rset.next()) {
+					list.add(new Product(rset.getInt("PRODUCT_NO")
+										,rset.getString("PRODUCT_CATEGORY")
+										,rset.getString("PRODUCT_NAME")
+										,rset.getInt("QUANTITY")
+										,rset.getString("MEMBER_NAME")
+										,rset.getDate("CREATED_AT")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(stmt);
+			}
+			return list;
+		}
 }

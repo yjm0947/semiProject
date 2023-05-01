@@ -1,77 +1,100 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String p = (String)request.getAttribute("payment");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-        *{
-            margin: 0;
-            padding:0;
-        }
-        a{
-            text-decoration: none;
-        }
-        .title-common-frame{
-            margin-top: 40px;
-            margin-bottom: 50px;
-            text-align: center;
+        div{
+            /* border: 1px solid black; */
+            box-sizing: border-box;
         }
         
-        /* 화면 전체 렙 */
-        .wrapper{
-            width: 100%;
-        }
-        
-        /* content 랩 */
-        .wrap{
-            width : 1080px;
+
+        /*==================================================================================*/
+        #content_1{
+            /* background-color: antiquewhite; */
+            width: 1000px;
+            height: 600px;
             margin: auto;
+            position: relative;
         }
-        .content_main{
-            width: 100%;
-            text-align: center;
-        }
-        
-        /* float 속성 해제 */
-        .clearfix{
-            clear: both;
-        }
-
-        /* 페이지 타이틀 */
-        .page-title{
-            margin-top: 100px;
-            font-size: 25px;
-            font-weight: bold;
-        }
-        
-        /* 배송지/결제 정보 */
-        .content{
-            width: 70%;
-            display: inline-block;
-            margin: 50px;
-            text-align: left;
-            border: 0px solid black;
-        }
-        .title-area{
-            font-size: larger;
-            font-weight: bold;
-        }
-        .input-container{
-            margin: 20px 0;
-        }
-        .title{
-            width: 100px;
-            border: 0px solid;
-            display: inline-block;
-        }
-        .input-area{
+        #context_text{
+            /* background-color: aqua; */
             width: 600px;
-            border: 0px solid;
-            display: inline-block;
+            height: 400px;
+            position: absolute;
+            top: 50%;
+            margin-top: -21%;
+            margin-left: 19%;
+            border: 1px solid rgb(201, 201, 201);
+            border-radius: 5px;
+        } 
+        #con_header{
+            background-color: rgb(240, 240, 240);
+            width: 100%;
+            height: 85px;
+            position: absolute;
+            top: 5%;
+            color: rgb(68, 68, 68);
+            font-size: 35px;
+            font-weight: 600;
+            line-height: 2.3;
         }
-
+        #con_info{
+            border: 1px solid rgb(177, 177, 177);
+            height: 250px;
+            width: 80%;
+            position: absolute;
+            margin-top: 20%;
+            margin-left: 9.5%;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 24px;
+            color: rgb(78, 78, 78);
+        }
+        #con_info_1{
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+        }
+        #con_info_2{
+            width: 90%;
+            height: 60px;
+            margin: auto;
+            font-weight: 600;
+            line-height: 60px;
+            background-color: rgb(236, 236, 236);
+        }
+        #con_info_2>div{
+            float: left;
+            height: 100%;
+        }
+        #con_info_3{
+            width: 100%;
+            height: 118px;
+        }
+        #info_3_1>div{
+            float: left;
+            height: 33px;
+            /* position: absolute; */
+            /* margin-left: 500px; */
+        }
+        #info_3_1{
+            position: relative;
+            top: -30px;
+        }
+        #con_info_4{
+            width: 100%;
+            height: 60px;
+            font-size: 13px;
+            position: relative;
+            top: -30px;
+        }
         /* 홈버튼 */
         .home_btn{
             display: inline-block;
@@ -83,73 +106,54 @@
             color: #fff;
             font-weight: bold;
             text-decoration: none;
+            position: relative;
+            top: -80px;
+            border: 2px solid white;
         }
         .home_btn:hover{
             cursor: pointer;
         }
-</style>    
+</style>
 </head>
 <body>
 <%@include file = "../common/header.jsp" %>
-<div class="wrapper">
-    <div class="wrap">
-        <div class="content_main">
-
-            <div class="title-common-frame">
-                <div class="page-title">주문완료</div>
-            </div>
-
-        <div class="content">
-            <div class="title-area">배송지 정보</div>
-                        
-            <div class="detail-area">
-                <div class="input-container">
-                    <div class="title">받으시는 분</div>
-                    <div class="input-area">윤재민</div>
-                </div>
-                
-                <div class="input-container">
-                    <div class="title">연락처</div>
-                    <div class="input-area">010-0000-0000</div>
-                </div>
-                
-                <div class="input-container">
-                    <div class="title">주소</div>
-                    <div class="input-area">서울특별시 성동구 마장동</div>
+  
+    <div id="content">
+        <div id="content_1">
+            <div id="context_text">
+                <div id="con_header">&nbsp;주문 완료</div>
+                <div id="con_info">
+                    <div id="con_info_1">파란 서점을 이용해 주셔서 감사합니다.</div>
+                    <div id="con_info_2">
+                        <div style="width: 130px; text-align: right;">고객님,&nbsp;</div>
+                        <div style="width: 134px; color: blue;">주문이 완료</div>
+                        <div style="width: 130px; text-align: left;">되었습니다.</div>
+                    </div>
+                    <div id="con_info_3">
+                        <div style="line-height: 90px;">고객님이 주문하신 주문번호는</div>
+                        <div id="info_3_1">
+                            <div style="width: 280px; text-align: right; color: blue; font-weight: 600;"><%=p %></div>
+                            <div style="width: 180px; text-align: left;">입니다</div>
+                        </div>
+                    </div>
+                    <div id="con_info_4" >*주문내역 확인은 마이페이지의 "주문조회"에서 하실 수 있습니다.</div>
                 </div>
             </div>
-
         </div>
-
-        <div class="content">
-            <div class="title-area">결제 정보</div>
-                        
-            <div class="detail-area">
-                <div class="input-container">
-                    <div class="title">결제방법</div>
-                    <div class="input-area">무통장입금</div>
-                </div>
-                
-                <div class="input-container">
-                    <div class="title">결제금액</div>
-                    <div class="input-area">50000원</div>
-                </div>
-                
-                <div class="input-container">
-                    <div class="title">입금정보</div>
-                    <div class="input-area">우리은행 0000-000-000000(입금자명:ㅇㅇㅇ)</div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content" style="text-align: center;">
+		<div style="text-align: center;">
             <button class="home_btn">홈으로</button>
         </div>
-
-        </div>
+		
     </div>
-</div>
+
+<script type="text/javascript">
+	$(function() {
+		$(".home_btn").click(function () {
+			location.replace("<%=request.getContextPath()%>");
+		});
+	});
+</script>
+
 <%@include file = "../common/footer.jsp" %>
 </body>
 </html>

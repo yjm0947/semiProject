@@ -360,4 +360,28 @@ public class ProductService {
 			
 			return list;
 		}
+
+		//출고조회 키워드 검색 - 관리자
+		public ArrayList<Product> searchReleaseAdmin(int num, String search) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> list = new ProductDao().searchReleaseAdmin(conn,num,search);
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
+		}
+
+		//상품관리 키워드 검색 - 관리자
+		public ArrayList<Product> searchProductAdmin(int num, String search) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> list = new ProductDao().searchProductAdmin(conn,num,search);
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
+		}
 }

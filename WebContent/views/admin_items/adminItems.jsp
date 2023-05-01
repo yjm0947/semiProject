@@ -3,7 +3,7 @@
     
  <%
  	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
- 	int[] relist = (int[])request.getAttribute("relist");
+ int[] relist = (int[])request.getAttribute("relist");
  %>
 <!DOCTYPE html>
 <html>
@@ -30,18 +30,29 @@
 		</div>
 		<div class="middle">
 			<div id="mid_search">
-				<form action="" method="post">
+				<form action="<%=contextPath%>/searchProduct.admin" method="get" onsubmit="return blankSearch()">
 					<select name="ms_select" id="ms_select">
 						<option value="1">상품 번호</option>
 						<option value="2">상품 카테고리</option>
 						<option value="3">상품명</option>
 						<option value="4">출판사</option>
 						<option value="5">저자</option>
+						<option value="6">등록일</option>
 					</select>
 						<input type="search" name="memberSearch" id="memberSearch">
-						<button id="ms_img"></button>
+						<button type="submit" id="ms_img"></button>
 				</form>
 			</div>
+			
+			<script>
+				function blankSearch(){
+					if($("#memberSearch").val().length == 0){
+						alert("다시 입력해주시길 바랍니다.");
+						return false;
+					}
+				};
+			</script>
+			
 			<div id="noticeBtn">
 				<button onclick="location.href='<%=contextPath%>/book.regi'">상품 등록</button>
 			</div>
@@ -104,13 +115,17 @@
 								<td><%=i.getProductPrice() %></td>
 								<td><%=i.getProductSalesRate() %></td>
 								
-								<%if(i.getProductStock() - relist[j] > 0) {%>
+								<%if((i.getProductStock() - relist[j]) > 0) {%>
 									<td><%=i.getProductStock() - relist[j] %></td>
 								<%}else {%>
 									<td>0</td>
 								<%} %>
 								
-								<td><%=i.getAuthor() %></td>
+								<%if(i.getAuthor() == null){%>
+									<td></td>
+								<%}else{%>
+									<td><%=i.getAuthor() %></td>
+								<%}%>
 								<td><%=i.getCreateDate() %></td>
 								<td><%=i.getStatus() %></td>
 							</tr>
@@ -218,7 +233,7 @@
 							</div>
 		
 							<div>
-								상태값
+								삭제유무
 								<div>
 									
 								</div>
@@ -256,7 +271,9 @@
 			<!-- ==================== 스크립트 ==================== -->
 
 			<script>
+			
 				$(".list-area>tbody>tr").click(function(){
+					var rel = $(this).children().eq(7).text();
 				
 					//상품번호 추출
 					var pno = $(this).children().eq(0).text();
@@ -299,8 +316,8 @@
 							$(".modal_body").children().children().eq(4).text(result.productText);
 							$(".modal_body").children().children().eq(5).text(result.productPrice);
 							$(".modal_body").children().children().eq(6).text(result.productSalesRate);
-							if((result.productStock - <%=relist%>) > 0){
-								$(".modal_body").children().children().eq(7).text(result.productStock - <%=relist%>);
+							if(rel > 0){
+								$(".modal_body").children().children().eq(7).text(rel);
 							}else{
 								$(".modal_body").children().children().eq(7).text(0);
 							}

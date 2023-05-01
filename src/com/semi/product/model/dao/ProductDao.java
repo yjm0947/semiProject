@@ -846,7 +846,7 @@ public class ProductDao {
 										,rset.getString("PRODUCT_CATEGORY")
 										,rset.getString("PRODUCT_NAME")
 										,rset.getInt("QUANTITY")
-										,rset.getString("MEMBER_NAME")
+										,rset.getString("MEMBER_ID")
 										,rset.getDate("CREATED_AT")));
 				}
 				
@@ -927,6 +927,17 @@ public class ProductDao {
 			try {
 				pstmt = conn.prepareStatement(sql);
 				
+				//상품번호 키워드 검색시 문자열로 들어왔을때 처리
+				char chkSearch = '\u0000';
+				
+				for(int i=0; i<search.length(); i++) {
+					chkSearch = search.charAt(i); 
+				}
+				
+				if(num == 1 && (int)chkSearch < 48 ||(int)chkSearch >57) {
+					return list;
+				}
+				
 				switch(num) {
 					case 1 : pstmt.setInt(1, Integer.parseInt(search));
 						break;
@@ -958,7 +969,7 @@ public class ProductDao {
 							}
 						pstmt.setString(1, search);
 						break;
-					case 4 : pstmt.setInt(1, Integer.parseInt(search));
+					case 4 : pstmt.setString(1, search);
 						break;
 				}
 				
@@ -971,6 +982,192 @@ public class ProductDao {
 										,rset.getInt("PRODUCT_STOCK")
 										,rset.getDate("CREATE_DATE")));
 				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return list;
+		}
+
+		//출고조회 키워드 검색 - 관리자
+		public ArrayList<Product> searchReleaseAdmin(Connection conn, int num, String search) {
+			ArrayList<Product> list = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = "";
+			
+			switch(num) {
+				case 1 : sql = prop.getProperty("searchReleasePno");
+					break;
+				case 2 : sql = prop.getProperty("searchReleasePname");
+					break;
+				case 3 : sql = prop.getProperty("searchReleaseCate");
+					break;
+				case 4 : sql = prop.getProperty("searchReleaseId");
+					break;
+				case 5 : sql = prop.getProperty("searchReleaseDate");
+					break;
+			}
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				//상품번호 키워드 검색시 문자열로 들어왔을때 처리
+				char chkSearch = '\u0000';
+				
+				for(int i=0; i<search.length(); i++) {
+					chkSearch = search.charAt(i); 
+				}
+				
+				if(num == 1 && (int)chkSearch < 48 ||(int)chkSearch >57) {
+					return list;
+				}
+				
+				switch(num) {
+					case 1 : pstmt.setInt(1, Integer.parseInt(search));
+						break;
+					case 2 : pstmt.setString(1, search);
+						break;
+					case 3 : switch(search) {
+								case "소설" : search = "1";
+									break;
+								case "에세이" : search = "2";
+									break;
+								case "자기계발" : search = "3";
+									break;
+								case "경제" : search = "4";
+									break;
+								case "경영" : search = "4";
+									break;
+								case "경제/경영" : search = "4";
+									break;
+								case "인문학" : search = "5";
+									break;
+								case "정치" : search = "6";
+									break;
+								case "사회" : search = "6";
+									break;
+								case "정치/사회" : search = "6";
+									break;
+								case "아이템" : search = "7";
+									break;
+							}
+						pstmt.setString(1, search);
+							break;
+					case 4 :
+					case 5 : pstmt.setString(1, search);
+						break;
+				}
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Product(rset.getInt("PRODUCT_NO")
+										,rset.getString("PRODUCT_CATEGORY")
+										,rset.getString("PRODUCT_NAME")
+										,rset.getInt("QUANTITY")
+										,rset.getString("MEMBER_ID")
+										,rset.getDate("CREATED_AT")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return list;
+		}
+
+		//상품관리 키워드 검색 - 관리자
+		public ArrayList<Product> searchProductAdmin(Connection conn, int num, String search) {
+			ArrayList<Product> list = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = "";
+			
+			switch(num) {
+				case 1 : sql = prop.getProperty("searchProductPno");
+					break;
+				case 2 : sql = prop.getProperty("searchProductCate");
+					break;
+				case 3 : sql = prop.getProperty("searchProductPname");
+					break;
+				case 4 : sql = prop.getProperty("searchProductPub");
+					break;
+				case 5 : sql = prop.getProperty("searchProductAthor");
+					break;
+				case 6 : sql = prop.getProperty("searchProductDate");
+					break;
+			}
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				//상품번호 키워드 검색시 문자열로 들어왔을때 처리
+				char chkSearch = '\u0000';
+				
+				for(int i=0; i<search.length(); i++) {
+					chkSearch = search.charAt(i); 
+				}
+				
+				if(num == 1 && (int)chkSearch < 48 ||(int)chkSearch >57) {
+					return list;
+				}
+				
+				switch(num) {
+					case 1 : pstmt.setInt(1, Integer.parseInt(search));
+						break;
+					case 2 : switch(search) {
+								case "소설" : search = "1";
+									break;
+								case "에세이" : search = "2";
+									break;
+								case "자기계발" : search = "3";
+									break;
+								case "경제" : search = "4";
+									break;
+								case "경영" : search = "4";
+									break;
+								case "경제/경영" : search = "4";
+									break;
+								case "인문학" : search = "5";
+									break;
+								case "정치" : search = "6";
+									break;
+								case "사회" : search = "6";
+									break;
+								case "정치/사회" : search = "6";
+									break;
+								case "아이템" : search = "7";
+									break;
+							}
+						pstmt.setString(1, search);
+							break;
+					case 3 :
+					case 4 :
+					case 5 :
+					case 6 : pstmt.setString(1, search);
+						break;
+				}
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Product(rset.getInt("PRODUCT_NO")
+									  ,rset.getString("PRODUCT_CATEGORY")
+									  ,rset.getString("PRODUCT_NAME")
+									  ,rset.getString("PRODUCT_PUBLISHER")
+									  ,rset.getString("PRODUCT_TEXT")
+									  ,rset.getInt("PRODUCT_PRICE")
+									  ,rset.getInt("PRODUCT_SALES_RATE")
+									  ,rset.getInt("PRODUCT_STOCK")
+									  ,rset.getString("AUTHOR")
+									  ,rset.getDate("CREATE_DATE")
+									  ,rset.getString("STATUS")));
+				}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {

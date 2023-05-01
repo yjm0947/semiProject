@@ -13,16 +13,16 @@ import com.semi.product.model.service.ProductService;
 import com.semi.product.model.vo.Product;
 
 /**
- * Servlet implementation class itemsController
+ * Servlet implementation class SearchProductAdmin
  */
-@WebServlet("/items.admin")
-public class ProductAdminController extends HttpServlet {
+@WebServlet("/searchProduct.admin")
+public class SearchProductAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductAdminController() {
+    public SearchProductAdmin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,36 +32,20 @@ public class ProductAdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		ArrayList<Product> list = new ArrayList<>();
+		int num = Integer.parseInt(request.getParameter("ms_select"));
 		
-//		if(request.getAttribute("list") == null) {
-			//상품 리스트 추출해서 뷰로 넘겨주기
-		ArrayList<Product> list = new ProductService().selectAdminProduct();
-//		}else {
-//			list = (ArrayList<Product>)request.getAttribute("list");
-//		}
+		String search = request.getParameter("memberSearch");
 		
-		//list.size()만큼 크기 지정 
-		int rel[] = new int[list.size()];  
+		ArrayList<Product> list = new ProductService().searchProductAdmin(num,search);
 		
-		//rel에 상품번호 넣어주기
-		for(int i=0; i<list.size(); i++) {
-			rel[i] = list.get(i).getProductNo();
+		if(list.isEmpty()) {
+			request.getSession().setAttribute("alertMsg", "해당하는 상품이 없습니다.");
+			response.sendRedirect(request.getContextPath()+"/items.admin");
+		}else {
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("/items.admin").forward(request, response);
 		}
 		
-		//출고량 추출
-		int relist[] = new int[list.size()];
-		
-		for(int i=0; i<rel.length; i++) {
-			relist[i] = new ProductService().relAdminProduct(rel[i]);
-		}
-		
-		
-		
-		request.setAttribute("list", list);
-		request.setAttribute("relist", relist);
-		
-		request.getRequestDispatcher("views/admin_items/adminItems.jsp").forward(request, response);
 	}
 
 	/**

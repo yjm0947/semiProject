@@ -264,7 +264,7 @@
 
 <!-- 출고조회 리스트 -->
 <entry key="selectReleaseAdmin">
-        SELECT P.PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,QUANTITY,MEMBER_NAME,CREATED_AT
+        SELECT P.PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,QUANTITY,MEMBER_ID,CREATED_AT
         FROM PRODUCT P
         JOIN P_ORDER PO ON (P.PRODUCT_NO = PO.PRODUCT_NO)
         JOIN PAYMENT PAY ON (PO.ORDER_NO = PAY.ORDER_NO)
@@ -310,7 +310,99 @@
 <entry key="searchReveiveCreateAdmin">
 	SELECT PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,PRODUCT_STOCK,CREATE_DATE
 	FROM PRODUCT
-	WHERE CREATE_DATE LIKE TO_DATE(?,'YYYY')
+	WHERE TO_CHAR(CREATE_DATE,'YYYYMMDD') LIKE '%'||?||'%'
+</entry>
+
+<!-- 출고조회 키워드 상품 번호 검색 (관리자) -->
+<entry key="searchReleasePno">
+    SELECT P.PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,QUANTITY,MEMBER_ID,CREATED_AT
+    FROM PRODUCT P
+    JOIN P_ORDER PO ON (P.PRODUCT_NO = PO.PRODUCT_NO)
+    JOIN PAYMENT PAY ON (PO.ORDER_NO = PAY.ORDER_NO)
+    JOIN MEMBER M ON (PO.MEMBER_NO = M.MEMBER_NO)
+    WHERE P.PRODUCT_NO = ?
+</entry>
+
+<!-- 출고조회 키워드 상품명 검색 (관리자) -->
+<entry key="searchReleasePname">
+    SELECT P.PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,QUANTITY,MEMBER_ID,CREATED_AT
+    FROM PRODUCT P
+    JOIN P_ORDER PO ON (P.PRODUCT_NO = PO.PRODUCT_NO)
+    JOIN PAYMENT PAY ON (PO.ORDER_NO = PAY.ORDER_NO)
+    JOIN MEMBER M ON (PO.MEMBER_NO = M.MEMBER_NO)
+    WHERE P.PRODUCT_NAME LIKE '%'||?||'%'
+</entry>
+
+<!-- 출고조회 키워드 상품 카테고리 검색 (관리자) -->
+<entry key="searchReleaseCate">
+    SELECT P.PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,QUANTITY,MEMBER_ID,CREATED_AT
+    FROM PRODUCT P
+    JOIN P_ORDER PO ON (P.PRODUCT_NO = PO.PRODUCT_NO)
+    JOIN PAYMENT PAY ON (PO.ORDER_NO = PAY.ORDER_NO)
+    JOIN MEMBER M ON (PO.MEMBER_NO = M.MEMBER_NO)
+    WHERE PRODUCT_CATEGORY = ?
+</entry>
+
+<!-- 출고조회 키워드 주문자ID 검색 (관리자) -->
+<entry key="searchReleaseId">
+    SELECT P.PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,QUANTITY,MEMBER_ID,CREATED_AT
+    FROM PRODUCT P
+    JOIN P_ORDER PO ON (P.PRODUCT_NO = PO.PRODUCT_NO)
+    JOIN PAYMENT PAY ON (PO.ORDER_NO = PAY.ORDER_NO)
+    JOIN MEMBER M ON (PO.MEMBER_NO = M.MEMBER_NO)
+    WHERE MEMBER_ID = ?
+</entry>
+
+<!-- 출고조회 키워드 출고날짜 검색 (관리자) -->
+<entry key="searchReleaseDate">
+    SELECT P.PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,QUANTITY,MEMBER_ID,CREATED_AT
+    FROM PRODUCT P
+    JOIN P_ORDER PO ON (P.PRODUCT_NO = PO.PRODUCT_NO)
+    JOIN PAYMENT PAY ON (PO.ORDER_NO = PAY.ORDER_NO)
+    JOIN MEMBER M ON (PO.MEMBER_NO = M.MEMBER_NO)
+    WHERE TO_CHAR(CREATED_AT,'YYYYMMDD') LIKE '%'||?||'%'
+</entry>
+
+<!-- 상품관리 키워드 상품번호 검색 (관리자) -->
+<entry key="searchProductPno">
+	SELECT *
+	FROM PRODUCT
+	WHERE PRODUCT_NO = ?
+</entry>
+
+<!-- 상품관리 키워드 상품카테고리 검색 (관리자) -->
+<entry key="searchProductCate">
+	SELECT *
+	FROM PRODUCT
+	WHERE PRODUCT_CATEGORY = ?
+</entry>
+
+<!-- 상품관리 키워드 상품명 검색 (관리자) -->
+<entry key="searchProductPname">
+	SELECT *
+	FROM PRODUCT
+	WHERE PRODUCT_NAME LIKE '%'||?||'%'
+</entry>
+
+<!-- 상품관리 키워드 출판사 검색 (관리자) -->
+<entry key="searchProductPub">
+	SELECT *
+	FROM PRODUCT
+	WHERE PRODUCT_PUBLISHER LIKE '%'||?||'%'
+</entry>
+
+<!-- 상품관리 키워드 저자 검색 (관리자) -->
+<entry key="searchProductAthor">
+	SELECT *
+	FROM PRODUCT
+	WHERE AUTHOR = ?
+</entry>
+
+<!-- 상품관리 키워드 등록일 검색 (관리자) -->
+<entry key="searchProductDate">
+	SELECT *
+	FROM PRODUCT
+	WHERE TO_CHAR(CREATE_DATE,'YYYYMMDD') LIKE '%'||?||'%'
 </entry>
 
 </properties>

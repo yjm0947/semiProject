@@ -39,7 +39,7 @@ public class SearchReceiveAdminController extends HttpServlet {
 		ArrayList<Product> list = new ProductService().searchReceiveAdmin(num,search);
 		
 		if(list.isEmpty()) {
-			request.getSession().setAttribute("alertMsg", "해당하는 상품이 없습니다.");
+			request.getSession().setAttribute("alertMsg", "해당하는 입고내역이 없습니다.");
 			response.sendRedirect(request.getContextPath()+"/receive.admin");
 		}else {
 			request.setAttribute("list", list);

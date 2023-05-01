@@ -22,7 +22,7 @@
 					<tr>
 						<td onclick="location.href='<%=contextPath%>/notice.admin'">공지사항</td>
 						<td onclick="location.href='<%=contextPath%>/inquire.admin'">1:1 문의</td>
-						<td onclick="location.href='<%=contextPath%>/faq.admin'">FAQ 관리</td>
+						<td id="own" onclick="location.href='<%=contextPath%>/faq.admin'">FAQ 관리</td>
 					</tr>
 				</table>
 		</div>

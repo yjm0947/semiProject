@@ -35,7 +35,7 @@ public class CheckPayAdminController extends HttpServlet {
 		int payment = Integer.parseInt(request.getParameter("payment"));
 		
 		//결제금액 적립금으로 계산
-		int pay = (int)((payment-3000)*0.1);
+		int pay = (int)((payment-3000)*0.01);
 		
 		//해당 주문번호 담기
 		int orderNo = Integer.parseInt(request.getParameter("orderNo"));

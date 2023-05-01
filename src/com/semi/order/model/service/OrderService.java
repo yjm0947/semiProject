@@ -103,11 +103,11 @@ public class OrderService {
 	}
 
 	//주문관리 상세조회 (관리자)
-	public Payment detailOrderAdmin(int ono) {
+	public Payment detailOrderAdmin(int Ono) {
 		
 		Connection conn = JDBCTemplate.getConnection();
 			
-		Payment pay = new OrderDao().detailOrderAdmin(conn,ono);
+		Payment pay = new OrderDao().detailOrderAdmin(conn,Ono);
 		
 		JDBCTemplate.close(conn);
 		

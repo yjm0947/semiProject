@@ -248,6 +248,7 @@
 		</div>
 		
 		<script>
+		
 			$(function(){
 				$(".list-area>tbody>tr").click(function(){
 					var Ono = $(this).children().eq(0).text();

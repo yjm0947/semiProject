@@ -293,14 +293,44 @@ public class ProductService {
 		}
 
 		//출고량 추출
-		public int relAdminProduct() {
+		public int relAdminProduct(int rel2) {
 			
 			Connection conn = JDBCTemplate.getConnection();
 			
-			int rel = new ProductDao().relAdminProduct(conn);
+			int rel = new ProductDao().relAdminProduct(conn,rel2);
 			
 			JDBCTemplate.close(conn);
 			
 			return rel;
+		}
+
+		//상품 삭제(관리자)
+		public int deleteProductAdmin(int pno) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int result = new ProductDao().deleteProductAdmin(conn,pno);
+					
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+			
+			JDBCTemplate.close(conn);
+			
+			return result;
+		}
+
+		//입고조회 키워드 검색 - 관리자
+		public ArrayList<Product> searchReceiveAdmin(int num, String search) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> list = new ProductDao().searchReceiveAdmin(conn,num,search);
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
 		}
 }

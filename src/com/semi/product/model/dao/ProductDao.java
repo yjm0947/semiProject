@@ -797,7 +797,7 @@ public class ProductDao {
 		}
 
 		//출고량 추출
-		public int relAdminProduct(Connection conn) {
+		public int relAdminProduct(Connection conn, int rel2) {
 			
 			int rel = 0;
 			PreparedStatement pstmt = null;
@@ -806,6 +806,8 @@ public class ProductDao {
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, rel2);
+				
 				rset = pstmt.executeQuery();
 				
 				if(rset.next()) {
@@ -818,5 +820,100 @@ public class ProductDao {
 				JDBCTemplate.close(pstmt);
 			}
 			return rel;
+		}
+
+		//상품 삭제 (관리자)
+		public int deleteProductAdmin(Connection conn, int pno) {
+			
+			int result = 0 ;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("deleteProductAdmin");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pno);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(pstmt);
+			}
+			return result;
+		}
+
+		//입고조회 키워드 검색 - 관리자
+		public ArrayList<Product> searchReceiveAdmin(Connection conn, int num, String search) {
+			
+			ArrayList<Product> list = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = "";
+			
+			switch(num) {
+			case 1 : sql = prop.getProperty("searchReceivePnoAdmin");
+				break;
+			case 2 : sql = prop.getProperty("searchReceivePnameAdmin");
+				break;
+			case 3 : sql = prop.getProperty("searchReceiveCateAdmin");
+				break;
+			case 4 : sql = prop.getProperty("searchReveiveCreateAdmin");
+			}
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				switch(num) {
+					case 1 : pstmt.setInt(1, Integer.parseInt(search));
+						break;
+					case 2: pstmt.setString(1, search);
+						break;
+					case 3 : switch(search) {
+								case "소설" : search = "1";
+									break;
+								case "에세이" : search = "2";
+									break;
+								case "자기계발" : search = "3";
+									break;
+								case "경제" : search = "4";
+									break;
+								case "경영" : search = "4";
+									break;
+								case "경제/경영" : search = "4";
+									break;
+								case "인문학" : search = "5";
+									break;
+								case "정치" : search = "6";
+									break;
+								case "사회" : search = "6";
+									break;
+								case "정치/사회" : search = "6";
+									break;
+								case "아이템" : search = "7";
+									break;
+							}
+						pstmt.setString(1, search);
+						break;
+					case 4 : pstmt.setInt(1, Integer.parseInt(search));
+						break;
+				}
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Product(rset.getInt("PRODUCT_NO")
+										,rset.getString("PRODUCT_CATEGORY")
+										,rset.getString("PRODUCT_NAME")
+										,rset.getInt("PRODUCT_STOCK")
+										,rset.getDate("CREATE_DATE")));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return list;
 		}	
 }

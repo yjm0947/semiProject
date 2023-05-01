@@ -8,7 +8,6 @@
 </head>
 <body>
 	<%@ include file = "views/common/header.jsp"%>
-	<a href="<%=contextPath%>/book.regi">상품등록</a>
 	<%@ include file = "views/common/main.jsp"%>
 	<%@ include file = "views/common/footer.jsp"%>
 </body>

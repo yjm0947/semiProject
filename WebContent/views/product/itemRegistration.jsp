@@ -9,187 +9,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
-        <style>
-        /*-----------------콘텐츠------------------------*/
-        #content{
-            width: 1000px;
-            height: 1220px;
-            margin: auto;
-        } 
-        #con_1{
-            width: 1000px;
-            height: 100px;
-            font-size: 36px;
-            padding: 30px;
-        }
-        .inputArea{
-            padding: 20px;
-            font-size: 18px;
-            font-weight: 550;
-        }
-        /*바------------------------------------------------------*/
-        #con_2{
-            width: 1000px;
-            height: 70px;
-        }
-        #con_2_book{
-            display: block;
-            float: left;
-            width: 145px;
-            height: 50px;
-            text-decoration: none;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 550;
-            color: rgb(190, 187, 187);
-            line-height: 50px;
-            border: 1px solid rgb(221, 219, 219);
-            border-bottom: 0px;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-        }
-        #con_2_pro{
-            display: block;
-            float: left;
-            width: 145px;
-            height: 50px;
-            text-decoration: none;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 550;
-            color: rgb(44, 43, 43);
-            line-height: 50px;
-            border: 1px solid rgb(44, 43, 43);
-            border-bottom-style: none; /*검색 우 선*/
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-        }
-        /*form 상자-----------------------------------*/
-        #con_3{
-            width: 1000px;
-            height: 1000px;
-            position: relative;
-            top: -20px;
-            border: 1px solid black;
-        }
-        #category1{
-            position: relative;
-            top: -3px;
-            left: 75px;
-            width: 100px;
-            height: 33px;
-        }
-        #pro_Name1{
-            position: relative;
-            top: -22px;
-        }
-        #pro_Name2{
-            position: relative;
-            top: -25px;
-            left: 57px;
-            width: 200px;
-            height: 30px;
-        }
-        #pro_Price1{
-            position: relative;
-            top: -43px;
-        }
-        #pro_Price2{
-            position: relative;
-            top: -50px;
-            left: 8px;
-            width: 200px;
-            height: 30px;
-        }
-        #pro_sales1{
-            position: relative;
-            top: -69px;
-        }
-        #pro_sales2{
-            position: relative;
-            top: -73px;
-            left: 30px;
-            width: 200px;
-            height: 30px;
-        }
-        #pro_Stock1{
-            position: relative;
-            top: -90px;
-        }
-        #pro_Stock2{
-            position: relative;
-            top: -93px;
-            left: 40px;
-            width: 200px;
-            height: 30px;
-        }
-        #pro_Des1{
-            position: relative;
-            top: -215px;
-        }
-        #pro_Des2{
-            position: relative;
-            top: -110px;
-            left: 40px;
-            width: 200px;
-            height: 30px;
-            width: 500px;
-            height: 200px;
-        }
-        #thum1{
-            position: relative;
-            top: -215px;
-        }
-        #thum2{
-            position: relative;
-            top: -125px;
-            left: 20px;
-            width: 200px;
-            height: 200px;
-        }
-        #img{
-            position: relative;
-            top: -200px;
-        }
-        #contentImg1{
-            position: relative;
-            top: -145px;
-            left: 20px;
-        }
-        #contentImg2{
-            position: relative;
-            top: -145px;
-            left: 20px;
-        }
-        #contentImg3{
-            position: relative;
-            top: -145px;
-            left: 20px;
-        }
-        #register_Btn{
-            position: relative;
-            top: -145px;
-            left: 420px;
-            width: 90px;
-            height: 40px;
-            background-color: white;
-            border-radius: 10px;
-            border: 1px solid rgb(123, 119, 119);
-        }
-        #back{
-            position: relative;
-            top: -145px;
-            left: 420px;
-            width: 90px;
-            height: 40px;
-            background-color: white;
-            border-radius: 10px;
-            border: 1px solid rgb(123, 119, 119);
-        }
-        </style>
+        <link rel="stylesheet" href="resources/adminPage_files/cssFolder/admin_insertItems2.css">
 </head>
 <body>
-	<%@include file = "../common/header.jsp" %>
+	<div class="wrap">
+		<%@include file="/views/common/admin_Category.jsp" %>
         <div id="content">
             <div id="con_1">상품등록</div>
             <div id="con_2">
@@ -212,6 +36,7 @@
                         <label for="pro_Publisher" id="pro_Publisher1">출판사(제조사)</label>
                         <input type="text" id="pro_Publisher2" name="pro_Publisher"/>
                     </div>
+                    <br>
                     <div class="inputArea">
                         <label for="pro_Price" id="pro_Price1">상품가격(원)</label>
                         <input type="number" id="pro_Price2" name="pro_Price" />
@@ -300,6 +125,9 @@
             
             </div>
         </div>
-	<%@include file = "../common/footer.jsp" %>
+	</div>
+		<div class="bottom">
+			<%@include file="/views/common/footer.jsp"%>
+		</div>
 </body>
 </html>

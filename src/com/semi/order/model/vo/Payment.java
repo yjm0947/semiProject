@@ -91,7 +91,7 @@ public class Payment {
 		this.usePoint = usePoint;
 	}
 	
-	public Payment(int orderNo, String productNo, String depositName, int payment, int deliveryCost, int usePoint, String state) {
+	public Payment(int orderNo, String productNo, String depositName, int payment, int deliveryCost, int usePoint, String state,Date createdAt) {
 		super();
 		this.orderNo = orderNo;
 		this.productNo = productNo;
@@ -100,6 +100,7 @@ public class Payment {
 		this.deliveryCost = deliveryCost;
 		this.usePoint = usePoint;
 		this.state = state;
+		this.createdAt = createdAt;
 	}
 	
 	public Payment(int orderNo, String memberNo, String productNo, int payment, String orderRequest, String bankName,

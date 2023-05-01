@@ -3,6 +3,7 @@ package com.semi.member.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.semi.board.model.vo.Board;
 import com.semi.board.review.model.vo.Review;
 import com.semi.common.JDBCTemplate;
 import com.semi.common.vo.PageInfo;
@@ -324,6 +325,35 @@ public class MemberService {
 			JDBCTemplate.close(conn);
 			
 			return result;
+		}
+
+		public int refundMyOrder(int memNo, int ono) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int result = new MemberDao().refundMyOrder(conn, memNo, ono);
+			
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+			
+			JDBCTemplate.close(conn);
+			
+			return result;
+		}
+
+		//나의 1:1 문의내역 조회
+		public ArrayList<Board> selectMyQna(int memNo) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Board> blist = new MemberDao().selectMyQna(conn, memNo);
+			
+			JDBCTemplate.close(conn);
+			
+			return blist;
 		}
 
 

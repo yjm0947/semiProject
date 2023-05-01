@@ -132,14 +132,17 @@
         .openModal .closeModal{
             cursor: pointer;
         }
-        #detailModal tr:nth-child(1) td:nth-child(1), tr:nth-child(2) td:nth-child(1),
-        			 tr:nth-child(3) td:nth-child(1){
+        #detailModal tr:nth-child(1) td:nth-child(1),
+        #detailModal tr:nth-child(2) td:nth-child(1),
+        #detailModal tr:nth-child(3) td:nth-child(1){
 			background-color: #D9D9D9;
 		}
-		#detailModal tr:nth-child(1) td:nth-child(3), tr:nth-child(2) td:nth-child(3) {
+		#detailModal tr:nth-child(1) td:nth-child(3),
+		#detailModal tr:nth-child(2) td:nth-child(3) {
 			background-color: #D9D9D9;
 		}
-		#detailModal tr:nth-child(1) td, tr:nth-child(2) td{
+		#detailModal tr:nth-child(1) td,
+		#detailModal tr:nth-child(2) td{
 			width: 150px;
 		}
 		#detailModal tr:nth-child(3) td:nth-child(2){
@@ -303,7 +306,7 @@
 	                        +"</tr>"
 	                        +"<tr>"
 	                            +"<td>"+"별점"+"</td>"
-	                            +"<td>"+r.reviewStar+"</td>"
+	                            +"<td>"+r.reviewStar+" 점"+"</td>"
 	                            +"<td>"+"작성자"+"</td>"
 	                            +"<td>"+"<%=loginUser.getMemberName() %>"+"</td>"
 	                        +"</tr>"

@@ -174,6 +174,7 @@
             cursor: pointer;
         }
         #refund-btn{
+        	display: none;
         	float: left;
             height: 40px;
             border-radius: 10px;
@@ -254,6 +255,7 @@
 	                                	<th colspan="3">주문번호</th>
 	                                	<th colspan="2">주문상품</th>
 		                                <th colspan="2">주문자명</th>
+		                                <th colspan="2">결제방식</th>
 		                                <th colspan="3">결제금액</th>
 		                                <th colspan="2">조회</th>
 	                                </tr>
@@ -265,6 +267,11 @@
 	                                    <td colspan="2"><%=p.getProductNo() %></td>
 	                                    <td colspan="2"><%=p.getDepositName() %></td>
 	                                    <td colspan="3"><%=p.getPayment()+p.getDeliveryCost() %></td>
+	                                    <%if(p.getBankName() != null) {%>
+	                                    	<td colspan="2">무통장</td>
+	                                    <%}else { %>
+	                                    	<td colspan="2">카드</td>
+	                                    <%} %>
 	                                    <td colspan="2">
 	                                    	<button type="button" class="openModal" data-toggle="modal" data-target="#myOrderModal">조회</button>
 	                                    </td>
@@ -343,11 +350,11 @@
 	        			async: false,
 	        			success : function(p){
 	        				switch(p.state){
-	        				case "1" : p.state = "준비중"; break;
-	        				case "2" : p.state = "배송중"; break;
-	        				case "3" : p.state = "배송완료"; break;
-	        				case "4" : p.state = "교환"; break;
-	        				case "5" : p.state = "취소"; break;
+	        				case "1" : p.state = "준비중"; $("#refund-btn").css("display", "block"); break;
+	        				case "2" : p.state = "배송중"; $("#refund-btn").css("display", "none"); break;
+	        				case "3" : p.state = "배송완료"; $("#refund-btn").css("display", "none"); break;
+	        				case "4" : p.state = "교환";  $("#refund-btn").css("display", "none"); break;
+	        				case "5" : p.state = "취소"; $("#refund-btn").css("display", "none"); break;
 	        				}
 	        				
 	        				var basicStr = "<tr>"
@@ -371,7 +378,7 @@
 	                        +"<tr>"
 	                        	+"<td>"+"결제금액"+"</td>"
 	                            +"<td>"+(p.deliveryCost+p.payment)+"</td>"
-	                            +"<td>"+"입금자명"+"</td>"
+	                            +"<td>"+"결제자명"+"</td>"
 	                           	+"<td>"+p.depositName+"</td>"
 	                      		+"</tr>"
 	                        +"<tr>"

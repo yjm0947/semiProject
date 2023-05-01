@@ -18,6 +18,9 @@ public class Product {
 	
 	//썸네일 이미지 (경로+파일명)담을 필드 생성
 	private String titleImg;
+	
+	//별점 담을 필드
+	private int starAvg;
 
 	public Product() {
 		super();
@@ -102,6 +105,25 @@ public class Product {
 		this.createDate = createDate;
 		this.titleImg = titleImg;
 	}
+	
+	public Product(int productNo, String productCategory, String productName, String productPublisher,
+			String productText, int productPrice, int productSalesRate, String author, Date createDate,	String titleImg,
+			int starAvg) {
+		super();
+		this.productNo = productNo;
+		this.productCategory = productCategory;
+		this.productName = productName;
+		this.productPublisher = productPublisher;
+		this.productText = productText;
+		this.productPrice = productPrice;
+		this.productSalesRate = productSalesRate;
+		this.author = author;
+		this.createDate = createDate;
+		this.titleImg = titleImg;
+		this.starAvg = starAvg;
+	}
+
+
 
 	public Product(int productNo, String productCategory, String productName, String productPublisher,
 			String productText, int productPrice, int productSalesRate, int productStock, String author,
@@ -215,12 +237,22 @@ public class Product {
 	public void setTitleImg(String titleImg) {
 		this.titleImg = titleImg;
 	}
+	
+	public int getStarAvg() {
+		return starAvg;
+	}
+
+	public void setStarAvg(int starAvg) {
+		this.starAvg = starAvg;
+	}
 
 	@Override
 	public String toString() {
 		return "Product [productNo=" + productNo + ", productCategory=" + productCategory + ", productName="
 				+ productName + ", productPublisher=" + productPublisher + ", productText=" + productText
 				+ ", productPrice=" + productPrice + ", productSalesRate=" + productSalesRate + ", productStock="
-				+ productStock + ", author=" + author + ", status=" + status + ", titleImg=" + titleImg + "]";
+				+ productStock + ", author=" + author + ", createDate=" + createDate + ", status=" + status
+				+ ", starAvg=" + starAvg + ", titleImg=" + titleImg + "]";
 	}
+
 }

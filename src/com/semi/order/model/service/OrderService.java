@@ -186,4 +186,20 @@ public class OrderService {
 		return p;
 	}
 
+	//카드결제정보 입력 메소드
+	public int orderCard(Payment p) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new OrderDao().orderCard(conn,p);
+		
+		if (result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 }

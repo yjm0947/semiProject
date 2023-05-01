@@ -102,6 +102,25 @@ public class Payment {
 		this.state = state;
 	}
 	
+	public Payment(int orderNo, String memberNo, String productNo, int payment, String orderRequest, int usePoint,
+			String addressName, String phone, String email, String post, String roadAddress, String detailAddress,
+			int deliveryCost) {
+		super();
+		this.orderNo = orderNo;
+		this.memberNo = memberNo;
+		this.productNo = productNo;
+		this.payment = payment;
+		this.orderRequest = orderRequest;
+		this.usePoint = usePoint;
+		this.addressName = addressName;
+		this.phone = phone;
+		this.email = email;
+		this.post = post;
+		this.roadAddress = roadAddress;
+		this.detailAddress = detailAddress;
+		this.deliveryCost = deliveryCost;
+	}
+
 	public Payment(int orderNo, String memberNo, String productNo, int payment, String orderRequest, String bankName,
 			String depositName, int usePoint, String addressName, String phone, String email, String post,
 			String roadAddress, String detailAddress, int deliveryCost) {

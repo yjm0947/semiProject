@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.member.model.service.MemberService;
+import com.semi.member.model.vo.Coupon;
 import com.semi.member.model.vo.Member;
 import com.semi.order.model.service.OrderService;
 import com.semi.order.model.vo.Order;
@@ -36,7 +38,10 @@ public class OrderPageController extends HttpServlet {
 		int userNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMemberNo(); 
 		
 		ArrayList<Order> list = new OrderService().selectList(userNo);
+		ArrayList<Coupon> clist = new MemberService().selectCoupon(userNo);
+		
 		request.setAttribute("list", list);
+		request.setAttribute("clist", clist);
 		request.getRequestDispatcher("views/product/order.jsp").forward(request, response);
 	}
 

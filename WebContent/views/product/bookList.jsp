@@ -3,6 +3,7 @@
 <%
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -370,7 +371,6 @@
             	
          <div class="book_list" id="book">
             <div id="book_1">
-                <input type="checkbox" class="checkbox" id="check" name="cart" value="상품번호출력">
                 <input type="hidden" value="<%=p.getProductNo()%>">
             </div>
             <div id="book_2">
@@ -378,7 +378,22 @@
                 <table >
                     <tr id="num">
                         <td rowspan="4" style="width: 150px; height: 250px;"><img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204);" width="135px" height="200px" id="imgthumb">
-                        <input type="hidden" value="<%=p.getProductNo()%>">                       
+                        <div style="position: relative; left: 0px;">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+                        </div>
+                        <div  style="position: relative; top: -21px; left: -2px;">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1; left: -1px;" width="21px" height="21px" class="star" hidden="">
+                        </div>
+                        <input type="hidden" id="star" value="<%=p.getStarAvg()%>">
+                        <input type="hidden" value="<%=p.getProductNo()%>">
                         </td>
                         <td id="title" style="font-size: 16px; font-weight: 600; position: relative; top: 45px;"><%=p.getProductName() %></td>
                     </tr>
@@ -444,13 +459,7 @@
        </form>
         
         <script>
-        	/* 체크박스 전체 선택 */
-            function selectAll(selectAll){
-                var checkboxes = document.getElementsByName('cart');
-                /*console.log(checkboxes)*/
-
-                checkboxes.forEach((checkboxes)=>checkboxes.checked=selectAll.checked);
-            }
+        	//별점 표시
             
         	//디테일 페이지 이동
             $(function(){

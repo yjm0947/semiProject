@@ -35,7 +35,7 @@
 						<option value="1">상품 번호</option>
 						<option value="2">상품 명</option>
 						<option value="3">상품 카테고리</option>
-						<option value="4">상품 등록일(년도)</option>
+						<option value="4">상품 등록일</option>
 					</select>
 						<input type="search" name="memberSearch" id="memberSearch">
 						<button id="ms_img"></button>

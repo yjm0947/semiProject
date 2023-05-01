@@ -28,19 +28,28 @@
 		</div>
 		<div class="middle">
 			<div id="mid_search">
-				<form action="" method="post">
+				<form action="<%=contextPath%>/searchRelease.admin" method="get" onsubmit="return blankSearch()">
 					<select name="ms_select" id="ms_select">
 						<option value="1">상품 번호</option>
 						<option value="2">상품 명</option>
 						<option value="3">상품 카테고리</option>
-						<option value="4">출고량</option>
-						<option value="5">주문자명</option>
-						<option value="6">출고일</option>
+						<option value="4">주문자명</option>
+						<option value="5">출고일</option>
 					</select>
 						<input type="search" name="memberSearch" id="memberSearch">
 						<button type="submit" id="ms_img"></button>
 				</form>
 			</div>
+			
+			<script>
+				function blankSearch(){
+					if($("#memberSearch").val().length == 0){
+						alert("다시 입력해주시길 바랍니다.");
+						return false;
+					}
+				};
+			</script>
+			
 		</div>
 		<div class="middle_left">
 			<div id="ml_table">
@@ -58,7 +67,7 @@
 							<th>상품 명</th>
 							<th>상품 카테고리</th>
 							<th>출고량</th>
-							<th>주문자명</th>
+							<th>주문자 ID</th>
 							<th>출고일</th>
 						</tr>
 					</thead>

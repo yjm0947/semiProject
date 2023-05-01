@@ -101,6 +101,7 @@
   height: 1152px;
   margin: 0 auto;
   margin-right: 0;
+  overflow-y: auto;
 }
 
 #ml_table{
@@ -354,6 +355,25 @@ tbody {
 #own{
   background-color: rgb(32, 112, 165);
   box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, 0.212);
+}
+
+/* ========================= < 모달 스크롤바 설정 > ========================= */
+.middle_left::-webkit-scrollbar{
+  background-color: rgba(52, 52, 52, 0.452);
+  border-radius: 12px 12px 12px 12px;
+  scrollbar-width: thin;
+  width: 13px;
+  height: 50px;
+}
+
+.middle_left::-webkit-scrollbar-thumb{
+  background-color: white;
+  border-radius: 12px 12px 12px 12px;
+  height: 5px;
+}
+
+.middle_left::-webkit-scrollbar-thumb:hover{
+  border: 1px solid rgb(52, 52, 52);
 }
 
 /* ============================== < bottom 영역 > ================================== */

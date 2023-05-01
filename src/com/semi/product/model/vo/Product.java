@@ -63,6 +63,18 @@ public class Product {
 		this.productSalesRate = productSalesRate;
 		this.titleImg = titleImg;
 	}
+	//상품 상세 페이지
+	public Product(int productNo, String productName, String productPublisher, String productText, int productPrice,
+			int productSalesRate, String titleImg) {
+		super();
+		this.productNo = productNo;
+		this.productName = productName;
+		this.productPublisher = productPublisher;
+		this.productText = productText;
+		this.productPrice = productPrice;
+		this.productSalesRate = productSalesRate;
+		this.titleImg = titleImg;
+	}
 	public Product(int productNo, String productName, String productPublisher, String productText, int productPrice,
 			int productSalesRate, String author,String titleImg) {
 		super();

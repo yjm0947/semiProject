@@ -166,8 +166,8 @@ public class ProductDao {
 		return list;
 	}
 
-	//카테고리 클릭시 출력되는 도서 리스트 조회
-	public ArrayList<Product> selectAttachmentC(Connection conn, PageInfo pi, String cate) {
+	//카테고리 클릭시 출력되는 도서 리스트 조회..a
+	public ArrayList<Product> selectAttachmentC(Connection conn, PageInfo pi, int cate) {
 
 		ArrayList<Product> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -180,7 +180,7 @@ public class ProductDao {
 			int endRow = (startRow+pi.getBoardLimit())-1;
 			
 			pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, cate);
+				pstmt.setInt(1, cate);
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
 			
@@ -252,7 +252,7 @@ public class ProductDao {
 		
 	}
 
-	//신간도서리스트 조회
+	//신간도서리스트 조회..a
 		public ArrayList<Product> selectNewAttachList(Connection conn, PageInfo pi) {
 			
 			ArrayList<Product> list = new ArrayList<>();
@@ -295,7 +295,7 @@ public class ProductDao {
 		}
 
 
-	//상품 리스트 조회
+	//상품 리스트 조회..a
 	public ArrayList<Product> selectItem(Connection conn, PageInfo pi) {
 		
 		ArrayList<Product> list = new ArrayList<>();
@@ -335,7 +335,7 @@ public class ProductDao {
 		return list;
 	}
 	
-	//도서 총 게시글
+	//도서 총 게시글..a
 	public int selectListCount(Connection conn) {
 		
 		int listCount = 0;
@@ -365,8 +365,8 @@ public class ProductDao {
 		}
 	
 
-		//카테고리별 도서 총 게시물 수
-	public int selectCListCount(Connection conn, String cate) {
+		//카테고리별 도서 총 게시물 수..a
+	public int selectCListCount(Connection conn, int cate) {
 		
 		int listCount = 0;
 		ResultSet rset = null;
@@ -376,7 +376,7 @@ public class ProductDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, cate);
+			pstmt.setInt(1, cate);
 			
 			rset = pstmt.executeQuery();
 			
@@ -467,8 +467,38 @@ public class ProductDao {
 			}
 			return list;
 		}
+		
+		//신간 도서 총 게시글 수..a
+		public int selectNewCount(Connection conn) {
+					
+			int listCount = 0;
+			ResultSet rset = null;
+			Statement stmt = null;
+					
+			String sql = prop.getProperty("selectNewCount");
+					
+			try {
+				stmt = conn.createStatement();
+						
+				rset = stmt.executeQuery(sql);
+						
+				if(rset.next()) {
+					listCount = rset.getInt("COUNT");
+				}
+						
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(stmt);
+			}
+					
+			return listCount;
+		}
 
-		//상품 총 게시글 수
+
+		//상품 총 게시글 수..a
 		public int selectProListCount(Connection conn) {
 			
 			int listCount = 0;
@@ -497,6 +527,38 @@ public class ProductDao {
 			return listCount;
 		}
 	
+		//상품 상세 정보
+		public Product productItemDetail(Connection conn, int pno) {
+			Product p = null;
+			ResultSet rset = null;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("productDetail");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pno);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					p = new Product(rset.getInt("PRODUCT_NO"),
+							rset.getString("PRODUCT_NAME"),
+							rset.getString("PRODUCT_PUBLISHER"),
+							rset.getString("PRODUCT_TEXT"),
+							rset.getInt("PRODUCT_PRICE"),
+							rset.getInt("PRODUCT_SALES_RATE"),
+							rset.getString("TITLEIMG"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return p;
+		}
 
 	//도서, 상품 상세 페이지
 	public Product productDetail(Connection conn, int pno) {
@@ -532,6 +594,7 @@ public class ProductDao {
 		}
 		return p;
 	}
+	
 	//도서, 쇼핑 상세페이지의 상세이미지..
 	public Product productDetail2(Connection conn, int pno) {
 		

@@ -74,37 +74,32 @@
 <body>
 	<%@ include file = "../common/header.jsp" %>
 	<%@ include file = "../common/myInfo.jsp" %>
-	
+	<%
+	int memPoint = loginUser.getMemberPoint();
+	%>
 	<div class="wrap">
 		<div id="content">
 			<div id="c_1">
 				<div id="my_point">
 			     	<h2>나의 적립금</h2>
-				     <!-- 보유 적립금 없을 때
-				     <div id="non_point">
-				         <div id="non_detail">
-				             <h4>적립금 사용 내역이 없습니다.</h4>
-				         </div>
-				     </div>  -->
-				     
 				     <!-- 보유 적립금 있을 때 -->
 				     <div>
 				         <table border="1">
 				         	<thead>
 						         <tr>
-						             <th colspan="2">적립날짜</th>
-						             <th colspan="2">내용</th>
-						             <th colspan="2">적립금 내역</th>
+						             <th colspan="2">결제일</th>
+						             <th colspan="2">적립금 사용내역</th>
 						             <th colspan="2">총 적립금</th>
 					             </tr>
 				             </thead>
 				             <tbody>
-					             <tr>
-					                 <td colspan="2">2023/04/01</td>
-					                 <td colspan="2">출석체크</td>
-					                 <td colspan="2">100 <b>P</b></td>
-				                 	 <td colspan="2">100 <b>P</b></td>
-					            </tr>
+			             	<%for(int i=0; i<plist.size(); i++){ %>
+	                            <tr>
+	                            	<td colspan="2"><%=plist.get(i).getCreatedAt() %></td>
+	                                <td colspan="2"><%=-plist.get(i).getUsePoint() %> <b>P</b></td>
+	                                <td colspan="2"><%=memPoint-=plist.get(i).getUsePoint() %> <b>P</b></td>
+	                            </tr>
+                   			 <%} %>
 				             </tbody>
 						</table>
 				    </div>

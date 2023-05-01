@@ -360,18 +360,24 @@
                     </div>
                     <div id="ct_"><%=p.getProductPublisher() %> ⊙ <%=p.getCreateDate() %></div>
                     <div id="ct_price">
-                        <div id="ct_p1"><%=p.getProductSalesRate() %>%</div>
-                        <div id="ct_p2"><%=Math.round((1-(p.getProductSalesRate()*0.01))*p.getProductPrice()) %>원</div>
-                        <div id="ct_p3"><%=p.getProductPrice() %>원</div>
+                        <div id="ct_p1"><%=p.getProductSalesRate() %>%&nbsp;</div>
+                        <div id="ct_p2"><fmt:formatNumber value="<%=Math.round((1-(p.getProductSalesRate()*0.01))*p.getProductPrice()) %>" pattern="#,###"/>원&nbsp;</div>
+                        <div id="ct_p3"><fmt:formatNumber value="<%=p.getProductPrice() %>" pattern="#,###"/>원&nbsp;</div>
                         <div id="ct_p4"><%=Math.round(((1-(p.getProductSalesRate()*0.01))*p.getProductPrice())*0.01) %>p</div>
                     </div>
+                    <%
+                    	//텍스트 없을시 빈문자열 출력
+                    	String productText = (p.getProductText()==null)?"":p.getProductText();
+                    %>
                     <div id="ct_text">
                         <p style="position: relative; top: -10px; font-size: 12px; font-weight: 300;">
-                            <%if(p.getProductText().length()>=75) {%><!-- 텍스트 글자 250 이상 -->
-	                            <%=p.getProductText().substring(0,75)%></p>
-                            <%}else {%><!-- 텍스트 글자 250이하 -->
-                            	<%=p.getProductText() %>
-                            <%} %>
+                            <%if(p.getProductText()==null) {%>
+                            	<%=productText %>
+                            <%}else if(p.getProductText().length()>=75) {%><!-- 텍스트 글자 250 이상 -->
+                            	<%=p.getProductText().substring(0,75)%>
+                            <%}else if(p.getProductText().length()<75) {%><!-- 텍스트 글자 250이하 -->
+                            	<%=p.getProductText()%>
+                            <%} %></p>
                     </div>
                 </div>
                 

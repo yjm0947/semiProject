@@ -448,7 +448,6 @@
 	 
 	    });
 		
-	
 	    //3)비밀번호와 비밀번호 확인 일치여부 
 	    inputCp.addEventListener("keyup",function(){
 		    if(inputPwd.value != inputCp.value){

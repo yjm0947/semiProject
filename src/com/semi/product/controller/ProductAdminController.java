@@ -50,9 +50,11 @@ public class ProductAdminController extends HttpServlet {
 		for(int i=0; i<rel.length; i++) {
 			relist[i] = new ProductService().relAdminProduct(rel[i]);
 		}
+//		int rel = new ProductService().relAdminProduct();
 		
 		request.setAttribute("list", list);
 		request.setAttribute("relist", relist);
+//		request.setAttribute("rel", rel);
 		
 		request.getRequestDispatcher("views/admin_items/adminItems.jsp").forward(request, response);
 	}

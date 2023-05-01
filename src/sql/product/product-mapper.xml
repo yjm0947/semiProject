@@ -39,7 +39,7 @@
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-	<!-- 페이징 처리 한 도서리스트 카테고리-->
+	<!-- 페이징 처리 한 도서 카테고리 리스트...a-->
 	<entry key="selectAttachmentListC">
 		SELECT *
 		FROM (SELECT ROWNUM RNUM,A.*
@@ -74,7 +74,7 @@
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-	<!-- 페이징 처리 한 신간도서리스트 -->
+	<!-- 페이징 처리 한 신간도서리스트..a -->
 	<entry key="selectNewAttachList">
 		SELECT *
 		FROM (SELECT ROWNUM RNUM,A.*
@@ -83,10 +83,10 @@
 		            AUTHOR,CREATE_DATE,ATTACHMENT_PATH||ATTACHMENT_CHANGE "TITLEIMG"
 		            FROM PRODUCT
 		            JOIN ATTACHMENT ON(PRODUCT_NO=BOARD_NO)
-		            AND STATUS = 'Y'
+		            WHERE STATUS = 'Y'
 		            AND FILE_LEVEL = '1'
 		            AND PRODUCT_CATEGORY IN (1,2,3,4,5,6)
-                    WHERE TO_CHAR(SYSDATE,'yyyy-mm-dd') BETWEEN TO_CHAR(ADD_MONTHS(SYSDATE,-3),'yyyy-mm-dd') AND TO_CHAR(SYSDATE,'yyyy-mm-dd')
+                    AND TO_CHAR(create_date,'YYYY-MM-DD') BETWEEN TO_CHAR(ADD_MONTHS(SYSDATE,-3),'YYYY-MM-DD') AND TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 		            ORDER BY CREATE_DATE DESC)A)
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
@@ -96,18 +96,18 @@
 		SELECT *
 		FROM (SELECT ROWNUM RNUM,A.*
 		        FROM(SELECT PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,PRODUCT_PUBLISHER,
-		            PRODUCT_TEXT,PRODUCT_PRICE,PRODUCT_SALES_RATE,
-		            AUTHOR,CREATE_DATE,ATTACHMENT_PATH||ATTACHMENT_CHANGE "TITLEIMG"
-		            FROM PRODUCT
+                            PRODUCT_TEXT,PRODUCT_PRICE,PRODUCT_SALES_RATE,
+                            AUTHOR,CREATE_DATE,ATTACHMENT_PATH||ATTACHMENT_CHANGE "TITLEIMG"
+		            FROM PRODUCT P
 		            JOIN ATTACHMENT ON(PRODUCT_NO=BOARD_NO)
-		            AND STATUS = 'Y'
+		            WHERE P.STATUS = 'Y'
 		            AND FILE_LEVEL = '1'
 		            AND PRODUCT_CATEGORY IN (7)
 		            ORDER BY CREATE_DATE DESC)A)
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-	<!-- 도서상품리스트 -->
+	<!-- 도서상품리스트???????? -->
 	<entry key="selectItem">
 		SELECT *
 		FROM (SELECT ROWNUM RNUM,A.*
@@ -131,7 +131,7 @@
 		AND PRODUCT_CATEGORY IN (1,2,3,4,5,6)
 	</entry>
 	
-	<!-- 도서 카테고리별 리스트 수 -->
+	<!-- 도서 카테고리별 리스트 수..a -->
 	<entry key="selectProCListCount">
 		SELECT COUNT(*) COUNT
 		FROM PRODUCT
@@ -156,7 +156,7 @@
 		            AUTHOR,CREATE_DATE,ATTACHMENT_PATH||ATTACHMENT_CHANGE "TITLEIMG"
 		            FROM PRODUCT
 		            JOIN ATTACHMENT ON(PRODUCT_NO=BOARD_NO)
-		            AND STATUS = 'Y'
+		            where STATUS = 'Y'
 		            AND FILE_LEVEL = '1'
                     AND PRODUCT_NAME LIKE '%'||?||'%'
 		            ORDER BY CREATE_DATE DESC)A)
@@ -170,25 +170,33 @@
 		WHERE STATUS = 'Y'
 		AND PRODUCT_CATEGORY IN (7)
 	</entry>
+	<!-- 신간도서 리스트 수..a -->
+	<entry key="selectNewCount">
+		select count(*) COUNT
+		FROM PRODUCT
+		WHERE STATUS = 'Y'
+		AND PRODUCT_CATEGORY IN (1,2,3,4,5,6)
+		AND TO_CHAR(create_date,'YYYY-MM-DD') BETWEEN TO_CHAR(ADD_MONTHS(SYSDATE,-3),'YYYY-MM-DD') AND TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</entry>
 	
-	<!-- 상세정보 이미지 있는 상품 상세 정보 -->
+	<!-- 상세정보 이미지 있는 상품 상세 정보(상품이미지 출력중..a) -->
 	<entry key="productDetail">
 		SELECT PRODUCT_NO,PRODUCT_NAME,PRODUCT_PUBLISHER,PRODUCT_TEXT,PRODUCT_PRICE,
         PRODUCT_SALES_RATE,AUTHOR,ATTACHMENT_PATH||ATTACHMENT_CHANGE "TITLEIMG"
-		FROM PRODUCT
+		FROM PRODUCT P
         JOIN ATTACHMENT ON(PRODUCT_NO=BOARD_NO)
-		WHERE STATUS = 'Y'
+		WHERE P.STATUS = 'Y'
         AND FILE_LEVEL = 1
-		AND PRODUCT_NO = ?
+		AND P.PRODUCT_NO = ?
 	</entry>
-	<!-- 상세정보 이미지의 상세 이미지 -->
+	<!-- 상세정보 이미지의 상품 상세 이미지(상품이미지 출력중..a) -->
 	<entry key="productDetail2">
 		SELECT ATTACHMENT_PATH||ATTACHMENT_CHANGE "TITLEIMG"
-		FROM PRODUCT
+		FROM PRODUCT P
         JOIN ATTACHMENT ON(PRODUCT_NO=BOARD_NO)
-		WHERE STATUS = 'Y'
+		WHERE P.STATUS = 'Y'
         AND FILE_LEVEL = 2
-		AND PRODUCT_NO = ?
+		AND P.PRODUCT_NO = ?
 	</entry>
 	<!-- 메인페이지 베스트도서 4개 -->
 	<entry key="mainBestBook">
@@ -206,29 +214,29 @@
 		              PRODUCT_SALES_RATE,AUTHOR,CREATE_DATE,ATTACHMENT_PATH||ATTACHMENT_CHANGE
 		     ORDER BY "QUANTITY" DESC, CREATE_DATE DESC)A
 	</entry>
-	<!-- 메인페이지 신간 도서 리스트 4개 -->
+	<!-- 메인페이지 신간 도서 리스트 4개..a -->
 	<entry key="newBookList">
 		SELECT *
 		FROM (SELECT ROWNUM RNUM,A.*
 		      FROM(SELECT PRODUCT_NO,PRODUCT_NAME,PRODUCT_PUBLISHER,
 		                  PRODUCT_PRICE,PRODUCT_SALES_RATE,ATTACHMENT_PATH||ATTACHMENT_CHANGE "TITLEIMG"
-		           FROM PRODUCT
-		           JOIN ATTACHMENT ON(PRODUCT_NO=BOARD_NO)
-		           WHERE STATUS = 'Y'
+		           FROM PRODUCT P
+		           JOIN ATTACHMENT A ON(PRODUCT_NO=BOARD_NO)
+		           WHERE P.STATUS = 'Y'
 		           AND FILE_LEVEL = 1
 		           AND PRODUCT_CATEGORY IN (1,2,3,4,5,6)
 		           ORDER BY CREATE_DATE DESC)A)
 		WHERE RNUM BETWEEN 1 AND 4
 	</entry>
-	<!-- 메인페이지 상품 리스트 -->
+	<!-- 메인페이지 상품 리스트..a -->
 	<entry key="newProList">
 		SELECT *
 		FROM (SELECT ROWNUM RNUM,A.*
 		      FROM(SELECT PRODUCT_NO,PRODUCT_NAME,PRODUCT_PUBLISHER,
 		                  PRODUCT_PRICE,PRODUCT_SALES_RATE,ATTACHMENT_PATH||ATTACHMENT_CHANGE "TITLEIMG"
-		           FROM PRODUCT
+		           FROM PRODUCT P
 		           JOIN ATTACHMENT ON(PRODUCT_NO=BOARD_NO)
-		           WHERE STATUS = 'Y'
+		           WHERE P.STATUS = 'Y'
 		           AND FILE_LEVEL = 1
 		           AND PRODUCT_CATEGORY = 7
 		           ORDER BY CREATE_DATE DESC)A)

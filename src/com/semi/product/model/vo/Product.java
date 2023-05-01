@@ -27,6 +27,7 @@ public class Product {
 		super();
 		this.titleImg = titleImg;
 	}
+	
 	//메인페이지 도서 쇼핑 리스트
 	public Product(int productNo, String productName, String productPublisher, int productPrice, int productSalesRate,
 			String titleImg) {
@@ -34,6 +35,18 @@ public class Product {
 		this.productNo = productNo;
 		this.productName = productName;
 		this.productPublisher = productPublisher;
+		this.productPrice = productPrice;
+		this.productSalesRate = productSalesRate;
+		this.titleImg = titleImg;
+	}
+	//상품 상세 페이지
+	public Product(int productNo, String productName, String productPublisher, String productText, int productPrice,
+			int productSalesRate, String titleImg) {
+		super();
+		this.productNo = productNo;
+		this.productName = productName;
+		this.productPublisher = productPublisher;
+		this.productText = productText;
 		this.productPrice = productPrice;
 		this.productSalesRate = productSalesRate;
 		this.titleImg = titleImg;

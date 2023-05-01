@@ -137,44 +137,110 @@
         </div>
         
         <script>
-	        function attendance(){
+        	
+        	<%if(loginUser==null){%> //로그인 안했으면
+
+        		$(function(){//로그인한 회원만 화면 보여주기
+        		alert("로그인이 필요한 서비스입니다.");
+        		location.href="<%=contextPath%>/logform.me";
+        		console.log("ddd");
+        	});
+        	
+        	<%}else {%>//로그인 했으면
+        		
+        		$(function(){//각 회원들의 출석체크일 출력
+        			$.ajax({
+        				url : "atdate.me",
+        				data : {memberNo : <%=loginUser.getMemberNo()%>},
+        				type : "post",
+        				success : function(count){//회원들의 출석체크일
+        					//console.log(count);
+        					var img = document.getElementsByTagName("img");
+        					var count2 = parseInt(count)+3;
+        					//console.log(count2);
+        					
+        					for(var i=3; i<count2; i++){
+        						if(img[i].style.visibility=="hidden"){
+        							img[i].style.visibility="visible"
+        						}
+        					}
+        				}
+        			});
+        		});
+	        
+        	function attendance(){//도장일 업데이트 및 적립금 더해주기
 	            /*도장변수에 담기.. img 인덱스 3~38번까지임*/
 	            var img = document.getElementsByTagName("img");
 	            var index = 0;
-	            console.log(img);
+	            //console.log(img);
 	
 	            for(var i=3;i<39;i++){
 	                if(img[i].style.visibility=="hidden"){//visibility가 hidden일시 도장 보이도록
-	                	img[i].style.visibility="visible"
-	                	alert("출석이 완료되었습니다. 내일 또 도전해주세요!");
+				         img[i].style.visibility="visible"
+	                	
 	                	if((i==7 || i==13 || i==19 || i==25 || i==31 || i==37) && img[i].style.visibility=="visible"){
 	                        index = i;
 	                        //console.log(index);                    
-	                        img[index+1].style.visibility="visible"
-	                        alert("300원의 적립금이 지급되었습니다.");
+	                        
+		                	$(function(){//적립금 300원 주기
+		                		$.ajax({
+		                			url : "upPoint.me",
+		                			data : {memberNo : <%=loginUser.getMemberNo()%>,
+		                					addP : 300},
+		                			type : "post",
+		                			success : function(){
+		                				//console.log("성공");
+		                				alert("5번의 출석체크로 300원의 적립금이 지급되었습니다.");
+				                        img[index+1].style.visibility="visible"
+		                			}
+		                		});
+		                	});
 	                        break;
 	                    }
 	                	
-	                	
-	                	$(function(){
+	                	$(function(){//출석체크일 늘리기
 	                		$.ajax({
 	                			url : "attendance.v",
-	                			type : "post",
+	                			type: "post",
+	                			data : {memberNo : <%=loginUser.getMemberNo()%>},
 	                			success : function(){
-	                				console.log("성공");
-	                			},
-	                			complete : function(){
-	                				console.log("실행만됨")
+								       	alert("출석이 완료되었습니다. 내일 또 도전해주세요!");
 	                			}
 	                		});
 	                	});
-	                	
 	                	break;
 	                }
 	            }
+	                //출석체크 도장 다 찍으면 출석일 다시 0으로 돌리기
+	                if(img[37].style.visibility=="visible"){
+            			console.log("다 찍음~!!")
+            			
+            			$.ajax({
+                			url : "upPoint.me",
+                			data : {memberNo : <%=loginUser.getMemberNo()%>,
+                					addP : 200},
+                			type : "post",
+                			success : function(){
+            			alert("축하합니다! 30번의 출석체크 완료로 200원의 추가 적립금이 지급되었습니다.")                					
+                			}
+                		});
+            			$.ajax({
+            				url : "atdate.me",
+            				data : {memberNo : <%=loginUser.getMemberNo()%>},
+            				type : "post",
+            				success : function(){//회원들의 출석체크일
+            					console.log("출석체크 되돌림")
+            				},
+            				complete : function(){
+            					console.log("출석체크 되돌림 실행만 됨..")
+            				}
+            			});
+            			
+            		}
 	        }
+        	<%}%>
         </script>
         
-	<%@include file = "../common/footer.jsp" %>
+     <%@include file = "../common/footer.jsp" %>
 </body>
 </html>

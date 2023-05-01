@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.event.attendance.model.service.AttendanceService;
+import com.semi.event.point.model.service.PointService;
 
 /**
  * Servlet implementation class AttendanceController
@@ -28,17 +29,20 @@ public class AttendanceController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		//출석체크 페이지 보여주기
-				request.getRequestDispatcher("views/event/attendanceView.jsp").forward(request, response); 
-			}
+		request.getRequestDispatcher("views/event/attendanceView.jsp").forward(request, response); 
+	}
 
 			/**
 			 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 			 */
-			protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-				//출석체크일 업데이트해주기
-				new AttendanceService().adDate();
-			}
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		
+			//출석체크일 업데이트해주기
+			new AttendanceService().upDate(memberNo);
+		
 		}
+	}

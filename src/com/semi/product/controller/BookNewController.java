@@ -42,7 +42,7 @@ public class BookNewController extends HttpServlet {
 		int startPage; //페이지 하단에 보여질 페이징바의 시작수
 		int endPage; //페이지 하단에 보여질 페이징바의 끝 수
 		
-		listCount = new ProductService().selectListCount();
+		listCount = new ProductService().selectNewCount(); //신간도서 총 게시글 수
 		currentPage = Integer.parseInt(request.getParameter("currentPage").trim());
 		pageLimit = 10;
 		boardLimit = 8;
@@ -57,19 +57,7 @@ public class BookNewController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
 		
-//		System.out.println("겟 옴..");
-//		String cate = request.getParameter("cate");
-//		System.out.println(cate);
-		
-		ArrayList<Product> list = null;
-		
-		//페이지에 보여질 게시글 리스트
-//		if(cate==null) {
-			list = new ProductService().selectNewAttachList(pi);
-//		}else {
-//			list = new ProductService().selectAttachmentCList(pi,cate);
-//		}
-//		System.out.println(list);
+		ArrayList<Product> list = new ProductService().selectNewAttachList(pi);
 		
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);

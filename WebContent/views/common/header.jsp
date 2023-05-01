@@ -17,6 +17,7 @@
     <head>
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -352,8 +353,6 @@
                                     <ul id="customer_1">
                                         <li><a href="<%=contextPath%>/noti.ma?currentPage=1" style="float: right; width: 206px; text-align:center;">공지사항</a></li>
                                         <li><a href="<%=contextPath %>/mafaq.c" style="float: right; width: 206px; text-align:center;">자주묻는 질문</a></li>
-                                        <li><a href="<%=contextPath %>/main.qna" style="float: right; width: 206px; text-align:center;">1:1 문의</a></li>
-                                        
                                     </ul>
                                 </li>
                             </ul>
@@ -374,13 +373,12 @@
                             <ul id="customer_li">
                                 <li><a href="<%=contextPath%>/noti.ma?currentPage=1">공지사항</a></li>
                                 <li><a href="<%=contextPath%>/mafaq.c">자주묻는 질문</a></li>
-                                <li><a href="<%=contextPath%>/main.qna">1:1 문의</a></li>
-                                
                             </ul>
                         </li>
                     </ul>
                 </div>
                 <div id="search_form_area">
+                    <%-- <form action="<%=contextPath %>/search.bo?search=&currentPage=1" id="search_form" method="post"> --%>
                     <form action="<%=contextPath %>/search.bo?currentPage=1" id="search_form" method="post">
                         <input type="search" name="search_text" id="search_text" placeholder="도서, 상품 검색">
                         <button type="submit" id="search_btn">

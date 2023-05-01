@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.product.model.vo.Product,com.semi.common.vo.PageInfo"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.product.model.vo.Product,com.semi.common.vo.PageInfo,com.semi.product.controller.SearchBookController"%>
 <%
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String search = String.valueOf(request.getAttribute("search"));
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -296,19 +297,19 @@
             <div id="con_page">
                 <!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
-                	<button onclick="location.href='<%=contextPath %>/search.bo?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
+                	<button onclick="location.href='<%=contextPath %>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
                 <%} %>
                 
                 <%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++) {%>
                 	<%if(i!=pi.getCurrentPage()) {%>
-                		<button onclick="location.href='<%=contextPath%>/search.bo?currentPage=<%=i%>';"><%=i %></button>
+                		<button onclick="location.href='<%=contextPath%>/search.bo?search=<%=search%>&currentPage=<%=i%>';"><%=i %></button>
                 	<%}else {%>
                 		<button disabled><%=i %></button>
                 	<%} %>
                 <%} %>
                 <!-- 오른쪽으로 가는 버튼 -->
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
-                	<button onclick="location.href='<%=contextPath%>/search.bo?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+                	<button onclick="location.href='<%=contextPath%>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
             </div>
             <div id="con_sel">
@@ -367,19 +368,19 @@
             <!-- 왼쪽 가기 버튼 -->
                 <!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
-                	<button type="button" onclick="location.href='<%=contextPath %>/search.bo?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
+                	<button type="button" onclick="location.href='<%=contextPath %>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
                 <%} %>
                 
                 <%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++) {%>
                 	<%if(i!=pi.getCurrentPage()) {%>
-                		<button type="button" onclick="location.href='<%=contextPath%>/search.bo?currentPage=<%=i%>';"><%=i %></button>
+                		<button type="button" onclick="location.href='<%=contextPath%>/search.bo?search=<%=search%>&currentPage=<%=i%>';"><%=i %></button>
                 	<%}else {%>
                 		<button type="button" type="button" disabled><%=i %></button>
                 	<%} %>
                 <%} %>
                 <!-- 오른쪽으로 가는 버튼 -->
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
-                	<button type="button" onclick="location.href='<%=contextPath%>/search.bo?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+                	<button type="button" onclick="location.href='<%=contextPath%>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
         </div>
         <pre>

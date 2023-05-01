@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+	<!--첫 화면 출력시 출력할 도장 개수  -->
+	<entry key="dayCount">
+		SELECT ATTENDANCE COUNT
+		FROM MEMBER
+		WHERE MEMBER_NO = ?
+	
+	</entry>
 	<entry key="upPoint">
 		UPDATE MEMBER
 		SET MEMBER_POINT =(MEMBER_POINT + ?)
 		WHERE MEMBER_NO = ?
 	</entry>
 	
-	<!-- 출석체크 도장 갯수 업데이트-->
-	<entry key="">
+	<!-- 출석체크일 업데이트-->
+	<entry key="upDate">
+		UPDATE MEMBER
+		SET ATTENDANCE = (ATTENDANCE +1)
+		WHERE MEMBER_NO = ?
+	</entry>
 	
+	<!-- 출석체크 다 하고 0으로 돌려주기 -->
+	<entry key="resetCount">
+		update MEMBER 
+		SET ATTENDANCE = 0
+		WHERE MEMBER_NO = ?
 	</entry>
 </properties>

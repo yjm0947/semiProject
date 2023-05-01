@@ -75,13 +75,18 @@ public class MemberUpdateController extends HttpServlet {
 		
 		String memberBirth = "";
 		
-		if(Integer.parseInt(birthMonth)<10) {
-			birthMonth="0"+(String)birthMonth;
+		if(birthMonth.length()>2) {
+			if(Integer.parseInt(birthMonth)<10) {
+				birthMonth="0"+(String)birthMonth;
+			}
 		}else {
 			birthMonth=(String)birthMonth;
 		}
-		if(Integer.parseInt(birthDay)<10) {
-			birthDay= "0"+(String)birthDay;
+		
+		if(birthDay.length()>2) {
+			if(Integer.parseInt(birthDay)<10) {
+				birthDay= "0"+(String)birthDay;
+			}
 		}else {
 			birthDay= (String)birthDay;
 		}

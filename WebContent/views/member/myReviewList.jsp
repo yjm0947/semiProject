@@ -335,15 +335,14 @@
 	        			data : {
 	        				rno : reviewNo
 	       				},
-	        			success : function(result){
-	        				if(result>0){
-	        					alert("댓글을 삭제했습니다.")
+	        			success : function(data){
+	        				if(data>0){
+	        					alert("선택하신 리뷰를 삭제했습니다.")
 	        					history.back();
 	        				}else{
-	        					alert("댓글 삭제를 실패했습니다.")
+	        					alert("리뷰를 삭제하지 못했습니다.")
 	        					history.back();
 	        				}
-	                       console.log(result);
 	        			},
 	        			error : function(){
 	        				console.log(";-;");

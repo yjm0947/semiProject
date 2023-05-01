@@ -40,7 +40,7 @@ public class MypageConteroller extends HttpServlet {
 		int memNo = loginUser.getMemberNo();
 		
 		ArrayList<Coupon> clist = new MemberService().selectCoupon(memNo);
-		ArrayList<Payment> plist = new MemberService().selectShoppingList(memNo);
+		ArrayList<Payment> plist = new MemberService().selectPaymentList(memNo);
 		
 		HttpSession session = request.getSession();
 		

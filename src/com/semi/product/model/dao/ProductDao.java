@@ -196,7 +196,8 @@ public class ProductDao {
 						,rset.getInt("PRODUCT_SALES_RATE")
 						,rset.getString("AUTHOR")
 						,rset.getDate("CREATE_DATE")
-						,rset.getString("titleImg")));
+						,rset.getString("TITLEIMG")
+						,rset.getInt("STAR_AVG")));
 			}
 			
 		} catch (SQLException e) {

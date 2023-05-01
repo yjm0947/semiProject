@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.order.model.vo.Order"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.order.model.vo.Order,com.semi.member.model.vo.Coupon"%>
 <%
 	ArrayList<Order> list = (ArrayList)request.getAttribute("list");
+	ArrayList<Coupon> clist = (ArrayList)request.getAttribute("clist");
 %>    
     
 <!DOCTYPE html>
@@ -20,6 +21,7 @@
 		let email = $("#input-8").val();
 		let post = $("#sample4_postcode").val();
 		let address = $("#sample4_roadAddress").val();
+		let marchant_id =  "order_no_" + Math.floor(Math.random() * 9999);
 		let count = 0;
 		
 		$(".book-data").each(function(index, element){
@@ -31,13 +33,12 @@
 		}else{
 			name = name+" 외 "+count+"개";
 		}
-		
 		//가맹점 식별코드
 		IMP.init('imp06731188');
 		IMP.request_pay({
 			pg : 'html5_inicis',
 			pay_method : 'card',
-			merchant_uid: "order_no_0001", // 상점에서 관리하는 주문 번호를 전달
+			merchant_uid: marchant_id, // 상점에서 관리하는 주문 번호를 전달
 			name : name,
 			amount : price,
 			buyer_email : email,
@@ -46,28 +47,35 @@
 			buyer_addr : address,
 			buyer_postcode : post,
 			m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
-		}, function(rsp) { // callback 로직
+		},function(rsp) { // callback 로직
 			if ( rsp.success ) {
 				$.ajax({
 					url : "<%=request.getContextPath()%>/completePaymentCard.od",
 					data : {
 						imp_uid: rsp.imp_uid,            // 결제 고유번호
-				    	merchant_uid: rsp.merchant_uid   // 주문번호
+				    	merchant_uid: rsp.merchant_uid,   // 주문번호
+				    	orderNum: $("input[name=orderNum]").val(),
+						productNum: $("input[name=productNum]").val(),
+						finalPrice: price,
+						selectMsg: $("#sm").val(),
+						inputPoint: $("input[name=inputPoint]").val(),
+						selectName: $("#sn").val(),
+						selectPhone: $("#sp").val(),
+						selectEmail: $("#se").val(),
+						selectPost: $("#spo").val(),
+						selectRoad: $("#sr").val(),
+						selectDetail: $("#sd").val(),
+						deliveryCost: $("#dc").val()
 					},
 					type : "post",
-					success: function(){
-						location.replace("<%=request.getContextPath()%>/list.sc");
+					success: function(orderNo){
+						console.log("통신성공");
+						location.replace("<%=request.getContextPath()%>/orderCp.od?orderNo="+orderNo);
 					},
-					error : function(){
+					error : function(orderNo){
 						console.log("통신실패");
 					}
 				});
-				
-		        /* var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
-		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
-		        msg += '카드 승인번호 : ' + rsp.apply_num; */
 		    } else {
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
@@ -76,7 +84,7 @@
 		});
 	}
 </script>
-<title>Insert title here</title>
+<title>[파랑서점] 주문/결제</title>
 <style>
         *{
             margin: 0;
@@ -260,8 +268,12 @@
         	margin-bottom: 10px;
         }
         .input-area input{
-        	width: 75%;
+        	width: 65%;
         	height: 40px;
+        }
+        .orderp input{
+        	position: relative;
+        	left: 50px;
         }
         .memberInfo_table{
             width: 100%;
@@ -296,7 +308,7 @@
             background-color: #6a8fe0;
         }
         .addressInfo_button_div{
-        	width: 60%;
+        	width: 50%;
         }
         .addressInfo_button_div button:hover{
             background-color: #a8b6d4;
@@ -423,6 +435,15 @@
 		    appearance: none;
 		    text-align: center;
         }
+        #input-coupon{
+        	width: 435px; 
+		    padding: .8em .5em; 
+		    border: 1px solid #999;
+		    -webkit-appearance: none; 
+		    -moz-appearance: none;
+		    appearance: none;
+		    text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -490,6 +511,8 @@
                         </tbody>
                     </table>
                     
+                    <div class="clearfix" style="border-bottom: 1px solid grey;"></div>
+                    
                     <form action="orderPay.od" method="post" class="info-layout">
                     	<input type="hidden" name="orderNum" value="<%=list.get(0).getOrderNo()%>">
                     <%String productNo = ""; %>
@@ -504,32 +527,32 @@
                         <div class="detail-area" style="float: left;">
                             <div class="input-container">
                                 <div class="title">주문하신 분</div>
-                                <div class="input-area">
-                                    <input class="" placeholder="이름을 입력해주세요." id="input-6" value="<%=loginUser.getMemberName()%>">
+                                <div class="input-area orderp">
+                                    <input placeholder="이름을 입력해주세요." id="input-6" value="<%=loginUser.getMemberName()%>" required="required">
                                 </div>
                             </div>
                             
                             <div class="input-container">
                                 <div class="title">연락처</div>
-                                <div class="input-area">
-                                    <input placeholder="010-0000-0000" id="input-7" value="<%=loginUser.getPhone()%>">
+                                <div class="input-area orderp">
+                                    <input placeholder="010-0000-0000" id="input-7" value="<%=loginUser.getPhone()%>" required="required">
                                 </div>
                             </div>
                             
                             <div class="input-container">
                                 <div class="title">이메일</div>
-                                <div class="input-area">
-                                    <input placeholder="aram@aram.com" id="input-8" value="<%=loginUser.getEmail()%>">
+                                <div class="input-area orderp">
+                                    <input placeholder="aram@aram.com" id="input-8" value="<%=loginUser.getEmail()%>" style="margin-bottom: 30px;" required="required">
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="clearfix" style="border-bottom: 1px solid #e7e7e7;"></div>
+                        <div class="clearfix" style="border-bottom: 1px solid grey;"></div>
                         
                         <div class="input-frame">
                             <div class="title-area" style="height: 80px; float: left;">배송지 정보</div>
                             <div class="addressInfo_div">
-                                    <div class="title" style="width: 80px;">배송지</div>
+                                    <div class="title" style="width: 80px; margin-right: 80px;">배송지</div>
                                     <div class="addressInfo_button_div" style="float: left;">
                                         <button type="button" class="address_btn address_btn_1" onclick="showAddress('1')" style="background-color: #365fdd;">기본 주소</button>
                                         <button type="button" class="address_btn address_btn_2" onclick="showAddress('2')">새로운 주소</button>
@@ -635,22 +658,35 @@
                                 </div>
 
                         </div>
-                        <div class="clearfix" style="border-bottom: 1px solid #e7e7e7;"></div>
+                        <div class="clearfix" style="border-bottom: 1px solid grey;"></div>
                         
                     <div class="payment-frame">
                         <div class="title-area" style="height: 80px; float: left;">결제정보</div>
                         <div class="detail-area" style="margin-bottom: 10px;">
+                        	<div class="paymentInfo_point_div" style="width: 100%;">
+                                <div class="title">쿠폰 사용</div>
+                                <select class="input-element" name="inputCoupon" id="input-coupon" style="width: 200px; height: 40px; margin-left: 50px; margin-bottom: 10px;">
+                                	<option value="">==선택==</option>
+                                	<%for(Coupon c : clist){ %>
+                                	<option value="<%=c.getCouponDc()%>"><%=c.getCouponName() %></option>
+                                	<%} %>
+                                </select>
+								<div style="font-size: 14px; position: relative; left: 380px; top: -40px;">할인율&nbsp;<span id="userCoupon">0</span>%</div>
+							</div>
+                        
                             <div class="paymentInfo_point_div" style="width: 100%;">
-                                    <div class="title">포인트 사용</div>
-                                    <input type="number" class="input-element" name="inputPoint" id="input-point" value="0" style="width: 100px; height: 30px; text-align: right; font-size: 16px; margin-left: 50px;">
-                                    	보유 포인트 <span id="userPoint"><%=loginUser.getMemberPoint() %></span>원
-                                </div>
+                                <div class="title">포인트 사용</div>
+                                <input type="number" class="input-element" name="inputPoint" id="input-point" value="0" style="width: 100px; height: 30px; text-align: right; font-size: 16px; margin-left: 50px;">
+								보유 포인트 <span id="userPoint"><%=loginUser.getMemberPoint() %></span>원
                             </div>
-                            <div class="title" style="width: 80px; margin-right: 80px;">결제수단</div>
-                            	<div class="paymentInfo_button_div" style="float: left;">
-                                    <button type="button" class="payment_btn payment_btn_1" onclick="showPayment('1')" style="background-color: #365fdd;">무통장 입금</button>
-                                    <button type="button" class="payment_btn payment_btn_2" onclick="showPayment('2')">신용카드</button>
-                                </div>
+                        </div>
+                        <div style="position: relative; left: 320px;">
+	                        <div class="title" style="width: 80px; margin-right: 80px;">결제수단</div>
+	                        	<div class="paymentInfo_button_div" style="float: left;">
+	                                <button type="button" class="payment_btn payment_btn_1" onclick="showPayment('1')" style="background-color: #365fdd;">무통장 입금</button>
+	                                <button type="button" class="payment_btn payment_btn_2" onclick="showPayment('2')">신용카드</button>
+	                            </div>
+                        </div>
                             <div class="clearfix"></div>
                             <div class="addressInfo_input_div_wrap" style="position: relative; left: 310px;">
                             <div class="paymentInfo_input_div paymentInfo_input_div_1" style="display: block;">
@@ -688,18 +724,15 @@
 					        <input type="checkbox" name="selectChk" checked="checked" id="sc1" >
 					        <input type="checkbox" name="selectChk" id="sc2" >
 					
-					        <input type="text" name="selectName" id="sn" >
-					        <input type="text" name="selectPhone" id="sp">
-					        <input type="text" name="selectEmail" id="se">
-					        <input type="text" name="selectPost" id="spo">
-					        <input type="text" name="selectRoad" id="sr" >
-					        <input type="text" name="selectDetail" id="sd">
-					        <input type="text" name="selectMsg" id="sm">
-					        <input type="text" name="selectUsePoint" id="sup">
-					        <input type="text" name="selectDepositName" id="sdn">
-					        <input type="text" name="selectBankName" id="sbn">
-					        <input type="text" name="deliveryCost" id="dc">
-					        <input type="text" name="finalPrice" id="fp">
+					        <input type="text" name="selectName" id="sn" required>
+					        <input type="text" name="selectPhone" id="sp" required>
+					        <input type="text" name="selectEmail" id="se" required>
+					        <input type="text" name="selectPost" id="spo" required>
+					        <input type="text" name="selectRoad" id="sr" required>
+					        <input type="text" name="selectDetail" id="sd" required>
+					        <input type="text" name="selectMsg" id="sm" required>
+					        <input type="text" name="deliveryCost" id="dc" required>
+					        <input type="text" name="finalPrice" id="fp" required>
 					    </div>
                     
                     
@@ -795,7 +828,6 @@
 		//결제 버튼을 누르면 알림창이 뜨지 않음
 	    $(".order_btn").click(function () {
 	        checkload = false;
-	        console.log(checkload);
 	    });
 	    
     	$(window).bind("beforeunload", function (e){
@@ -847,6 +879,11 @@
 			}
 		});
     });
+	
+    /* 쿠폰 선택 */
+	$("#input-coupon").change(function(){
+		setTotalInfo();
+	});
 	    
 	/*포인트 입력 / 0이상 최대포인트 이하*/
 	$("#input-point").on("propertychange change keyup paste input", function(){
@@ -1005,6 +1042,7 @@
     	let totalPoint = 0;		// 총 마일리지
     	let deliveryPrice = 0;	// 배송비
     	let usePoint = 0;		// 사용 포인트(할인가격)
+    	let useCoupon = 0;		// 사용 쿠폰(할인가격)
     	let finalTotalPrice = 0;// 최종 가격(총 가격 + 배송비)
     	
     	$(".book-data").each(function(index, element){
@@ -1028,12 +1066,17 @@
     		deliveryPrice = 3000;	
     	}
     	
+    	/* 사용 쿠폰 */
+    	useCoupon = $("#input-coupon").val();
+    	
+    	totalPrice = totalPrice - (totalPrice*(useCoupon/100));
+
     	finalTotalPrice = totalPrice + deliveryPrice;	
     	
     	/* 사용 포인트 */
     	usePoint = $("#input-point").val();
     	
-    	finalTotalPrice = finalTotalPrice - usePoint;	
+    	finalTotalPrice = finalTotalPrice - usePoint;
     	
     	/* 값 삽입 */
     	// 총 가격
@@ -1050,6 +1093,8 @@
     	// 최종 가격(총 가격 + 배송비)
     	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());
     	$("#fp").val(finalTotalPrice);
+    	// 쿠폰(할인율)
+    	$("#userCoupon").text(useCoupon);
     	// 할인가(사용 포인트)
     	$(".usePoint_span").text(usePoint.toLocaleString());
 	}

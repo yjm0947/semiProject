@@ -16,7 +16,7 @@
 		<%@include file="/views/common/admin_Category.jsp" %>
 		<%-- <%@include file="/views/common/admin_Category.jsp" %> --%>
         <div id="content">
-            <div id="con_1">상품등록</div>
+            <div id="con_1">도서등록</div>
             <div id="con_2">
                 <a href="<%=contextPath%>/book.regi" id="con_2_book">도서 등록</a>
                 <a href="<%=contextPath %>/item.regi" id="con_2_pro">상품 등록</a>

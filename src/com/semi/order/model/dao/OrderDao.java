@@ -118,6 +118,8 @@ public class OrderDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
 		}
 		
 		return result;
@@ -226,7 +228,7 @@ public class OrderDao {
 	}
 
 	//주문관리 상세조회 (관리자)
-	public Payment detailOrderAdmin(Connection conn, int ono) {
+	public Payment detailOrderAdmin(Connection conn, int Ono) {
 		
 		Payment pay = null;
 		PreparedStatement pstmt = null;
@@ -235,7 +237,7 @@ public class OrderDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, ono);
+			pstmt.setInt(1, Ono);
 			rset = pstmt.executeQuery();
 					
 			if(rset.next()) {
@@ -254,9 +256,8 @@ public class OrderDao {
 							 	 ,rset.getString("ROAD_ADDRESS")
 							 	 ,rset.getString("DETAIL_ADDRESS")
 							 	 ,rset.getInt("DELIVERY_COST")
-							 	,rset.getString("CHECK_PAY"));
+							 	 ,rset.getString("CHECK_PAY"));
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{

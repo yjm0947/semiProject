@@ -275,6 +275,42 @@
 <entry key="relAdminProduct">
 	SELECT SUM(QUANTITY) QUANTITY
 	FROM P_ORDER
+	WHERE PRODUCT_NO = ?
+</entry>
+
+<!-- 상품 삭제 (관리자) -->
+<entry key="deleteProductAdmin">
+	UPDATE PRODUCT
+	SET STATUS = 'N'
+	WHERE PRODUCT_NO = ?
+</entry>
+
+<!-- 입고조회 키워드 상품 번호 검색 (관리자) -->
+<entry key="searchReceivePnoAdmin">
+	SELECT PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,PRODUCT_STOCK,CREATE_DATE
+	FROM PRODUCT
+	WHERE PRODUCT_NO = ?
+</entry>
+
+<!-- 입고조회 키워드 상품 명 검색 (관리자) -->
+<entry key="searchReceivePnameAdmin">
+	SELECT PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,PRODUCT_STOCK,CREATE_DATE
+	FROM PRODUCT
+	WHERE PRODUCT_NAME LIKE '%'||?||'%'
+</entry>
+
+<!-- 입고조회 키워드 상품 카테고리 검색 (관리자) -->
+<entry key="searchReceiveCateAdmin">
+	SELECT PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,PRODUCT_STOCK,CREATE_DATE
+	FROM PRODUCT
+	WHERE PRODUCT_CATEGORY = ?
+</entry>
+
+<!-- 입고조회 키워드 상품 등록일  검색 (관리자) -->
+<entry key="searchReveiveCreateAdmin">
+	SELECT PRODUCT_NO,PRODUCT_CATEGORY,PRODUCT_NAME,PRODUCT_STOCK,CREATE_DATE
+	FROM PRODUCT
+	WHERE CREATE_DATE LIKE TO_DATE(?,'YYYY')
 </entry>
 
 </properties>

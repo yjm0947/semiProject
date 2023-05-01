@@ -150,7 +150,7 @@ public class ProductService {
 		return list;
 	}
 	
-	//상품 리스트 조회..a
+	//상품 리스트 조회
 	public ArrayList<Product> selectItem(PageInfo pi) {
 		
 		Connection conn = JDBCTemplate.getConnection();
@@ -162,7 +162,7 @@ public class ProductService {
 		return list;
 	}
 
-	//도서 총 게시글 개수 ..a
+	//도서 총 게시글 개수 
 	public int selectListCount() {
 
 		Connection conn = JDBCTemplate.getConnection();
@@ -174,7 +174,7 @@ public class ProductService {
 		return listCount;
 	}
 	
-	//상품 총 게시글 개수 ..a
+	//상품 총 게시글 개수 
 		public int selectProListCount() {
 
 			Connection conn = JDBCTemplate.getConnection();
@@ -313,6 +313,48 @@ public class ProductService {
 			Connection conn = JDBCTemplate.getConnection();
 			
 			ArrayList<Product> list = new ProductDao().selectReleaseAdmin(conn);
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
+		}
+
+		//출고량 추출
+		public int relAdminProduct(int rel2) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int rel = new ProductDao().relAdminProduct(conn,rel2);
+			
+			JDBCTemplate.close(conn);
+			
+			return rel;
+		}
+
+		//상품 삭제(관리자)
+		public int deleteProductAdmin(int pno) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int result = new ProductDao().deleteProductAdmin(conn,pno);
+					
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+			
+			JDBCTemplate.close(conn);
+			
+			return result;
+		}
+
+		//입고조회 키워드 검색 - 관리자
+		public ArrayList<Product> searchReceiveAdmin(int num, String search) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> list = new ProductDao().searchReceiveAdmin(conn,num,search);
 			
 			JDBCTemplate.close(conn);
 			

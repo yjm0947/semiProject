@@ -187,7 +187,7 @@
 				<%} %>
 				
 				<!-- 다음 버튼 -->
-				<%if(pi.getCurrentPage() != pi.getMaxPage()){%>
+				<%if(pi.getCurrentPage() != pi.getMaxPage() ){%>
 					<button onclick="location.href='<%=contextPath%>/searchMember.admin?currentPage=<%=pi.getCurrentPage()+1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&gt;</button>
 				<%}%>
 				</div>

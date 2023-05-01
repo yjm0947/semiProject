@@ -35,10 +35,25 @@ public class ProductAdminController extends HttpServlet {
 		//상품 리스트 추출해서 뷰로 넘겨주기
 		ArrayList<Product> list = new ProductService().selectAdminProduct();
 		
+		
+		//list.size()만큼 크기 지정 
+		int rel[] = new int[list.size()];  
+		
+		//rel에 상품번호 넣어주기
+		for(int i=0; i<list.size(); i++) {
+			rel[i] = list.get(i).getProductNo();
+		}
+		
 		//출고량 추출
+		int relist[] = new int[list.size()];
+		
+		for(int i=0; i<rel.length; i++) {
+			relist[i] = new ProductService().relAdminProduct(rel[i]);
+		}
 //		int rel = new ProductService().relAdminProduct();
 		
 		request.setAttribute("list", list);
+		request.setAttribute("relist", relist);
 //		request.setAttribute("rel", rel);
 		
 		request.getRequestDispatcher("views/admin_items/adminItems.jsp").forward(request, response);

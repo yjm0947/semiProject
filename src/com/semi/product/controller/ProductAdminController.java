@@ -36,10 +36,10 @@ public class ProductAdminController extends HttpServlet {
 		ArrayList<Product> list = new ProductService().selectAdminProduct();
 		
 		//출고량 추출
-		int rel = new ProductService().relAdminProduct();
+//		int rel = new ProductService().relAdminProduct();
 		
 		request.setAttribute("list", list);
-		request.setAttribute("rel", rel);
+//		request.setAttribute("rel", rel);
 		
 		request.getRequestDispatcher("views/admin_items/adminItems.jsp").forward(request, response);
 	}

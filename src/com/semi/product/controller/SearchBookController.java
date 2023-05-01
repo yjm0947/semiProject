@@ -76,6 +76,9 @@ public class SearchBookController extends HttpServlet {
 		
 		request.setAttribute("list", searchP);
 		request.setAttribute("pi", pi);
+		request.setAttribute("search", search);
+		
+		System.out.println(search);
 		
 //		for(Product p : searchP) {
 //			System.out.println(p);

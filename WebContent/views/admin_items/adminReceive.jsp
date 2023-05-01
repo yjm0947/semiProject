@@ -22,7 +22,7 @@
 		<div class="top">
 				<table>
 					<tr>
-						<td onclick="location.href='<%=contextPath%>/receive.admin'">입고 조회</td>
+						<td id="own" onclick="location.href='<%=contextPath%>/receive.admin'">입고 조회</td>
 						<td onclick="location.href='<%=contextPath%>/release.admin'">출고 조회</td>
 						<td onclick="location.href='<%=contextPath%>/items.admin'">상품 관리</td>
 					</tr>
@@ -30,18 +30,26 @@
 		</div>
 		<div class="middle">
 			<div id="mid_search">
-				<form action="" method="post">
+				<form action="<%=contextPath%>/searchReceive.admin" method="get" onsubmit="return blankSearch()">
 					<select name="ms_select" id="ms_select">
 						<option value="1">상품 번호</option>
 						<option value="2">상품 명</option>
 						<option value="3">상품 카테고리</option>
-						<option value="4">입고량</option>
-						<option value="5">상품 등록일</option>
+						<option value="4">상품 등록일(년도)</option>
 					</select>
 						<input type="search" name="memberSearch" id="memberSearch">
 						<button id="ms_img"></button>
 				</form>
 			</div>
+			<script>
+				function blankSearch(){
+					if($("#memberSearch").val().length == 0){
+						alert("다시 입력해주시길 바랍니다.");
+						return false;
+					}
+				};
+			</script>
+			
 		</div>
 		<div class="middle_left">
 			<div id="ml_table">

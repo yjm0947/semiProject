@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.semi.board.model.vo.Board"%>
+<%
+	ArrayList<Board> blist = (ArrayList<Board>)session.getAttribute("blist");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,13 +16,15 @@
         box-sizing: border-box;
     }
     .wrap{
-        
         width: 1400px;
         margin: auto;
     }
 	#content{
         width: 100%;
         margin-top: 20px;
+    }
+    #c_1{
+    	height: 100%;
     }
     /*---------------------------------------------------------*/
     #my_qna{
@@ -29,7 +34,6 @@
     }
     #write-btn{
         float: right;
-        margin-right: 30px;
         margin-bottom: 10px;
         width: 150px;
         height: 40px;
@@ -45,36 +49,71 @@
         color: white;
         font-weight: bold;
     }
-    
     #my-qna-area {
         margin-right: 30px;
         width: 100%;
     }
     #my-qna-area table{
         width: 100%;
-        margin: 0px 0px 0px 30px;
+        border-collapse: collapse;
     }
-    #my-qna-area th, td{
-        padding: 8px;
+    #my-qna-area th{
+        padding: 10px;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
     }
-    #my-qna-area th:nth-child(2){
-        width: 100px;
+	#my-qna-area td{
+        padding: 10px;
+        border-bottom: 1px solid black;
     }
-    #my-qna-area th:nth-child(3){
-        width: 300px;
-    }
-    #my-qna-area th:nth-child(4){
-        width: 500px;
-    }
-
+	.arrowBtn {
+		font-size: 20px;
+		padding: 5px;
+		border: 2px solid white;
+		border-radius: 5px;
+		font-weight: bold;
+	}
+	.arrowBtn:hover {
+		padding: 5px;
+		color: rgb(62, 130, 255);
+		border: 2px solid rgb(62, 130, 255);
+		border-radius: 5px;
+	}
     .plusIcon .minusIcon{
         font-size: 30px;
     }
+    #boardContent {
+    	margin: 20px 0;
+    	border: 3px solid lightblue;
+    	border-radius: 10px;
+    }
+    #boardContent p{
+    	margin: 30px 0;
+    }
+    #boardAnswer {
+    	margin: 20px 0;
+    	border: 3px solid lightpink;
+    	border-radius: 10px;
+    }
+    #boardAnswer p{
+    	margin: 30px 0;
+    }
+    #chkContent {
+    	margin: 20px 0;
+    	border: 3px solid #FFC93C;
+    	border-radius: 10px;
+    }
+    #chkContent p{
+    	margin: 30px 0;
+    }
+    
+    
 </style>
 </head>
 <body>
 	<%@ include file = "../common/header.jsp" %>
 	<%@ include file = "../common/myInfo.jsp" %>
+	<% String memName = loginUser.getMemberName(); %>
 	
 	<div class="wrap">
 		<div id="content">
@@ -96,11 +135,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                        <%if(blist.isEmpty()) {%>
+                        		<tr>
+                        			<td>
+	                        			<div id="sh_detail">
+				                            <i class="fa-solid fa-circle-exclamation"></i>
+				                            <h4>해당 기간 내에 주문한 상품이 없습니다.</h4>
+				                        </div>
+			                        </td>
+                        		</tr>
+                        <%}else{ %>
+                            <%for(Board b : blist) {%>
                                 <tr>
-                                    <td>1</td>
-                                    <td>2023/04/04</td>
-                                    <td>재입고 언제 되나요?</td>
-                                    <td>답변완료</td>
+                                    <td><%=b.getBoardNo() %></td>
+                                    <td><%=b.getCreateDate() %></td>
+                                    <td><%=b.getBoardTitle() %></td>
+                                <%if(b.getBoardAnswered() == null) {%>
+                                	<td>N</td>
+                                <%}else {%>
+                                	<td>Y</td>
+                                <%} %>
                                     <td>
                                         <i class="fa-solid fa-angles-down arrowBtn"></i>
                                         <i class="fa-solid fa-angles-up arrowBtn" style="display: none;"></i>
@@ -108,13 +162,34 @@
                                 </tr>
                                 <tr style="display: none">
                                     <td colspan="5">
-                                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaatest
+                                    	<div id="boardContent">
+	                                    	<p>
+	                                    		<b><%=memName %></b> 님의 문의 내용입니다. <br><br>
+	                                    		<%=b.getBoardContent() %>
+	                                    	</p>
+                                    	</div>
+                             		<%if(b.getBoardAnswered() != null) {%>
+                             			<div id="boardAnswer">
+	                                    	<p>
+	                                    		<b><%=memName %></b> 님 문의에 대한 답변입니다. <br><br>
+	                                    		<%=b.getBoardAnswered() %>
+	                                    	</p>                                
+                             			</div>
+                                	<%}else {%>
+                                		<div id="chkContent">
+	                                		<p>
+	                                			안녕하세요, <b><%=memName %></b> 님. <br><br>
+	                                			문의 내역을 검토하는 중입니다. <br>
+	                                			답변은 문의 내용에 따라 1주일~2주일 정도 소요될 예정입니다.
+	                                		</p>
+                                		</div>
+                                	<%} %>
                                     </td>
                                 </tr>
+                            <%} %>
+                        <%} %>
                             </tbody>
-    
                         </table>
-
                     </div>
                 </div>
             </div>
@@ -126,7 +201,8 @@
             $(".arrowBtn").on("click",function(){
 
                 var show = $(this);
-
+				var answer = $(this).parent().prev();
+				
                 if(show.hasClass("fa-angles-down")){
                     show.hide();
                     show.next().show();
@@ -134,7 +210,7 @@
                 }else{
                     show.hide();
                     show.prev().show();
-                    show.parent().parent().next().hide();
+                    show.parent().parent().next().hide(); 
                 }
             });
             

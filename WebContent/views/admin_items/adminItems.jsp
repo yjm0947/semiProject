@@ -3,7 +3,7 @@
     
  <%
  	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
- 	int rel = (int)request.getAttribute("rel");
+ 	int[] relist = (int[])request.getAttribute("relist");
  %>
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
 					<tr>
 						<td onclick="location.href='<%=contextPath%>/receive.admin'">입고 조회</td>
 						<td onclick="location.href='<%=contextPath%>/release.admin'">출고 조회</td>
-						<td onclick="location.href='<%=contextPath%>/items.admin'">상품 관리</td>
+						<td id="own" onclick="location.href='<%=contextPath%>/items.admin'">상품 관리</td>
 					</tr>
 				</table>
 		</div>
@@ -73,9 +73,9 @@
 						</tr>
 					</thead>
 					<tbody>
+						<%int j = 0; %>
 						<%for(Product i : list){ %>
 							<tr>
-							
 							<!-- 상품 카테고리 문자열 처리 -->
 							<%
 								String category = "";
@@ -96,7 +96,6 @@
 										break;
 								};
 							%>
-							
 								<td><%=i.getProductNo() %></td>
 								<td><%=category %></td>
 								<td><%=i.getProductName() %></td>
@@ -104,11 +103,18 @@
 								<td><%=i.getProductText() %></td>
 								<td><%=i.getProductPrice() %></td>
 								<td><%=i.getProductSalesRate() %></td>
-								<td><%=i.getProductStock()-rel %></td>
+								
+								<%if(i.getProductStock() - relist[j] > 0) {%>
+									<td><%=i.getProductStock() - relist[j] %></td>
+								<%}else {%>
+									<td>0</td>
+								<%} %>
+								
 								<td><%=i.getAuthor() %></td>
 								<td><%=i.getCreateDate() %></td>
 								<td><%=i.getStatus() %></td>
 							</tr>
+							<%j+=1; %>
 						<%} %>
 					<%} %>
 					</tbody>
@@ -220,11 +226,31 @@
 						</div>
 						
 						<div class="modal_footer">
-							<button onclick="updateItems()">상품 수정</button>
-							<button onclick="deleteItems()">상품 삭제</button>
+							<button onclick="">상품 수정</button>
+							<button onclick="deleteProduct()">상품 삭제</button>
 						</div>
 					</div>
 				</div>
+
+			<!-- ==================== 상품 삭제 (모달) ==================== -->
+	
+			<div class="modal_delete">
+				<form action="<%=contextPath%>/deleteProduct.admin" method="post">
+					<input type="hidden" id="productNo" name="productNo" value="" >
+				<div class="modal_delete_content">
+					<div class="modal_delete_header">
+						<img src="resources/adminPage_files/iconFolder/delete_icon.png">
+					</div>
+					<div class="modal_delete_body">
+						정말 삭제 하시겠습니까?
+					</div>
+					<div class="modal_delete_footer">
+						<input type="submit" value="삭제" id="delsub">
+						<button type="button" id="delbtn" onclick="delbutton()">취소</button>
+					</div>
+				</div>
+				</form>	
+			</div>
 
 
 			<!-- ==================== 스크립트 ==================== -->
@@ -273,7 +299,11 @@
 							$(".modal_body").children().children().eq(4).text(result.productText);
 							$(".modal_body").children().children().eq(5).text(result.productPrice);
 							$(".modal_body").children().children().eq(6).text(result.productSalesRate);
-							$(".modal_body").children().children().eq(7).text(result.productStock - <%=rel%>);
+							if((result.productStock - <%=relist%>) > 0){
+								$(".modal_body").children().children().eq(7).text(result.productStock - <%=relist%>);
+							}else{
+								$(".modal_body").children().children().eq(7).text(0);
+							}
 							$(".modal_body").children().children().eq(8).text(result.author);
 							$(".modal_body").children().children().eq(9).text(result.createDate);
 							$(".modal_body").children().children().eq(10).text(result.status);
@@ -299,8 +329,25 @@
 					});
 					
 				});	
+				
+				//상품삭제 버튼 클릭시
+				function deleteProduct(){
+					//해당 모달 창 열어주기
+					$(".modal_delete").fadeIn();
+					
+					//상품 번호 추출
+					var delPno = $(".modal_body").children().children().eq(0).text();
+					
+					//form태그안의 hidden값을 넣어줌
+					$("#productNo").val(delPno);
+				}
+				
+				// 상품삭제 창에서의 취소버튼 클릭시
+				function delbutton(){
+					$(".modal_delete").fadeOut();
+				}
+				
 			</script>	
 	</div>	
-</div>
 </body>
 </html>

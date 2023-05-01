@@ -2,6 +2,9 @@ package com.semi.product.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,51 +49,28 @@ public class BookListController extends HttpServlet {
 				
 				PageInfo pi = null;
 				ArrayList<Product> list = null;
-				String cate = request.getParameter("cate");
-
-				if(cate==null) {//카테고리에 넘어온게 없으면
-					
-					listCount = new ProductService().selectListCount(); //전체 도서 목록 리스트 게시글 수
-					currentPage = Integer.parseInt(request.getParameter("currentPage").trim());
-					pageLimit = 10;
-					boardLimit = 8;
-					
-					maxPage = (int)Math.ceil((double)listCount/boardLimit);
-					startPage = (currentPage-1)/pageLimit*pageLimit+1;
-					endPage = startPage+pageLimit-1;
-					
-					if(endPage>maxPage) {
-						endPage = maxPage;
-					}
-					
-					pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
-					
-					list = new ProductService().selectAttachmentList(pi);
-					
-				}else {//카테고리 클릭시
-					
-					listCount = new ProductService().selectCListCount(cate); //카테고리 목록 리스트 게시글 수
-					currentPage = Integer.parseInt(request.getParameter("currentPage").trim());
-					pageLimit = 10;
-					boardLimit = 8;
-					
-					maxPage = (int)Math.ceil((double)listCount/boardLimit);
-					startPage = (currentPage-1)/pageLimit*pageLimit+1;
-					endPage = startPage+pageLimit-1;
-					
-					if(endPage>maxPage) {
-						endPage = maxPage;
-					}
-					
-					pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
-					
-					list = new ProductService().selectAttachmentCList(pi,cate);
 				
+				listCount = new ProductService().selectListCount(); //전체 도서 목록 리스트 게시글 수
+				currentPage = Integer.parseInt(request.getParameter("currentPage").trim());
+				pageLimit = 10;
+				boardLimit = 8;
+					
+				maxPage = (int)Math.ceil((double)listCount/boardLimit);
+				startPage = (currentPage-1)/pageLimit*pageLimit+1;
+				endPage = startPage+pageLimit-1;
+					
+				if(endPage>maxPage) {
+					endPage = maxPage;
 				}
+					
+				pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
+					
+				list = new ProductService().selectAttachmentList(pi);
+				
 
 				request.setAttribute("list", list);
 				request.setAttribute("pi", pi);
-
+				
 				request.getRequestDispatcher("views/product/bookList.jsp").forward(request, response);
 			}
 

@@ -58,11 +58,11 @@ public class UpdateAddrController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		if(updateAddr != null) {
-			request.getSession().setAttribute("alertMsg", "회원 정보가 수정되었습니다.");
+			session.setAttribute("alertMsg", "회원 정보가 수정되었습니다.");
 			session.setAttribute("loginUser", updateAddr);
 			response.sendRedirect(request.getContextPath()+"/myPage.me");
 		}else {
-			request.getSession().setAttribute("alertMsg", "회원 정보 수정을 실패했습니다.");
+			session.setAttribute("alertMsg", "회원 정보 수정을 실패했습니다.");
 			response.sendRedirect(request.getContextPath()+"/myPage.me");
 		}
 		

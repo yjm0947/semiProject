@@ -43,7 +43,7 @@ public class ItemListController extends HttpServlet {
 		int startPage; //페이지 하단에 보여질 페이징바의 시작수
 		int endPage; //페이지 하단에 보여질 페이징바의 끝 수
 		
-		listCount = new ProductService().selectProListCount();
+		listCount = new ProductService().selectProListCount();//보여줄 총 상품 게시물..a
 		currentPage = Integer.parseInt(request.getParameter("currentPage").trim());
 		pageLimit = 10;
 		boardLimit = 8;
@@ -58,7 +58,7 @@ public class ItemListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
 		
-		//페이지에 보여질 게시글 리스트
+		//페이지에 보여질 게시글 리스트..a
 		ArrayList<Product> list = new ProductService().selectItem(pi);
 		
 		request.setAttribute("list", list);

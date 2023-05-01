@@ -372,14 +372,22 @@
             
             </pre>
             <div>
-                
+                <%
+                	//텍스트 없을시 빈 문자열 출력
+                	String productText = (p.getProductText()==null)?"":p.getProductText();
+                %>
+                <%if(p.getProductText()==null) {%>
+                <pre style="white-space: pre-wrap; word-wrap: break-word; width: 1000px; margin: auto; width: 1000px;">
+<%=productText %>
+</pre>                
+                <%}else {%>
                 <pre style="white-space: pre-wrap; word-wrap: break-word; width: 1000px; margin: auto; width: 1000px;">
                 
 <%=p.getProductText() %>
 
 
 </pre>
-
+				<%} %>
 
             </div>
         </div>

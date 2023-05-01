@@ -241,10 +241,13 @@
 	
 	<!-- 주문 조회 -->
 	<entry key="selectShoppingList">
-		SELECT ORDER_NO, PRODUCT_NAME, DEPOSIT_NAME, PAYMENT, DELIVERY_COST,USE_POINT,STATE
+		SELECT ORDER_NO, PRODUCT_NAME, DEPOSIT_NAME, PAYMENT, DELIVERY_COST,USE_POINT,STATE, CREATED_AT
 		FROM PAYMENT P
 		JOIN PRODUCT PD USING (PRODUCT_NO)
+		JOIN P_ORDER PO USING (ORDER_NO)
 		WHERE P.MEMBER_NO= ?
+		AND PO.STATUS = 'Y'
+		ORDER BY CREATED_AT ASC
 	</entry>
 	
 	<!-- 주문 상세 조회 -->
@@ -323,4 +326,18 @@
 		WHERE MEMBER_NO = ?
 	</entry>
 	
+	<!-- 마이페이지에서 상품 환불 -->
+	<entry key="refundMyOrder">
+		UPDATE P_ORDER
+		SET STATUS = 'N'
+		WHERE MEMBER_NO = ?
+		AND ORDER_NO = ?
+	</entry>
+	
+	<entry key="selectMyQna">
+		SELECT *
+		FROM BOARD
+		WHERE BOARD_CATEGORY = 3
+		AND MEMBER_NO = ?
+	</entry>
 </properties>

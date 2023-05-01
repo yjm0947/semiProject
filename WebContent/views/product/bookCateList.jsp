@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.product.model.vo.Product,com.semi.common.vo.PageInfo,com.semi.product.controller.BookListController"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.product.model.vo.Product,com.semi.common.vo.PageInfo,com.semi.product.controller.BookCateController"%>
 <%
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	
-	/* int cate = Integer.parseInt(String.valueOf((request.getAttribute("cate")))); */
+	int cate = Integer.parseInt(String.valueOf(request.getAttribute("cate")));
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -315,6 +314,58 @@
         cursor : pointer;
         background-color: white;
         }
+        
+        /*카테고리 목록 추가================================*/
+        #all_content{
+            width: 1400px;
+            margin: auto;
+            /* background-color: aqua; */
+         	height: 2730px;
+        }
+        #all_content>div{
+            float: left;
+        }
+        #all_content_1{
+            width: 200px;
+            /* height: 1000px; */
+            /* background-color: blue; */
+        }
+        #all_content_2{
+            width: 1200px;
+            /*height: 1000px;*/
+            /* background-color: brown; */
+        }
+        #all_content_2>*{
+        	position: relative;
+        	left : -105px
+        }
+        #all_none{
+            width: 200px;
+            /* background-color: yellowgreen; */
+            height: 205px;
+        }
+        #all_cate{
+            width: 170px;
+            border: 1px solid rgb(167, 167, 167);
+            /* height: 400px; */
+            border-radius: 8px;
+            font-size: 20px;
+            margin: auto;
+            font-weight: 600;
+            color: rgb(44, 44, 65);
+            position: fixed;
+            /* box-sizing: border-box; */
+            padding: 9px;
+            /* box-shadow: 0 1rem 5rem -2rem rgba(black,0.5); */
+            /* transition: transform 100ms linear; */
+            /* background-color: rgb(207, 218, 228); */
+        }
+        #all_cate a{
+            text-decoration: none;
+            color: rgb(86, 86, 95);
+            font-size: 15px;
+            font-weight: 500;
+        }
         </style>
 </head>
 <body>
@@ -356,21 +407,20 @@
                         <div id="list_num"><!-- 페이징 처리 -->
                             <!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
-                	<button type="button" onclick="location.href='<%=contextPath %>/book.list?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
+                	<button type="button" onclick="location.href='<%=contextPath %>/cate.b?cate=<%=cate%>&currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
                 <%} %>
                 
                 <%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++) {%>
                 	<%if(i!=pi.getCurrentPage()) {%>
-                		<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=i%>';"><%=i %></button>
+                		<button type="button" onclick="location.href='<%=contextPath%>/cate.b?cate=<%=cate%>&currentPage=<%=i%>';"><%=i %></button>
                 	<%}else {%>
                 		<button type="button" disabled><%=i %></button>
                 	<%} %>
                 <%} %>
                 <!-- 오른쪽으로 가는 버튼 -->
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
-                	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+                	<button type="button" onclick="location.href='<%=contextPath%>/book.list?cate=<%=cate%>&currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
-
                           
                         </div>
                         <div id="list_menu_3">
@@ -380,18 +430,12 @@
                     </div>
                     
                     <%if(list.isEmpty()) {%>
-
-            </div>
-            
-         </div>
-            	<%if(list.isEmpty()) {%>
             		<div id="none_div">
 			        	<div id="none_td">도서 목록이 존재하지 않습니다.</div>
 			        </div>
             	<%} else {%>
             	
             	<%for(Product p : list) {%>
-
                             
                      <div id="book">
                         <div id="book_1">
@@ -401,34 +445,9 @@
                         <div id="book_2">
                        
                             <table id="con_table">
-
-            	
-         <div class="book_list" id="book">
-            <div id="book_1">
-                <input type="checkbox" class="checkbox" id="check" name="cart" value="상품번호출력">
-                <input type="hidden" value="<%=p.getProductNo()%>">
-            </div>
-            <div id="book_2">
-           
-                <table >
                     <tr id="num">
                         <td rowspan="4" style="width: 150px; height: 250px;"><img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204);" width="135px" height="200px" id="imgthumb">
-                        <div style="position: relative; left: 0px;">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        </div>
-                        <div  style="position: relative; top: -21px; left: -2px;">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1; left: -1px;" width="21px" height="21px" class="star" hidden="">
-                        </div>
-                        <input type="hidden" id="star" value="<%=p.getStarAvg()%>">
-                        <input type="hidden" value="<%=p.getProductNo()%>">
+                        <input type="hidden" value="<%=p.getProductNo()%>">                       
                         </td>
                         <td id="title" style="font-size: 16px; font-weight: 600; position: relative; top: 45px;"><%=p.getProductName() %></td>
                     </tr>
@@ -496,8 +515,6 @@
     </div>
         
         <script>
-        	//별점 표시
-            
         
 		      //스크롤 부드럽게 따라오게 하기
 		        $(document).ready(function(){
@@ -507,6 +524,8 @@
 		                $("#all_cate").stop().animate({"top":position+currentPosition+"px"},1000);
 		            });
 	            });
+		      
+        	
         	
         	//디테일 페이지 이동
             $(function(){
@@ -516,12 +535,14 @@
             		//console.log(pno);
             		location.href="<%=contextPath%>/book.de?pno="+pno;
             	});
+            	/* $("#book_2").click(function(){
+            		console.log("ddd");
+            	}); */
             });
         	
             <%if (loginUser!=null){%> //로그인 되어있으면
-            
-            //장바구니 버튼 클릭시
             $(function(){
+            	//장바구니 버튼 클릭시
             	$("#book_3>#cart").click(function(){
             		var productNo = $(this).parent().children("input[type=hidden]").val()
             		var cartNo = 0;
@@ -632,7 +653,6 @@
    					alert("로그인 후 이용이 가능합니다."); 
    					location.href = "<%=contextPath%>/logform.me"
       			};
-    		<%}%>
     		<%}%>
           </script>
         

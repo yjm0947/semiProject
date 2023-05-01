@@ -63,7 +63,7 @@ public class ProductService {
 		return result*result2;
 	}
 
-	//전체도서리스트 조회
+	//전체도서리스트 조회..a
 	public ArrayList<Product> selectAttachmentList(PageInfo pi) {
 		
 		Connection conn = JDBCTemplate.getConnection();
@@ -75,28 +75,28 @@ public class ProductService {
 		return list;
 	}
 	
-		//도서 검색시 보여줄 리스트 수
-		public int searchCount(String search) {
+	//도서 검색시 보여줄 리스트 수..a
+	public int searchCount(String search) {
 			
-			Connection conn = JDBCTemplate.getConnection();
-			
-			int listCount = new ProductDao().searchCount(conn,search);
-			
-			JDBCTemplate.close(conn);
-			
-			return listCount;
-		}
+		Connection conn = JDBCTemplate.getConnection();
 		
-		//도서 검색
-		public ArrayList<Product> searchBook(String search, PageInfo pi) {
+		int listCount = new ProductDao().searchCount(conn,search);
 			
-			Connection conn = JDBCTemplate.getConnection();
+		JDBCTemplate.close(conn);
 			
-			ArrayList<Product> list = new ProductDao().searchBook(conn,search,pi);
+		return listCount;
+	}
+		
+	//도서 검색
+	public ArrayList<Product> searchBook(String search, PageInfo pi) {
+		
+		Connection conn = JDBCTemplate.getConnection();
 			
-			JDBCTemplate.close(conn);
+		ArrayList<Product> list = new ProductDao().searchBook(conn,search,pi);
 			
-			return list;
+		JDBCTemplate.close(conn);
+			
+		return list;
 		}
 		
 	//베스트 도서 리스트 조회(출고순)
@@ -112,8 +112,21 @@ public class ProductService {
 		
 		
 	}
+	
+	//신간도서 게시글 수 조회..a
+	public int selectNewCount() {
 
-	//신간도서리스트 조회
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int listCount = new ProductDao().selectNewCount(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return listCount;
+	}
+	
+
+	//신간도서리스트 조회..a
 		public ArrayList<Product> selectNewAttachList(PageInfo pi) {
 			
 			Connection conn = JDBCTemplate.getConnection();
@@ -125,8 +138,8 @@ public class ProductService {
 			return list;
 		}
 	
-	//카테고리 클릭시 출력되는 도서 리스트 조회
-	public ArrayList<Product> selectAttachmentCList(PageInfo pi, String cate) {
+	//카테고리 클릭시 출력되는 도서 리스트 조회..a
+	public ArrayList<Product> selectAttachmentCList(PageInfo pi, int cate) {
 		
 		Connection conn = JDBCTemplate.getConnection();
 		
@@ -166,15 +179,15 @@ public class ProductService {
 
 			Connection conn = JDBCTemplate.getConnection();
 			
-			int listCount = new ProductDao().selectListCount(conn);
+			int listCount = new ProductDao().selectProListCount(conn);
 			
 			JDBCTemplate.close(conn);
 			
 			return listCount;
 		}
 
-	//카테고리 총 게시물 수
-	public int selectCListCount(String cate) {
+	//카테고리 총 게시물 수..a
+	public int selectCListCount(int cate) {
 		
 		Connection conn = JDBCTemplate.getConnection();
 		
@@ -196,6 +209,20 @@ public class ProductService {
 		
 		return p;
 	}
+	
+	//상품 상세 페이지
+		public Product productItemDetail(int pno) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			Product p = new ProductDao().productItemDetail(conn,pno);
+			
+			JDBCTemplate.close(conn);
+			
+			return p;
+		}
+	
+	
 	//도서,상품 상세 페이지.. 상세이미지
 	public Product productDetail2(int pno) {
 		
@@ -293,14 +320,44 @@ public class ProductService {
 		}
 
 		//출고량 추출
-		public int relAdminProduct() {
+		public int relAdminProduct(int rel2) {
 			
 			Connection conn = JDBCTemplate.getConnection();
 			
-			int rel = new ProductDao().relAdminProduct(conn);
+			int rel = new ProductDao().relAdminProduct(conn,rel2);
 			
 			JDBCTemplate.close(conn);
 			
 			return rel;
+		}
+
+		//상품 삭제(관리자)
+		public int deleteProductAdmin(int pno) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int result = new ProductDao().deleteProductAdmin(conn,pno);
+					
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+			
+			JDBCTemplate.close(conn);
+			
+			return result;
+		}
+
+		//입고조회 키워드 검색 - 관리자
+		public ArrayList<Product> searchReceiveAdmin(int num, String search) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> list = new ProductDao().searchReceiveAdmin(conn,num,search);
+			
+			JDBCTemplate.close(conn);
+			
+			return list;
 		}
 }

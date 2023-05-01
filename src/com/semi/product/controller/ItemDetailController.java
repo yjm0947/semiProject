@@ -32,7 +32,7 @@ public class ItemDetailController extends HttpServlet {
 		
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		
-		Product p = new ProductService().productDetail(pno);
+		Product p = new ProductService().productItemDetail(pno);
 		Product p2 = new ProductService().productDetail2(pno);
 		
 		request.setAttribute("product", p);

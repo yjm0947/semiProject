@@ -8,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.event.attendance.model.service.AttendanceService;
-import com.semi.event.point.model.service.PointService;
 
 /**
- * Servlet implementation class AttendanceController
+ * Servlet implementation class AttendanceDateController
  */
-@WebServlet("/attendance.v")
-public class AttendanceController extends HttpServlet {
+@WebServlet("/atdate.me")//출석체크 화면에 출력해줄 도장 갯수 알아오기
+public class AttendanceDateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AttendanceController() {
+    public AttendanceDateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,20 +28,25 @@ public class AttendanceController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//출석체크 페이지 보여주기
-		request.getRequestDispatcher("views/event/attendanceView.jsp").forward(request, response); 
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-			/**
-			 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-			 */
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		
-			//출석체크일 업데이트해주기
-			new AttendanceService().upDate(memberNo);
+		int count = new AttendanceService().dayCount(memberNo);
 		
+		if (count>23) {//출석체크 일수가 23개 찍혀있다면... 0으로 바꿔주기
+			new AttendanceService().resetCount(memberNo);
 		}
+		
+		response.getWriter().print(count);
+		
 	}
+
+}

@@ -21,7 +21,7 @@
 				<table>
 					<tr>
 						<td onclick="location.href='<%=contextPath%>/receive.admin'">입고 조회</td>
-						<td onclick="location.href='<%=contextPath%>/release.admin'">출고 조회</td>
+						<td id="own" onclick="location.href='<%=contextPath%>/release.admin'">출고 조회</td>
 						<td onclick="location.href='<%=contextPath%>/items.admin'">상품 관리</td>
 					</tr>
 				</table>

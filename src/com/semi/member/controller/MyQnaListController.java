@@ -1,11 +1,18 @@
 package com.semi.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.semi.board.model.vo.Board;
+import com.semi.member.model.service.MemberService;
+import com.semi.member.model.vo.Member;
 
 /**
  * Servlet implementation class MyQnaListController
@@ -27,6 +34,14 @@ public class MyQnaListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		int memNo = loginUser.getMemberNo();
+		
+		ArrayList<Board> blist = new MemberService().selectMyQna(memNo);
+		
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("blist", blist);
 		request.getRequestDispatcher("views/member/myQnaList.jsp").forward(request, response);
 	}
 

@@ -14,16 +14,16 @@ import com.semi.product.model.service.ProductService;
 import com.semi.product.model.vo.Product;
 
 /**
- * Servlet implementation class BookBestController
+ * Servlet implementation class BookCateController
  */
-@WebServlet("/book.be")
-public class BookBestController extends HttpServlet {
+@WebServlet("/cate.b") //카테고리 클릭시 보여주는
+public class BookCateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BookBestController() {
+    public BookCateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,41 +38,38 @@ public class BookBestController extends HttpServlet {
 		int currentPage; //현재 페이지
 		int pageLimit; //페이지 하단에 보여질 페이징바의 페이지 최대 개수
 		int boardLimit; //한 페이지에 보여질 게시글 최대 개수
-				
+		
 		int maxPage; //가장 마지막 페이지가 몇인지 (총 페이지 개수)
 		int startPage; //페이지 하단에 보여질 페이징바의 시작수
 		int endPage; //페이지 하단에 보여질 페이징바의 끝 수
-				
-		listCount = 30; /*보여줄 총 게시물 수@@@@@@@@@@@ 베스트 셀러라서 30개만보여줄거임*/
+		
+		PageInfo pi = null;
+		ArrayList<Product> list = null;
+		int cate = Integer.parseInt(request.getParameter("cate"));
+		
+		listCount = new ProductService().selectCListCount(cate); //카테고리 리스트 수
 		currentPage = Integer.parseInt(request.getParameter("currentPage").trim());
 		pageLimit = 10;
 		boardLimit = 8;
-				
+			
 		maxPage = (int)Math.ceil((double)listCount/boardLimit);
 		startPage = (currentPage-1)/pageLimit*pageLimit+1;
 		endPage = startPage+pageLimit-1;
-				
+			
 		if(endPage>maxPage) {
 			endPage = maxPage;
 		}
-				
-		PageInfo pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
-				
-		int cate = Integer.parseInt(request.getParameter("cate"));
-				
-		ArrayList<Product> list = null;
-				
-		//페이지에 보여질 게시글 리스트
-		if(cate==0) {
-			list = new ProductService().selectBestAttachList(pi);
-		}else {
-			list = new ProductService().selectAttachmentCList(pi,cate);
-		}
-				
+			
+		pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
+			
+		list = new ProductService().selectAttachmentCList(pi, cate);
+		
+
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
+		request.setAttribute("cate", cate);
 		
-		request.getRequestDispatcher("views/product/bookBest.jsp").forward(request, response);
+		request.getRequestDispatcher("views/product/bookCateList.jsp").forward(request, response);
 	}
 
 	/**

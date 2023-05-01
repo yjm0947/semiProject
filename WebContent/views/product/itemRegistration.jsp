@@ -9,6 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link rel="stylesheet" href="resources/adminPage_files/cssFolder/admin_insertItems2.css">
         <style>
         /*-----------------콘텐츠------------------------*/
         #content{
@@ -67,7 +68,7 @@
         /*form 상자-----------------------------------*/
         #con_3{
             width: 1000px;
-            height: 1000px;
+            height: 1050px;
             position: relative;
             top: -20px;
             border: 1px solid black;
@@ -189,7 +190,8 @@
         </style>
 </head>
 <body>
-	<%@include file = "../common/header.jsp" %>
+	<div class="wrap">
+		<%@include file="/views/common/admin_Category.jsp" %>
         <div id="content">
             <div id="con_1">상품등록</div>
             <div id="con_2">
@@ -209,9 +211,10 @@
                         <input type="text" id="pro_Name2" name="pro_Name" />
                     </div>
                     <div class="inputArea">
-                        <label for="pro_Publisher" id="pro_Publisher1">출판사(제조사)</label>
-                        <input type="text" id="pro_Publisher2" name="pro_Publisher"/>
+                        <label for="pro_Publisher" id="pro_Publisher1" style="position: relative;  top: -32px;">제조사</label>
+                        <input type="text" id="pro_Publisher2" name="pro_Publisher" style="position: relative; top: -30px; left: 56px; width: 200px; height: 30px;"/>
                     </div>
+                    <br>
                     <div class="inputArea">
                         <label for="pro_Price" id="pro_Price1">상품가격(원)</label>
                         <input type="number" id="pro_Price2" name="pro_Price" />
@@ -300,6 +303,9 @@
             
             </div>
         </div>
-	<%@include file = "../common/footer.jsp" %>
+	</div>
+		<div class="bottom">
+			<%@include file="/views/common/footer.jsp"%>
+		</div>
 </body>
 </html>

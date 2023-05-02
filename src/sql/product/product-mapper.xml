@@ -248,8 +248,12 @@
 	
 <!-- 상품관리 조회 -->
 <entry key="selectAdminProduct">
-	SELECT *
-	FROM PRODUCT
+SELECT *
+FROM(SELECT ROWNUM RNUM, A.*
+     FROM(SELECT *
+          FROM PRODUCT
+          ORDER BY PRODUCT_NO DESC) A)
+WHERE RNUM BETWEEN ? AND ?
 </entry>
 
 <!-- 상품관리 상세조회 -->
@@ -368,42 +372,114 @@
 
 <!-- 상품관리 키워드 상품번호 검색 (관리자) -->
 <entry key="searchProductPno">
-	SELECT *
-	FROM PRODUCT
-	WHERE PRODUCT_NO = ?
+SELECT *
+FROM (SELECT ROWNUM RNUM , A.*
+      FROM(SELECT *
+           FROM PRODUCT
+           WHERE PRODUCT_NO = ?
+           ORDER BY PRODUCT_NO DESC)A)
+WHERE RNUM BETWEEN ? AND ?
 </entry>
 
 <!-- 상품관리 키워드 상품카테고리 검색 (관리자) -->
 <entry key="searchProductCate">
-	SELECT *
-	FROM PRODUCT
-	WHERE PRODUCT_CATEGORY = ?
+SELECT *
+FROM (SELECT ROWNUM RNUM , A.*
+      FROM(SELECT *
+           FROM PRODUCT
+           WHERE PRODUCT_CATEGORY = ?
+           ORDER BY PRODUCT_NO DESC)A)
+WHERE RNUM BETWEEN ? AND ?
 </entry>
 
 <!-- 상품관리 키워드 상품명 검색 (관리자) -->
 <entry key="searchProductPname">
-	SELECT *
-	FROM PRODUCT
-	WHERE PRODUCT_NAME LIKE '%'||?||'%'
+SELECT *
+FROM (SELECT ROWNUM RNUM , A.*
+      FROM(SELECT *
+           FROM PRODUCT
+           WHERE PRODUCT_NAME LIKE '%'||?||'%'
+           ORDER BY PRODUCT_NO DESC)A)
+WHERE RNUM BETWEEN ? AND ?
 </entry>
 
 <!-- 상품관리 키워드 출판사 검색 (관리자) -->
 <entry key="searchProductPub">
-	SELECT *
-	FROM PRODUCT
-	WHERE PRODUCT_PUBLISHER LIKE '%'||?||'%'
+SELECT *
+FROM (SELECT ROWNUM RNUM , A.*
+      FROM(SELECT *
+           FROM PRODUCT
+           WHERE PRODUCT_PUBLISHER LIKE '%'||?||'%'
+           ORDER BY PRODUCT_NO DESC)A)
+WHERE RNUM BETWEEN ? AND ?
 </entry>
 
 <!-- 상품관리 키워드 저자 검색 (관리자) -->
 <entry key="searchProductAthor">
-	SELECT *
-	FROM PRODUCT
-	WHERE AUTHOR = ?
+SELECT *
+FROM (SELECT ROWNUM RNUM , A.*
+      FROM(SELECT *
+           FROM PRODUCT
+           WHERE AUTHOR LIKE ?
+           ORDER BY PRODUCT_NO DESC)A)
+WHERE RNUM BETWEEN ? AND ?
 </entry>
 
 <!-- 상품관리 키워드 등록일 검색 (관리자) -->
 <entry key="searchProductDate">
-	SELECT *
+SELECT *
+FROM (SELECT ROWNUM RNUM , A.*
+      FROM(SELECT *
+           FROM PRODUCT
+           WHERE TO_CHAR(CREATE_DATE,'YYYYMMDD') LIKE '%'||?||'%'
+           ORDER BY PRODUCT_NO DESC)A)
+WHERE RNUM BETWEEN ? AND ?
+</entry>
+
+<!-- 총 상품 개수 (관리자 - 페이징) -->
+<entry key="selProductAdminCount">
+	SELECT COUNT(*) COUNT
+	FROM PRODUCT
+</entry>
+
+<!-- 상품번호 검색 수 -->
+<entry key="selPnoCount">
+	SELECT COUNT(*) COUNT
+	FROM PRODUCT
+	WHERE PRODUCT_NO = ?
+</entry>
+
+<!-- 상품카테고리 검색 수 -->
+<entry key="selCateCount">
+	SELECT COUNT(*) COUNT
+	FROM PRODUCT
+	WHERE PRODUCT_CATEGORY = ?
+</entry>
+
+<!-- 상품명 검색 수  -->
+<entry key="selPnameCount">
+	SELECT COUNT(*) COUNT
+	FROM PRODUCT
+	WHERE PRODUCT_NAME LIKE '%'||?||'%'
+</entry>
+
+<!-- 상품 출판사 검색 수 -->
+<entry key="selPubCount">
+	SELECT COUNT(*) COUNT
+	FROM PRODUCT
+	WHERE PRODUCT_PUBLISHER LIKE '%'||?||'%'
+</entry>
+
+<!-- 상품 저자 검색 수 -->
+<entry key="selAthorCount">
+	SELECT COUNT(*) COUNT
+	FROM PRODUCT
+	WHERE AUTHOR = ?
+</entry>
+
+<!-- 상품 등록일 검색 수 -->
+<entry key="selDateCount">
+	SELECT COUNT(*) COUNT
 	FROM PRODUCT
 	WHERE TO_CHAR(CREATE_DATE,'YYYYMMDD') LIKE '%'||?||'%'
 </entry>

@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.product.model.vo.Product"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.product.model.vo.Product,com.semi.common.vo.PageInfo"%>
     
  <%
  	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
- int[] relist = (int[])request.getAttribute("relist");
+	int[] relist = (int[])request.getAttribute("relist");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int bar = (int)request.getAttribute("bar");
+	int barNum = (int)request.getAttribute("barNum");
+	String barSearch = (String)request.getAttribute("barSearch");
  %>
 <!DOCTYPE html>
 <html>
@@ -27,13 +31,14 @@
 					<tr>
 						<td onclick="location.href='<%=contextPath%>/receive.admin'">입고 조회</td>
 						<td onclick="location.href='<%=contextPath%>/release.admin'">출고 조회</td>
-						<td id="own" onclick="location.href='<%=contextPath%>/items.admin'">상품 관리</td>
+						<td onclick="location.href='<%=contextPath%>/items.admin?currentPage=1'" id="own" >상품 관리</td>
 					</tr>
 				</table>
 		</div>
 		<div class="middle">
 			<div id="mid_search">
-				<form action="<%=contextPath%>/searchProduct.admin" method="get" onsubmit="return blankSearch()">
+				<form action="<%=contextPath%>/searchProduct.admin?currentPage=1" method="get" onsubmit="return blankSearch()">
+					<input type="hidden" name="currentPage" value="1">
 					<select name="ms_select" id="ms_select">
 						<option value="1">상품 번호</option>
 						<option value="2">상품 카테고리</option>
@@ -138,6 +143,53 @@
 					</tbody>
 				</table>
 			</div>
+			
+			<!-- 일반 조회 시 페이징 바 -->
+			<%if(bar == 0) {%>
+				<div align="center" class="paging-area">
+				<!-- 이전 버튼 -->
+				<%if(pi.getCurrentPage() != 1) {%>
+					<button onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=pi.getCurrentPage()-1%>'">&lt;</button>
+				<%}%>
+				
+				<!-- 페이징바 -->
+				<%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++){%>
+					<%if(i != pi.getCurrentPage()) {%>
+						<button onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=i%>'"><%=i%></button>
+					<%}else {%>
+						<button disabled><%=i%></button>
+					<%} %>
+				<%} %>
+				
+				<!-- 다음 버튼 -->
+				<%if(pi.getCurrentPage() != pi.getMaxPage()){%>
+					<button onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+				<%}%>
+				</div>
+				
+			<!--  ===== ===== ===== 검색기능 사용시 페이징 바 ===== ===== ===== -->
+			<%}else{ %>
+				<div align="center" class="paging-area">
+				<!-- 이전 버튼 -->
+				<%if(pi.getCurrentPage() != 1) {%>
+					<button onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=pi.getCurrentPage()-1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&lt;</button>
+				<%}%>
+				
+				<!-- 페이징바 -->
+				<%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++){%>
+					<%if(i != pi.getCurrentPage()) {%>
+						<button onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=i%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'"><%=i%></button>
+					<%}else {%>
+						<button disabled><%=i%></button>
+					<%} %>
+				<%} %>
+				
+				<!-- 다음 버튼 -->
+				<%if(pi.getCurrentPage() != pi.getMaxPage() ){%>
+					<button onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=pi.getCurrentPage()+1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&gt;</button>
+				<%}%>
+				</div>
+			<%} %>		
 		</div>
 		
 		<div class="bottom">

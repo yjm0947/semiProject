@@ -49,7 +49,7 @@
 					<ul id="mc_navi">
 						<li><a href="<%=contextPath%>/receive.admin">입고 조회</a></li>
 						<li><a href="<%=contextPath%>/release.admin">출고 조회</a></li>
-						<li><a href="<%=contextPath%>/items.admin">상품 관리</a></li>
+						<li><a href="<%=contextPath%>/items.admin?currentPage=1">상품 관리</a></li>
 					</ul>
 				</li>
 				<li>

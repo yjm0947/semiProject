@@ -202,4 +202,18 @@ public class OrderService {
 		return result;
 	}
 
+	//사용한 포인트 차감 메소드
+	public void usePoint(String userNo, int usePoint) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new OrderDao().usePoint(conn,userNo,usePoint);
+		
+		if (result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+	}
+
 }

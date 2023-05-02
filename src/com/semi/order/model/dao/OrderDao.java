@@ -415,4 +415,27 @@ public class OrderDao {
 		return result;
 	}
 
+	//사용한 포인트 차감 메소드
+	public int usePoint(Connection conn, String userNo, int usePoint) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("usePoint");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, usePoint);
+			pstmt.setString(2, userNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+	
+		return result;
+	}
+
 }

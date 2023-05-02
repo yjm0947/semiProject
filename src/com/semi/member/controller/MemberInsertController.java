@@ -49,13 +49,13 @@ public class MemberInsertController extends HttpServlet {
 		String email = request.getParameter("email");
 		
 		String addressNum = request.getParameter("addressNum");
-		String loadAddress = request.getParameter("loadAddress");
+//		String loadAddress = request.getParameter("loadAddress");
 		String detailAddress = request.getParameter("detailAddress");
 		String extraAddress = request.getParameter("extraAddress");
 		
 		String address = request.getParameter("address");
 
-		address = addressNum + loadAddress + detailAddress + extraAddress;
+		address = addressNum + detailAddress + extraAddress;
 		
 		
 		

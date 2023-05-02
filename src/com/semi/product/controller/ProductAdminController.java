@@ -32,9 +32,14 @@ public class ProductAdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//상품 리스트 추출해서 뷰로 넘겨주기
-		ArrayList<Product> list = new ProductService().selectAdminProduct();
+//		ArrayList<Product> list = new ArrayList<>();
 		
+//		if(request.getAttribute("list") == null) {
+			//상품 리스트 추출해서 뷰로 넘겨주기
+		ArrayList<Product> list = new ProductService().selectAdminProduct();
+//		}else {
+//			list = (ArrayList<Product>)request.getAttribute("list");
+//		}
 		
 		//list.size()만큼 크기 지정 
 		int rel[] = new int[list.size()];  
@@ -50,11 +55,11 @@ public class ProductAdminController extends HttpServlet {
 		for(int i=0; i<rel.length; i++) {
 			relist[i] = new ProductService().relAdminProduct(rel[i]);
 		}
-//		int rel = new ProductService().relAdminProduct();
+		
+		
 		
 		request.setAttribute("list", list);
 		request.setAttribute("relist", relist);
-//		request.setAttribute("rel", rel);
 		
 		request.getRequestDispatcher("views/admin_items/adminItems.jsp").forward(request, response);
 	}

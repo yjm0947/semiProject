@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//ArrayList<Payment> payList = (ArrayList<Payment>)session.getAttribute("payList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,8 +81,7 @@
             border-bottom: 1px solid #ffffff;
         }
         #cancel:checked ~ #cancel_cont,
-        #exchange:checked ~ #exchange_cont,
-        #return:checked ~ #return_cont {
+        #exchange:checked ~ #exchange_cont {
             display: block;
         }
 		#cancel_info i{
@@ -94,20 +96,32 @@
 <body>
 	<%@ include file = "../common/header.jsp" %>
 	<%@ include file = "../common/myInfo.jsp" %>
-	
+	<%
+		int rst1 = 0;
+		int rst2 = 0;
+		
+		for(int i=0; i<plist.size(); i++){
+			if(plist.get(i).getState() == "5"){
+				rst1 += 1;			
+			}
+		}
+		
+		for(int i=0; i<plist.size(); i++){
+			if(plist.get(i).getState() == "4"){
+				rst2 += 1;			
+			}
+		}
+	%>
 	<div class="wrap">
 		<div id="content">
 	            <div id="c_1">
 	                <div id="cancel_info">
-	                    <h2>취소 / 교환 / 반품 상세 조회</h2>
+	                    <h2>취소 / 교환  상세 조회</h2>
 	                    <input type="radio" id="cancel" name="tab" checked>
 	                    <label for="cancel">취소 내역</label>
 	
 	                    <input type="radio" id="exchange" name="tab">
 	                    <label for="exchange">교환 내역</label>
-	
-	                    <input type="radio" id="return" name="tab">
-	                    <label for="return">반품 내역</label>
 	
 	                    <section id="cancel_cont">
 	                        <table border="1">
@@ -118,109 +132,63 @@
 	                                <th colspan="3">상품명</th>
 	                                <th>상품수량</th>
 	                                <th colspan="2">상품금액</th>
-	                                <th colspan="2">취소일</th>
 	                            </tr>
+		                
+	                    <%if(rst1 == 0) {%>
 	                            <tr>
 	                                <td colspan="12" style="height: 200px;">
 	                                    <i class="fa-solid fa-circle-exclamation"></i>
-	                                    <h4>최근 3개월 내에 취소한 상품이 없습니다.</h4>
+	                                    <h4>회원님의 주문 내역 중 취소 신청한 상품이 없습니다.</h4>
 	                                </td>
 	                            </tr>
+                     	<%}else {%>
 	                            <!--조회결과 있을 때-->
-	                            <!-- <tr>
-	                                <th colspan="2">주문번호</th>
-	                                <th colspan="2">주문일</th>
-	                                <th colspan="3">상품명</th>
-	                                <th>상품수량</th>
-	                                <th colspan="2">상품금액</th>
-	                                <th colspan="2">취소일</th>
-	                            </tr>
+	                        <%for(Payment p : plist) {%>
 	                            <tr>
-	                                <td colspan="2">00000000</td>
-	                                <td colspan="2">2013/04/01</td>
-	                                <td colspan="3">무인도에서 살아남기</td>
-	                                <td>1</td>
-	                                <td colspan="2">12500</td>
-	                                <td colspan="2">2023/03/31</td>
-	                            </tr> -->
+	                                <td colspan="2"><%=p.getOrderNo() %></td>
+	                                <td colspan="2"><%=p.getCreatedAt() %></td>
+	                                <td colspan="3"><%=p.getProductNo() %></td>
+	                                <td><%=p.getUsePoint() %></td>
+	                                <td colspan="2"><%=p.getDeliveryCost() + p.getPayment() %></td>
+	                            </tr>
+                     		<%} %>
+                   		<%} %>
 	                        </table>
 	                    </section>
 	
 	                    <section id="exchange_cont">
 	                        <table border="1">
 	                            <!--조회결과 없을 때-->
-	                            <tr>
+	                             <tr>
 	                                <th colspan="2">주문번호</th>
 	                                <th colspan="2">주문일</th>
 	                                <th colspan="3">상품명</th>
 	                                <th>상품수량</th>
 	                                <th colspan="2">상품금액</th>
-	                                <th colspan="2">취소일</th>
 	                            </tr>
+	                   <%if(rst2 < 0) {%>
 	                            <tr>
 	                                <td colspan="12" style="height: 200px;">
 	                                    <i class="fa-solid fa-circle-exclamation"></i>
-	                                    <h4>최근 3개월 내에 교환한 상품이 없습니다.</h4>
+	                                    <h4>회원님의 주문 내역 중 교환 신청한 상품이 없습니다.</h4>
 	                                </td>
 	                            </tr>
+                       <%}else { %>
 	
+	                        <%for(Payment p : plist) {%>
 	                            <!-- 조회 결과 있을 때 -->
-	                            <!-- <tr>
-	                                <th colspan="2">주문번호</th>
-	                                <th colspan="2">주문일</th>
-	                                <th colspan="3">교환 상품명</th>
-	                                <th>교환 상품 수량</th>
-	                                <th colspan="2">상품금액</th>
-	                                <th colspan="2">교환 신청일</th>
-	                            </tr>
 	                            <tr>
-	                                <td colspan="2">00000000</td>
-	                                <td colspan="2">2013/04/01</td>
-	                                <td colspan="3">무인도에서 살아남기</td>
-	                                <td>1</td>
-	                                <td colspan="2">12500</td>
-	                                <td colspan="2">2023/03/31</td>
-	                            </tr> -->
+	                                <td colspan="2"><%=p.getOrderNo() %></td>
+	                                <td colspan="2"><%=p.getCreatedAt() %></td>
+	                                <td colspan="3"><%=p.getProductNo() %></td>
+	                                <td><%=p.getUsePoint() %></td>
+	                                <td colspan="2"><%=p.getDeliveryCost() + p.getPayment() %></td>
+	                            </tr>
+	                            <%} %>
+                     	<%} %>
 	                        </table>
 	                    </section>
 	
-	                    <section id="return_cont">
-	                        <table border="1">
-	                            <!--조회결과 없을 때-->
-	                            <!-- <tr>
-	                                <th colspan="2">주문번호</th>
-	                                <th colspan="2">주문일</th>
-	                                <th colspan="3">상품명</th>
-	                                <th>상품수량</th>
-	                                <th colspan="2">상품금액</th>
-	                                <th colspan="2">취소일</th>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="12" style="height: 200px;">
-	                                    <i class="fa-solid fa-circle-exclamation"></i>
-	                                    <h4>최근 3개월 내에 반품 신청한 상품이 없습니다.</h4>
-	                                </td>
-	                            </tr> -->
-	
-	                            <!-- 조회 결과 있을 때 -->
-	                            <tr>
-	                                <th colspan="2">주문번호</th>
-	                                <th colspan="2">반품 신청일</th>
-	                                <th colspan="3">상품명</th>
-	                                <th>상품 수량</th>
-	                                <th colspan="2">상품금액</th>
-	                                <th colspan="2">반품 진행현황</th>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="2">00000000</td>
-	                                <td colspan="2">2013/04/01</td>
-	                                <td colspan="3">무인도에서 살아남기</td>
-	                                <td>1</td>
-	                                <td colspan="2">12500</td>
-	                                <td colspan="2">반품완료</td>
-	                            </tr>
-	                        </table>
-	                    </section>
 	                </div>
 	            </div>
 	        </div>

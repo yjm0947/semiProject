@@ -276,7 +276,7 @@
         /*가격--------------------------------------------------------*/
         #tr_3{
             /* background-color: aqua; */
-            position: relative;
+            position: relative;ㄴㄷㄱ
             top: 17px;
             font-size: 12px;
             font-weight: 600;
@@ -418,10 +418,6 @@
                 <%} %>
 
                         </div>
-                        <div id="list_menu_3">
-                            <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" >전체선택
-                            <button type="button">장바구니</button>
-                        </div>
                     </div>
             </div>
          </div>
@@ -435,7 +431,6 @@
 
          <div class="book_list" id="book"  style="position: relative; background-color:; left: 192px;" >
             <div id="book_1">
-                <input type="checkbox" class="checkbox" id="check" name="cart" value="상품번호출력">
                 <input type="hidden" value="<%=p.getProductNo()%>">
             </div>
             <div id="book_2" >
@@ -487,9 +482,11 @@
             <%} %>
         </div>
                 <%} %>
-				<%} %>
-                        <div id="page">
-                             <!-- 왼쪽 가기 버튼 -->
+
+			<%} %>
+
+                <div id="page">
+                	<!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
                 	<button type="button" onclick="location.href='<%=contextPath %>/book.list?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
                 <%} %>
@@ -507,7 +504,6 @@
                 <%} %>
                         </div>
                     </div>
-        
         <script>
         
 		      /* //스크롤 부드럽게 따라오게 하기

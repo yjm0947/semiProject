@@ -401,5 +401,10 @@
             </div>
         </div>
         
+        <script>
+        	<%-- function search(){
+        		location.href="<%=contextPath%>/search.bo?search=나&currentPage=1"
+        	} --%>
+        </script>
 </body>
 </html>

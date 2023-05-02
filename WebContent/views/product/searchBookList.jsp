@@ -312,10 +312,6 @@
                 	<button onclick="location.href='<%=contextPath%>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
             </div>
-            <div id="con_sel">
-                <input type="checkbox" id="checkbox" name="cart" value="전체선택" onclick="selectAll(this)">전체선택
-                <button>장바구니</button>
-            </div>
         </div>
         <%if(list.isEmpty()){ %>
         <div style="height: 80px; width: 1200px; text-align: center;">
@@ -332,7 +328,6 @@
             <div id="con_1"></div>
             <div id="con_2">
                 <div id="con_check">
-                    <input type="checkbox" id="check" name="cart" value="상품번호출력">
                 </div>
                 <div id="con_img">
                     <img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204); width: 100%; height: 100%;">

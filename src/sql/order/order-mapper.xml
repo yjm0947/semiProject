@@ -108,4 +108,12 @@
 		FROM PAYMENT
 		WHERE ORDER_NO = ?
 	</entry>
+	
+	<!-- 사용포인트 차감 -->
+	<entry key="usePoint">
+		UPDATE MEMBER
+		SET MEMBER_POINT = MEMBER_POINT - ?
+		WHERE MEMBER_NO = ?
+		AND STATUS = 'Y'
+	</entry>
 </properties>

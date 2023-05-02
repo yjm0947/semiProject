@@ -13,6 +13,7 @@ public class Payment {
 	private String bankName;		//BANK_NAME VARCHAR2(20 BYTE) 은행이름
 	private String depositName;		//DEPOSIT_NAME VARCHAR2(20 BYTE) 입금자명
 	private int usePoint;			//USE_POINT NUMBER 사용 포인트
+	private int useCoupon;			//USE_POINT NUMBER 사용 쿠폰
 	private String addressName;		//ADDRESS_NAME VARCHAR2(20 BYTE) 배송받는 사람
 	private String phone;			//PHONE VARCHAR2(30 BYTE) 배송받는 번호
 	private String email;			//EMAIL VARCHAR2(30 BYTE) 배송받는 이메일
@@ -121,10 +122,10 @@ public class Payment {
 		this.usePoint = usePoint;
 	}
 	
-	
+	//카드 결제 생성자
 	public Payment(int orderNo, String memberNo, String productNo, int payment, String orderRequest, int usePoint,
-			String addressName, String phone, String email, String post, String roadAddress, String detailAddress,
-			int deliveryCost) {
+			int useCoupon, String addressName, String phone, String email, String post, String roadAddress,
+			String detailAddress, int deliveryCost) {
 		super();
 		this.orderNo = orderNo;
 		this.memberNo = memberNo;
@@ -132,6 +133,7 @@ public class Payment {
 		this.payment = payment;
 		this.orderRequest = orderRequest;
 		this.usePoint = usePoint;
+		this.useCoupon = useCoupon;
 		this.addressName = addressName;
 		this.phone = phone;
 		this.email = email;
@@ -153,6 +155,29 @@ public class Payment {
 		this.bankName = bankName;
 		this.depositName = depositName;
 		this.usePoint = usePoint;
+		this.addressName = addressName;
+		this.phone = phone;
+		this.email = email;
+		this.post = post;
+		this.roadAddress = roadAddress;
+		this.detailAddress = detailAddress;
+		this.deliveryCost = deliveryCost;
+	}
+	
+	//주문완료 생성자
+	public Payment(int orderNo, String memberNo, String productNo, int payment, String orderRequest, String bankName,
+			String depositName, int usePoint, int useCoupon, String addressName, String phone, String email,
+			String post, String roadAddress, String detailAddress, int deliveryCost) {
+		super();
+		this.orderNo = orderNo;
+		this.memberNo = memberNo;
+		this.productNo = productNo;
+		this.payment = payment;
+		this.orderRequest = orderRequest;
+		this.bankName = bankName;
+		this.depositName = depositName;
+		this.usePoint = usePoint;
+		this.useCoupon = useCoupon;
 		this.addressName = addressName;
 		this.phone = phone;
 		this.email = email;
@@ -185,8 +210,16 @@ public class Payment {
 		this.state = state;
 		this.deliveryCost = deliveryCost;
 	}
-
 	
+	
+	public int getUseCoupon() {
+		return useCoupon;
+	}
+
+	public void setUseCoupon(int useCoupon) {
+		this.useCoupon = useCoupon;
+	}
+
 	public int getQuantity() {
 		return quantity;
 	}

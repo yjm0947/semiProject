@@ -223,6 +223,7 @@ public class MemberDao {
 		return srcPwdM;
 	}
 
+	//총 회원 수
 	public int selMemberAdminCount(Connection conn) {
 		
 		int listCount = 0;
@@ -286,7 +287,7 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			//회원등급 int형 으로 변환
-			if((search == "1" || search == "2" || search == "3" || search == "4") && num == 7) {
+			if(num == 7 && (search == "1" || search == "2" || search == "3" || search == "4")) {
 				//ORA-01722: invalid number 방지
 				pstmt.setInt(1, Integer.parseInt(search));
 				rset = pstmt.executeQuery();

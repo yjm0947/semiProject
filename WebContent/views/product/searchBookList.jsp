@@ -295,7 +295,7 @@
         <div id="con_menu_1">
             <div id="con_menu_1a"></div>
             <div id="con_page">
-                <!-- 왼쪽 가기 버튼 -->
+                <%-- <!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
                 	<button onclick="location.href='<%=contextPath %>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
                 <%} %>
@@ -310,7 +310,7 @@
                 <!-- 오른쪽으로 가는 버튼 -->
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
                 	<button onclick="location.href='<%=contextPath%>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
-                <%} %>
+                <%} %> --%>
             </div>
             <div id="con_sel">
                 <input type="checkbox" id="checkbox" name="cart" value="전체선택" onclick="selectAll(this)">전체선택
@@ -374,7 +374,7 @@
         </div>
         <%}} %>
         <div id="page">
-            <!-- 왼쪽 가기 버튼 -->
+            <%-- <!-- 왼쪽 가기 버튼 -->
                 <!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
                 	<button type="button" onclick="location.href='<%=contextPath %>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
@@ -390,7 +390,7 @@
                 <!-- 오른쪽으로 가는 버튼 -->
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
                 	<button type="button" onclick="location.href='<%=contextPath%>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
-                <%} %>
+                <%} %> --%>
         </div>
         <pre>
 

@@ -427,7 +427,7 @@ public class ProductDao {
 			}
 	
 		//검색한 도서 리스트
-		public ArrayList<Product> searchBook(Connection conn, String search, PageInfo pi) {
+		public ArrayList<Product> searchBook(Connection conn, String search) {
 			
 			ArrayList<Product> list = new ArrayList<>();
 			PreparedStatement pstmt = null;
@@ -436,13 +436,13 @@ public class ProductDao {
 			String sql = prop.getProperty("searchBook");
 	
 			try {
-				int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit()+1;
-				int endRow = (startRow+pi.getBoardLimit())-1;
+//				int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit()+1;
+//				int endRow = (startRow+pi.getBoardLimit())-1;
 				
 				pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, search);
-					pstmt.setInt(2, startRow);
-					pstmt.setInt(3, endRow);
+//					pstmt.setInt(2, startRow);
+//					pstmt.setInt(3, endRow);
 				
 				rset = pstmt.executeQuery();
 				

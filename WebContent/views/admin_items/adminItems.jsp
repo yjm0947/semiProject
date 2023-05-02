@@ -335,8 +335,7 @@
 				
 					//상품번호 추출
 					var pno = $(this).children().eq(0).text();
-					
-					console.log(pno);
+					//console.log(pno);
 
 					//검색결과에 따른 조회값 추출 및 삽입
 					$.ajax({
@@ -419,11 +418,14 @@
 						url : "product.md",
 						data : {productNo : pNo},
 						type : "post",
-						success : function(){
-							location.href="<%=request.getContextPath()%>/product.md";
-						},
-						complete : function(){
-							console.log("ㄴㄴㄴ");
+						success : function(productNo){
+							
+							console.log(productNo);
+							<%-- location.replace="<%=request.getContextPath()%>/product.md?productNo='+productNo'"; --%>
+							
+							//let url = '/SemiProject/product.md?pNo='+pno'';
+							
+							location.replace("/SemiProject/product.md?pNo="+productNo);
 						}
 					});
 				}

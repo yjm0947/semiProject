@@ -665,12 +665,16 @@
                         <div class="detail-area" style="margin-bottom: 10px;">
                         	<div class="paymentInfo_point_div" style="width: 100%;">
                                 <div class="title">쿠폰 사용</div>
-                                <select class="input-element" name="inputCoupon" id="input-coupon" style="width: 200px; height: 40px; margin-left: 50px; margin-bottom: 10px;">
+                                <select class="input-element" id="input-coupon" style="width: 200px; height: 40px; margin-left: 50px; margin-bottom: 10px;">
                                 	<option value="">==선택==</option>
-                                	<%for(Coupon c : clist){ %>
-                                	<option value="<%=c.getCouponDc()%>"><%=c.getCouponName() %></option>
+                                	<%for(int i=0;i<clist.size();i++){ %>
+                                	<option value="<%=i%>"><%=clist.get(i).getCouponName() %></option>
                                 	<%} %>
                                 </select>
+                                <%for(int i=0;i<clist.size();i++){ %>
+                               	<input type="checkbox" name="inputCoupon" id="<%=i%>" value="<%=clist.get(i).getCouponNo()%>" hidden="">
+                               	<label for="<%=i%>" hidden=""><%=clist.get(i).getCouponDc()%></label>
+                               	<%} %>
 								<div style="font-size: 14px; position: relative; left: 380px; top: -40px;">할인율&nbsp;<span id="userCoupon">0</span>%</div>
 							</div>
                         
@@ -769,7 +773,7 @@
 
                     <!-- 버튼 영역 -->
                     <div class="total_info_btn_div">
-                        <button type="submit" class="order_btn" id="pay-btn1">결제하기</button>
+						<button type="submit" class="order_btn" id="pay-btn1">결제하기</button>
                     </div>
                 </div>
                 
@@ -818,7 +822,6 @@
     
 
 <script>
-
 	$(function() {
 		/* 주문 조합 정보란 최신화 */
 		setTotalInfo();
@@ -884,7 +887,17 @@
 	$("#input-coupon").change(function(){
 		setTotalInfo();
 	});
-	    
+    
+    /* 쿠폰 번호 전송 */
+    $(function() {
+    	$('#input-coupon').change(function() {
+            var optionVal = $(this).val();
+            $('input[type=checkbox][name=inputCoupon]').prop('checked', false);
+            $('input[type=checkbox][id="' + optionVal + '"]').prop('checked', true);
+            var couponDc = $('input[type=checkbox][id="' + optionVal + '"]').next('label').text();
+        });
+   	});
+    
 	/*포인트 입력 / 0이상 최대포인트 이하*/
 	$("#input-point").on("propertychange change keyup paste input", function(){
 		const maxPoint = <%=loginUser.getMemberPoint()%>;
@@ -1067,7 +1080,7 @@
     	}
     	
     	/* 사용 쿠폰 */
-    	useCoupon = $("#input-coupon").val();
+    	useCoupon = $('input[type=checkbox][id="' + $('#input-coupon').val() + '"]').next('label').text();
     	
     	totalPrice = totalPrice - (totalPrice*(useCoupon/100));
 

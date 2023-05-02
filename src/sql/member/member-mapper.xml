@@ -238,6 +238,7 @@
 		SELECT *
 		FROM COUPON
 		WHERE MEMBER_NO = ?
+		AND STATUS = 'Y'
 	</entry>
 	
 	<!-- 주문 조회 -->

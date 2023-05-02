@@ -15,6 +15,7 @@
     
 	<link rel="stylesheet" href="resources/adminPage_files/cssFolder/admin_category.css">
 	<link rel="stylesheet" href="resources/adminPage_files/cssFolder/admin_items.css">
+	<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -339,7 +340,6 @@
 						
 					});
 				});
-				
 				
 				//모달 보이기/숨기기 기능
 				$(function(){

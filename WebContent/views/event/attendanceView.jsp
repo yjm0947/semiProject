@@ -143,25 +143,24 @@
         		$(function(){//로그인한 회원만 화면 보여주기
         		alert("로그인이 필요한 서비스입니다.");
         		location.href="<%=contextPath%>/logform.me";
-        		console.log("ddd");
         	});
         	
         	<%}else {%>//로그인 했으면
         		
-        		$(function(){//각 회원들의 출석체크일 출력
+        	$(function(){//각 회원들의 출석체크일 출력
         			$.ajax({
         				url : "atdate.me",
         				data : {memberNo : <%=loginUser.getMemberNo()%>},
-        				type : "post",
-        				success : function(count){//회원들의 출석체크일
+        				type : "get",
+        				success : function(count){//페이지 로딩시 회원들의 출석체크일 출력하기
         					//console.log(count);
         					var img = document.getElementsByTagName("img");
-        					var count2 = parseInt(count)+3;
+        					var count2 = parseInt(count)-2;
         					//console.log(count2);
         					
-        					for(var i=3; i<count2; i++){
-        						if(img[i].style.visibility=="hidden"){
-        							img[i].style.visibility="visible"
+        					for(var i=0; i<count2; i++){
+        						if(img[i+3].style.visibility=="hidden"){
+        							img[i+3].style.visibility="visible"
         						}
         					}
         				}
@@ -174,11 +173,45 @@
 	            var index = 0;
 	            //console.log(img);
 	
-	            for(var i=3;i<39;i++){
+            	//하루에 한번으로 막기
+            	var today = new Date();
+            	
+            	var year = today.getFullYear();
+            	var month = ('0'+(today.getMonth()+1)).slice(-2);
+            	var day = today.getDate();
+            	
+            	var dateString = year+month+day; //오늘 날짜 담기
+            	//console.log(dateString);
+
+            	var nextday = parseInt(today.getDate())+1;
+            	var nextdateString = year+month+nextday;  //오늘 날짜 +1
+            	//console.log(nextdateString);
+            	
+            	dateString = parseInt(dateString)+1;
+            	
+	            $(function(){
+		        	if(dateString==nextdateString){
+		        		$("#atten_click_btn").attr("disabled", true);
+		        		//alert("막기");
+		        	}
+		        });
+            	
+	            for(var i=3;i<39;i++){//클릭시 도장 보이기
 	                if(img[i].style.visibility=="hidden"){//visibility가 hidden일시 도장 보이도록
 				         img[i].style.visibility="visible"
+						 alert("출석이 완료되었습니다. 내일 또 도전해주세요!");
+	                
+				         $(function(){//출석체크일 db에 +1진행
+		                		$.ajax({
+		                			url : "attendance.v",
+		                			type: "post",
+		                			data : {memberNo : <%=loginUser.getMemberNo()%>},
+		                			success : function(){
+		                			}
+		                		});
+		                	});
 	                	
-	                	if((i==7 || i==13 || i==19 || i==25 || i==31 || i==37) && img[i].style.visibility=="visible"){
+	                	if((i==7 || i==13 || i==19 || i==25 || i==31 || i==37)){ /* 출첵5회시마다 적립금 300 쏴주기 */
 	                        index = i;
 	                        //console.log(index);                    
 	                        
@@ -192,38 +225,23 @@
 		                				//console.log("성공");
 		                				alert("5번의 출석체크로 300원의 적립금이 지급되었습니다.");
 				                        img[index+1].style.visibility="visible"
+				                        
+				                        	$(function(){//도장도 하나 더 찍어주기
+						                		$.ajax({
+						                			url : "attendance.v",
+						                			type: "post",
+						                			data : {memberNo : <%=loginUser.getMemberNo()%>},
+						                			success : function(){
+						                			}
+						                		});
+						                	});
 		                			}
 		                		});
 		                	});
-	                        break;
-	                    }
-	                	
-	                	$(function(){//출석체크일 늘리기
-	                		$.ajax({
-	                			url : "attendance.v",
-	                			type: "post",
-	                			data : {memberNo : <%=loginUser.getMemberNo()%>},
-	                			success : function(){
-								       	alert("출석이 완료되었습니다. 내일 또 도전해주세요!");
-	                			}
-	                		});
-	                	});
-	                	break;
-	                }
-	            }
 	                //출석체크 도장 다 찍으면 출석일 다시 0으로 돌리기
-	                if(img[37].style.visibility=="visible"){
-            			console.log("다 찍음~!!")
+	               if(img[37].style.visibility=="visible"){
+            			alert("다 찍음~!!");
             			
-            			$.ajax({
-                			url : "upPoint.me",
-                			data : {memberNo : <%=loginUser.getMemberNo()%>,
-                					addP : 200},
-                			type : "post",
-                			success : function(){
-            			alert("축하합니다! 30번의 출석체크 완료로 200원의 추가 적립금이 지급되었습니다.")                					
-                			}
-                		});
             			$.ajax({
             				url : "atdate.me",
             				data : {memberNo : <%=loginUser.getMemberNo()%>},
@@ -237,7 +255,14 @@
             			});
             			
             		}
+	                        break;
+	                    }
+	                	break;
+	                }
+	            }
 	        }
+        	
+        	
         	<%}%>
         </script>
         

@@ -8,6 +8,8 @@
 		WHERE MEMBER_NO = ?
 	
 	</entry>
+	
+	<!-- 출첵5회시마다 적립금 300 쏴주기 -->
 	<entry key="upPoint">
 		UPDATE MEMBER
 		SET MEMBER_POINT =(MEMBER_POINT + ?)

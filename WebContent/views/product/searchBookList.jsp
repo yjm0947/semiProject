@@ -398,17 +398,12 @@
     </div>
 
     <script>
-        function selectAll(selectAll){
-            var checkboxes = document.getElementsByName('cart');
-            /*console.log(checkboxes)*/
 
-            checkboxes.forEach((checkboxes)=>checkboxes.checked=selectAll.checked);
-        }
         $(function(){
         	$("#con>#con_2>#con_img").click(function(){
         		//console.log(this);
         		var pno = $(this).children("input[type=hidden]").val();
-        		//console.log(pno);
+        		/* console.log(pno); */
         		location.href="<%=contextPath%>/book.de?pno="+pno;
         	});
         });

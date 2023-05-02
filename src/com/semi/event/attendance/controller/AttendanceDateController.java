@@ -28,8 +28,13 @@ public class AttendanceDateController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		
+		//페이지 로딩시 출석체크 도장 출력
+		int count = new AttendanceService().dayCount(memberNo);
+
+		response.getWriter().print(count);
 	}
 
 	/**
@@ -39,13 +44,8 @@ public class AttendanceDateController extends HttpServlet {
 	
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		
-		int count = new AttendanceService().dayCount(memberNo);
+		new AttendanceService().resetCount(memberNo);//출석체크 다 찍었을시 0으로 바꿔주기
 		
-		if (count>23) {//출석체크 일수가 23개 찍혀있다면... 0으로 바꿔주기
-			new AttendanceService().resetCount(memberNo);
-		}
-		
-		response.getWriter().print(count);
 		
 	}
 

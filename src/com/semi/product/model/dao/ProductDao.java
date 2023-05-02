@@ -1176,5 +1176,34 @@ public class ProductDao {
 				JDBCTemplate.close(pstmt);
 			}
 			return list;
-		}	
+		}
+
+		//상품 수정시 불러올 상품 리스트 조회
+//		public Product modifiPro(Connection conn, int proNo) {
+//			
+//			Product pro = ;
+//			PreparedStatement pstmt = null;
+//			ResultSet rset = null;
+//
+//			String sql = prop.getProperty("modifiPro");
+//			
+//			try {
+//				pstmt = conn.prepareStatement(sql);
+//					pstmt.setInt(1, proNo);
+//					
+//				rset = pstmt.executeQuery();
+//				
+//				if(rset.next()) {
+//						
+//				}
+//				
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			
+//			
+//			return null;
+//		}	
 }

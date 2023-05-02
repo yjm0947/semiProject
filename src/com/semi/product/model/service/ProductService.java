@@ -395,4 +395,16 @@ public class ProductService {
 			
 			return list;
 		}
+
+		//상품 수정시 불러올 상품 리스트
+//		public Product modifiPro(int proNo) {
+//			
+//			Connection conn = JDBCTemplate.getConnection();
+//			
+//			Product pro = new ProductDao().modifiPro(conn,proNo);
+//			
+//			JDBCTemplate.close(conn);
+//			
+//			return null;
+//		}
 }

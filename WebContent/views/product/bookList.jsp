@@ -281,7 +281,7 @@
         /*가격--------------------------------------------------------*/
         #tr_3{
             /* background-color: aqua; */
-            position: relative;
+            position: relative;ㄴㄷㄱ
             top: 17px;
             font-size: 12px;
             font-weight: 600;
@@ -315,185 +315,217 @@
         cursor : pointer;
         background-color: white;
         }
+        
+         /*카테고리 목록 추가================================*/
+        #all_content{
+            width: 1400px;
+            margin: auto;
+            /* background-color: aqua; */
+            height: 610px;
+        }
+        #all_content>div{
+            float: left;
+        }
+        #all_content_1{
+            width: 200px;
+            /* height: 1000px; */
+            /* background-color: blue; */
+        }
+        #all_content_2{
+            width: 1200px;
+            /* height: 1000px; */
+            /* background-color: brown; */
+        }
+        #all_none{
+            width: 200px;
+            /* background-color: yellowgreen; */
+            height: 205px;
+        }
+        #all_cate{
+            width: 170px;
+            border: 1px solid rgb(167, 167, 167);
+            /* height: 400px; */
+            border-radius: 8px;
+            font-size: 20px;
+            margin: auto;
+            font-weight: 600;
+            color: rgb(44, 44, 65);
+            position: fixed;
+            /* box-sizing: border-box; */
+            padding: 9px;
+            /* box-shadow: 0 1rem 5rem -2rem rgba(black,0.5); */
+            /* transition: transform 100ms linear; */
+            /* background-color: rgb(207, 218, 228); */
+        }
+        #all_cate a{
+            text-decoration: none;
+            color: rgb(86, 86, 95);
+            font-size: 15px;
+            font-weight: 500;
+        }
         </style>
 </head>
 <body>
 	<%@include file = "../common/header.jsp" %>
 	
       <div id="all_content">
-        <div id="all_content_1">
-            <div id="all_none"></div>
-            <div id="all_cate">
-                <pre></pre>
-                &nbsp;&nbsp;&nbsp;카테고리
-                <ul>
-                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=1">소설</a> </li>
-                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=2">에세이</a> </li>
-                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=3">자기계발</a></li>
-                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=4">경제/경영</a></li>
-                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=5">인문학</a> </li>
-                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=6">정치/사회</a></li>
-                </ul>
-            </div>
-        </div>
-        <div id="all_content_2">
-
-                    <div id="content">
-                     <div id="con_1">
-                        <p id="con_title">도서 전체 목록</p>
-                        <p id="con_subtitle">파란 서점에서 판매되는 전체 도서 목록입니다.</p>
-                     </div>
-                     <div id="con_menu">
-                        <a href="<%=contextPath %>/book.list?currentPage=1" id="con_menu_1">전체 도서</a>
-                        <a href="<%=contextPath %>/book.be?currentPage=1" id="con_menu_2">베스트 셀러</a>
-                        <a href="<%=contextPath %>/book.new?currentPage=1" id="con_menu_3">신간 도서</a> <!--비동기통신 예정-->
-                     </div>
-                   
-                     <div id="list_menu">
-                        <div id="list_menu_1"> 
-                            
-                        </div>
-                        <div id="list_num"><!-- 페이징 처리 -->
-                            <!-- 왼쪽 가기 버튼 -->
-                <%if(pi.getCurrentPage()!=1) {%>
-                	<button type="button" onclick="location.href='<%=contextPath %>/book.list?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
-                <%} %>
-                
-                <%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++) {%>
-                	<%if(i!=pi.getCurrentPage()) {%>
-                		<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=i%>';"><%=i %></button>
-                	<%}else {%>
-                		<button type="button" disabled><%=i %></button>
-                	<%} %>
-                <%} %>
-                <!-- 오른쪽으로 가는 버튼 -->
-                <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
-                	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
-                <%} %>
-
-                          
-                        </div>
-                        <div id="list_menu_3">
-                            <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" >전체선택
-                            <button type="button">장바구니</button>
-                        </div>
-                    </div>
-                    
-                    <%if(list.isEmpty()) {%>
-
-            </div>
-            
-         </div>
-            	<%if(list.isEmpty()) {%>
-            		<div id="none_div">
-			        	<div id="none_td">도서 목록이 존재하지 않습니다.</div>
-			        </div>
-            	<%} else {%>
-            	
-            	<%for(Product p : list) {%>
-
-                            
-                     <div id="book">
-                        <div id="book_1">
-                            <label for="check"></label>
-                            <input type="checkbox" id="check" name="cart" value="상품번호출력">
-                        </div>
-                        <div id="book_2">
-                       
-                            <table id="con_table">
-
-            	
-         <div class="book_list" id="book">
-            <div id="book_1">
-                <input type="checkbox" class="checkbox" id="check" name="cart" value="상품번호출력">
-                <input type="hidden" value="<%=p.getProductNo()%>">
-            </div>
-            <div id="book_2">
-           
-                <table >
-                    <tr id="num">
-                        <td rowspan="4" style="width: 150px; height: 250px;"><img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204);" width="135px" height="200px" id="imgthumb">
-                        <div style="position: relative; left: 0px;">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        </div>
-                        <div  style="position: relative; top: -21px; left: -2px;">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1; left: -1px;" width="21px" height="21px" class="star" hidden="">
-                        </div>
-                        <input type="hidden" id="star" value="<%=p.getStarAvg()%>">
-                        <input type="hidden" value="<%=p.getProductNo()%>">
-                        </td>
-                        <td id="title" style="font-size: 16px; font-weight: 600; position: relative; top: 45px;"><%=p.getProductName() %></td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: 12px; font-weight: 300; position: relative; top: 25px;"><%=p.getAuthor() %> ⊙ <%=p.getProductPublisher() %> ⊙ <%=p.getCreateDate() %></td>
-                    </tr>
-                        <!--  
-                        -->
-                    <tr>
-                        <td id="tr_3">
-                        	<div id="tr_3_1"><%=p.getProductSalesRate() %>%&nbsp;</div>
-                            <div id="tr_3_2"><fmt:formatNumber value="<%=Math.round((1-(p.getProductSalesRate()*0.01))*p.getProductPrice()) %>" pattern="#,###"/>원&nbsp;</div>
-                            <div id="tr_3_3"><s><fmt:formatNumber value="<%=p.getProductPrice() %>" pattern="#,###"/>원</s>&nbsp;</div>
-                            <div id="tr_3_4"><%=Math.round(((1-(p.getProductSalesRate()*0.01))*p.getProductPrice())*0.01) %>p</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p style="position: relative; top: -10px; font-size: 12px; font-weight: 300;">
-                            <%if(p.getProductText().length()>=250) {%><!-- 텍스트 글자 250 이상 -->
-	                            <%=p.getProductText().substring(0,250)%></p>
-                            <%}else {%><!-- 텍스트 글자 250이하 -->
-                            	<%=p.getProductText() %>
-                            <%} %>
-                        </td>
-                    </tr>
-                </table>
-                        </div>
-                        <%if(loginUser!=null){ %>
-                        <div id="book_3">
-                            <button id="cart" type="button">장바구니</button>
-                <input type="hidden" value="<%=p.getProductNo()%>"> 
-                <button id="direct" type="button">바로구매</button>
-            </div>
-            <%}else{ %>
-            
-            <div id="book_3">
-                <button type="button" onclick="q_btn_on()">장바구니</button>
-                <button type="button" onclick="q_btn_on()">바로구매</button>
-            </div>
-            <%} %>
-        </div>
-                <%} %>
+	        <div id="all_content_1">
+	            <div id="all_none"></div>
+	            <div id="all_cate">
+	                <pre></pre>
+	                &nbsp;&nbsp;&nbsp;카테고리
+	                <ul>
+	                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=1">소설</a> </li>
+	                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=2">에세이</a> </li>
+	                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=3">자기계발</a></li>
+	                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=4">경제/경영</a></li>
+	                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=5">인문학</a> </li>
+	                    <li><a href="<%=contextPath%>/cate.b?currentPage=1&cate=6">정치/사회</a></li>
+	                </ul>
+	            </div>
+	        </div>
+	        <div id="all_content_2">
+	
+	            <div id="content">
+	                 <div id="con_1">
+	                     <p id="con_title">도서 전체 목록</p>
+	                     <p id="con_subtitle">파란 서점에서 판매되는 전체 도서 목록입니다.</p>
+	                 </div>
+	          		  <div id="con_menu">
+	               		 <a href="<%=contextPath %>/book.list?currentPage=1" id="con_menu_1">전체 도서</a>
+	               		 <a href="<%=contextPath %>/book.be?currentPage=1" id="con_menu_2">베스트 셀러</a>
+	               		 <a href="<%=contextPath %>/book.new?currentPage=1" id="con_menu_3">신간 도서</a> <!--비동기통신 예정-->
+	          		  </div>
+	                   
+			            <div id="list_menu">
+			                 <div id="list_menu_1"> 
+			                            
+			                 </div>
+			                 <div id="list_num"><!-- 페이징 처리 -->
+			                       <!-- 왼쪽 가기 버튼 -->
+			                		<%if(pi.getCurrentPage()!=1) {%>
+			                			<button type="button" onclick="location.href='<%=contextPath %>/book.list?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
+			               			 <%} %>
+			                
+			               			 <%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++) {%>
+			                				<%if(i!=pi.getCurrentPage()) {%>
+			                					<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=i%>';"><%=i %></button>
+			                				<%}else {%>
+			                					<button type="button" disabled><%=i %></button>
+			                				<%} %>
+			              			  <%} %>
+			               		 <!-- 오른쪽으로 가는 버튼 -->
+			             		   <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
+			                			<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+			             			   <%} %>
+			
+			                          
+			                   </div>
+			                   <div id="list_menu_3">
+			                       <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" >전체선택
+			                       <button type="button">장바구니</button>
+			                   </div>
+	             		</div>
+	          	  </div>
+	            
+	         </div>
+	            <%if(list.isEmpty()) {%>
+	            	<div id="none_div">
+				      	<div id="none_td">도서 목록이 존재하지 않습니다.</div>
+				    </div>
+	            <%} else {%>
+	            	
+	            <%for(Product p : list) {%>
+	
+	         <div class="book_list" id="book">
+	            <div id="book_1">
+	                <input type="checkbox" class="checkbox" id="check" name="cart" value="상품번호출력">
+	                <input type="hidden" value="<%=p.getProductNo()%>">
+	            </div>
+	            <div id="book_2">
+	                <table >
+	                    <tr id="num">
+	                        <td rowspan="4" style="width: 150px; height: 250px;"><img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204);" width="135px" height="200px" id="imgthumb">
+		                        <div style="position: relative; left: 0px;">
+			                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+			                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+			                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+			                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+			                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
+		                        </div>
+		                        <div  style="position: relative; top: -21px; left: -2px;">
+			                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+			                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+			                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+			                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
+			                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1; left: -1px;" width="21px" height="21px" class="star" hidden="">
+		                        </div>
+		                        <input type="hidden" id="star" value="<%=p.getStarAvg()%>">
+		                        <input type="hidden" value="<%=p.getProductNo()%>">
+	                        </td>
+	                        <td id="title" style="font-size: 16px; font-weight: 600; position: relative; top: 45px;"><%=p.getProductName() %></td>
+	                    </tr>
+	                    <tr>
+	                        <td style="font-size: 12px; font-weight: 300; position: relative; top: 25px;"><%=p.getAuthor() %> ⊙ <%=p.getProductPublisher() %> ⊙ <%=p.getCreateDate() %></td>
+	                    </tr>
+	                    <tr>
+	                        <td id="tr_3">
+	                        	<div id="tr_3_1"><%=p.getProductSalesRate() %>%&nbsp;</div>
+	                            <div id="tr_3_2"><fmt:formatNumber value="<%=Math.round((1-(p.getProductSalesRate()*0.01))*p.getProductPrice()) %>" pattern="#,###"/>원&nbsp;</div>
+	                            <div id="tr_3_3"><s><fmt:formatNumber value="<%=p.getProductPrice() %>" pattern="#,###"/>원</s>&nbsp;</div>
+	                            <div id="tr_3_4"><%=Math.round(((1-(p.getProductSalesRate()*0.01))*p.getProductPrice())*0.01) %>p</div>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <td>
+	                            <p style="position: relative; top: -10px; font-size: 12px; font-weight: 300;">
+	                            <%if(p.getProductText().length()>=250) {%><!-- 텍스트 글자 250 이상 -->
+		                            <%=p.getProductText().substring(0,250)%></p>
+	                            <%}else {%><!-- 텍스트 글자 250이하 -->
+	                            	<%=p.getProductText() %>
+	                            <%} %>
+	                        </td>
+	                    </tr>
+	                </table>
+	             </div>
+	             
+	          <%if(loginUser!=null){ %>
+	          
+	          <div id="book_3">
+	              <button id="cart" type="button">장바구니</button>
+	              <input type="hidden" value="<%=p.getProductNo()%>"> 
+	              <button id="direct" type="button">바로구매</button>
+	          </div>
+	           
+	          <%}else{ %>
+	            
+	            <div id="book_3">
+	                <button type="button" onclick="q_btn_on()">장바구니</button>
+	                <button type="button" onclick="q_btn_on()">바로구매</button>
+	            </div>
+	          <%} %>
+	       </div>
+	           <%} %>
 				<%} %>
-                        <div id="page">
-                             <!-- 왼쪽 가기 버튼 -->
-                <%if(pi.getCurrentPage()!=1) {%>
-                	<button type="button" onclick="location.href='<%=contextPath %>/book.list?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
-                <%} %>
-                
-                <%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++) {%>
-                	<%if(i!=pi.getCurrentPage()) {%>
-                		<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=i%>';"><%=i %></button>
-                	<%}else {%>
-                		<button type="button" disabled><%=i %></button>
-                	<%} %>
-                <%} %>
-                <!-- 오른쪽으로 가는 버튼 -->
-                <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
-                	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
-                <%} %>
-                        </div>
-                    </div>
-        </div>
-    </div>
+	            	 <div id="page">
+			           <!-- 왼쪽 가기 버튼 -->
+				          <%if(pi.getCurrentPage()!=1) {%>
+				           		<button type="button" onclick="location.href='<%=contextPath %>/book.list?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
+				           <%} %>
+				                
+				           <%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++) {%>
+				                <%if(i!=pi.getCurrentPage()) {%>
+				                	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=i%>';"><%=i %></button>
+				                <%}else {%>
+				                	<button type="button" disabled><%=i %></button>
+				                <%} %>
+				             <%} %>
+				       	 <!-- 오른쪽으로 가는 버튼 -->
+				             <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
+				                <button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+				             <%} %>
+	                </div>
+            </div>
         
         <script>
         	//별점 표시
@@ -632,7 +664,6 @@
    					alert("로그인 후 이용이 가능합니다."); 
    					location.href = "<%=contextPath%>/logform.me"
       			};
-    		<%}%>
     		<%}%>
           </script>
         

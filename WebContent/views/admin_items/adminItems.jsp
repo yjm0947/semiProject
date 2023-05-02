@@ -11,6 +11,8 @@
 <meta charset="UTF-8">
 <title>adminItems</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    
 	<link rel="stylesheet" href="resources/adminPage_files/cssFolder/admin_category.css">
 	<link rel="stylesheet" href="resources/adminPage_files/cssFolder/admin_items.css">
 	<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
@@ -163,7 +165,7 @@
 		
 						<div class="modal_body">
 		
-							<div>
+							<div id="productN">
 								상품 번호
 								<div>
 									
@@ -240,11 +242,14 @@
 								</div>
 							</div>
 						</div>
-						
+						<%-- <form action="<%=contextPath %>/product.md" method="post"> --%>
 						<div class="modal_footer">
-							<button onclick="">상품 수정</button>
-							<button onclick="deleteProduct()">상품 삭제</button>
-						</div>
+							<button type="button" onclick="modifiProduct()">상품 수정</button>
+							<!-- <input type="hidden" name="productNo" id="productNo" value="">
+							<button type="submit"">상품 수정</button> -->
+							<button type="button" onclick="deleteProduct()">상품 삭제</button>
+						</div>						
+						<!-- </form> -->
 					</div>
 				</div>
 
@@ -279,6 +284,8 @@
 					//상품번호 추출
 					var pno = $(this).children().eq(0).text();
 					
+					console.log(pno);
+
 					//검색결과에 따른 조회값 추출 및 삽입
 					$.ajax({
 						
@@ -332,7 +339,6 @@
 						}
 						
 					});
-					
 				});
 				
 				//모달 보이기/숨기기 기능
@@ -346,6 +352,30 @@
 					});
 					
 				});	
+				
+				//상품 수정 버튼 클릭시
+				function modifiProduct(){
+					/* var proNo = $(".list-area>tbody>tr").eq(0).children().eq(0).text(); */
+					
+					//상품 번호 보내주기
+					var pNo = $(".modal_body").children().children().eq(0).text();
+					console.log(pNo);		
+				
+					<%-- location.href="<%=request.getContextPath()%>/product.md"; --%>
+					
+					$.ajax({
+						url : "product.md",
+						data : {productNo : pNo},
+						type : "post",
+						success : function(){
+							location.href="<%=request.getContextPath()%>/product.md";
+						},
+						complete : function(){
+							console.log("ㄴㄴㄴ");
+						}
+					});
+				}
+				
 				
 				//상품삭제 버튼 클릭시
 				function deleteProduct(){

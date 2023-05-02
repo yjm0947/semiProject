@@ -208,7 +208,7 @@
       		});
       	};
       	
-      $(function(){//베스트도서 4개
+      /* $(function(){//베스트도서 4개
       		$.ajax({
       			url : "main.be",
       			data : {currentPage : 1},
@@ -237,7 +237,7 @@
 					$("#con_bi").html(result);
       			}
       		});
-      	});
+      	}); */
       	
       	$(function(){
   			$.ajax({

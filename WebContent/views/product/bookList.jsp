@@ -280,7 +280,7 @@
         /*가격--------------------------------------------------------*/
         #tr_3{
             /* background-color: aqua; */
-            position: relative;ㄴㄷㄱ
+            position: relative;
             top: 17px;
             font-size: 12px;
             font-weight: 600;

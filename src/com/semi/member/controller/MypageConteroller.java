@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.semi.member.model.service.MemberService;
 import com.semi.member.model.vo.Coupon;
@@ -16,6 +15,9 @@ import com.semi.member.model.vo.Member;
 import com.semi.order.model.vo.Payment;
 
 
+/**
+ * Servlet implementation class MypageConteroller
+ */
 /**
  * Servlet implementation class MypageConteroller
  */
@@ -42,18 +44,10 @@ public class MypageConteroller extends HttpServlet {
 		ArrayList<Coupon> clist = new MemberService().selectCoupon(memNo);
 		ArrayList<Payment> plist = new MemberService().selectPaymentList(memNo);
 		
-		HttpSession session = request.getSession();
-		
-		session.setAttribute("pList", plist);
-		session.setAttribute("clist", clist);
+		request.setAttribute("clist", clist);
 		request.getRequestDispatcher("views/member/myPage.jsp").forward(request, response);
 		
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		

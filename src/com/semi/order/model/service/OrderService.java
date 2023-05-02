@@ -230,4 +230,16 @@ public class OrderService {
 		JDBCTemplate.close(conn);
 	}
 
+	//주문내역 키워드 검색 - 관리자
+	public ArrayList<Payment> searchOrderAdmin(int num, String search) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Payment> list = new OrderDao().searchOrderAdmin(conn,num,search);
+		
+		JDBCTemplate.close(conn);
+		
+		return list;
+	}
+
 }

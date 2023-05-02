@@ -106,8 +106,6 @@
             	<div id="my_qna">
                     <h1>1 : 1 문의 내역</h1>
                     
-                    <button type="button" id="write-btn">1:1 문의하기</button>
-
                     <div id="my-qna-area">
                         <table id="my_table">
                             <thead>
@@ -125,7 +123,7 @@
                         			<td>
 	                        			<div id="sh_detail">
 				                            <i class="fa-solid fa-circle-exclamation"></i>
-				                            <h4>해당 기간 내에 주문한 상품이 없습니다.</h4>
+				                            <h4>문의 내역이 없습니다.</h4>
 				                        </div>
 			                        </td>
                         		</tr>

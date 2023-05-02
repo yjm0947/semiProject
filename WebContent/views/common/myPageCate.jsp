@@ -46,7 +46,7 @@
         /*--------------마이페이지 사용자 카테고리 영역-----------------*/
         #c_3{
             width: 20%;
-            height: auto;
+            height: 1000px;
             border-top: 1px solid lightgray;
             padding: 10px 0px;
             border-right: 1px solid lightgray;

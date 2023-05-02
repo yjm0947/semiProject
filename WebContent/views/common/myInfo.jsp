@@ -4,7 +4,7 @@
 <%
 	String contextPath2 = request.getContextPath();
 	Member loginMem = (Member)session.getAttribute("loginUser");
-	ArrayList<Coupon> clist = (ArrayList<Coupon>)session.getAttribute("clist");
+	ArrayList<Coupon> cplist = (ArrayList<Coupon>)session.getAttribute("cplist");
 	ArrayList<Payment> plist = (ArrayList<Payment>)session.getAttribute("pList");
 %>
 <!DOCTYPE html>
@@ -103,8 +103,8 @@
 		
 		int couponCount = 0;
 		
-		for(int i=0; i<clist.size(); i++){
-			if(clist.get(i).getStatus().charAt(0) == 'Y') {
+		for(int i=0; i<cplist.size(); i++){
+			if(cplist.get(i).getStatus().charAt(0) == 'Y') {
 				couponCount += 1;		
 			}
 		}

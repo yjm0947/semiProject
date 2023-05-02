@@ -23,13 +23,20 @@
         
         /*--------------마이페이지 쿠폰 상세 조회 영역-----------------*/
         #c_info{
-            margin: 50px 0px 0px 30px;
+            margin: 20px 0px 0px 30px;
             box-sizing: border-box;
         }
-        #c_info h2{
-            margin: 0px 0px 10px 0px;
+        h2{
+            margin: 50px 0px 0px 30px;
         }
+        #available_cont::-webkit-scrollbar {
+		    display: none;
+		}
         #c_info section{
+        	overflow: scroll;
+        	-ms-overflow-style: none;
+        	scrollbar-width: none;
+        	height: 350px;
             display: none;
             margin: 0px 30px 0px 0px;
             padding: 20px 0 0;
@@ -86,14 +93,18 @@
 
         /*--------------마이페이지 적립금 상세 조회 영역-----------------*/
         #p_info{
-            margin: 50px 0px 0px 30px;
+            margin: 20px 0px 0px 30px;
             box-sizing: border-box;
         }
-        #p_info h2{
-            margin: 0px 0px 10px 0px;
-        }
-
+		#point_section::-webkit-scrollbar,
+		#unavailable_cont::-webkit-scrollbar {
+		    display: none;
+		}
         #p_info section{
+        	overflow: scroll;
+        	-ms-overflow-style: none;
+        	scrollbar-width: none;
+        	height: 350px;
             margin: 0px 30px 0px 0px;
             padding: 10px;
         }
@@ -139,16 +150,16 @@
 		
 		int resultY = 0;
 		
-		for(int i=0; i<clist.size(); i++){
-			if(clist.get(i).getStatus().charAt(0) == 'Y') {
+		for(int i=0; i<cplist.size(); i++){
+			if(cplist.get(i).getStatus().charAt(0) == 'Y') {
 				resultY += 1;		
 			}
 		}
 		
 		int resultN= 0;
 		
-		for(int i=0; i<clist.size(); i++){
-			if(clist.get(i).getStatus().charAt(0) == 'N') {
+		for(int i=0; i<cplist.size(); i++){
+			if(cplist.get(i).getStatus().charAt(0) == 'N') {
 				resultN += 1;		
 			}
 		}
@@ -156,8 +167,8 @@
 	<div class="wrap">
 		<div id="content">
 	            <div id="c_1">
+                    <h2>My 쿠폰</h2>
 	                <div id="c_info">
-	                    <h2>My 쿠폰</h2>
 	                    <input type="radio" id="available" name="tab" checked>
 	                    <label for="available">사용가능</label>
 	
@@ -171,7 +182,7 @@
 			                            <th colspan="3">혜택</th>
 			                            <th colspan="3">유효기간</th>
 		                            </tr>
-                            	<%if(resultY < 1) {%>
+                            	<%if(resultN < 1) {%>
 		                            <tr>
 		                                <td colspan="9">
 		                                	<div id="non-text">
@@ -181,8 +192,8 @@
 		                                </td>
 	                            	</tr>
 	                           	<%}else {%>
-			                   		<%for(Coupon c : clist){  %>	
-			                   		 	<%if(c.getStatus().charAt(0)=='Y') {%>			
+			                   		<%for(Coupon c : cplist){  %>	
+			                   		 	<%if(c.getStatus().charAt(0)=='N') {%>			
 				                            <tr>
 				                                <td colspan="3"><%=c.getCouponName() %></td>
 				                                <td colspan="3"><%=c.getCouponDc() %>%</td>
@@ -200,16 +211,18 @@
 	                                <th colspan="3">혜택</th>
 	                                <th colspan="3">유효기간</th>
 	                            </tr>
-                           <%if(resultN < 1) {%>
+                           <%if(resultY < 1) {%>
 	                            <tr>
 	                                <td colspan="9">
-	                                    <i class="fa-solid fa-circle-exclamation"></i>
-	                                    <h4>사용 만료된 쿠폰이 없습니다.</h4>
+	                                    <div id="non-text">
+		                                    <i class="fa-solid fa-circle-exclamation"></i>
+		                                    <h4>사용 만료된 쿠폰이 없습니다.</h4>
+	                                	</div>
 	                                </td>
 	                           	</tr>
                           	<%}else {%>
-	                             <%for(Coupon c : clist){  %>	
-		                   		 	<%if(c.getStatus().charAt(0)=='N') {%>			
+	                             <%for(Coupon c : cplist){  %>	
+		                   		 	<%if(c.getStatus().charAt(0)=='Y') {%>			
 		                            <tr>
 		                                <td colspan="3"><%=c.getCouponName() %></td>
 		                                <td colspan="3"><%=c.getCouponDc() %></td>
@@ -222,8 +235,8 @@
 	                    </section>
 	                </div>
 	                
+                    <h2>My 적립금</h2>
 	                <div id="p_info">
-	                    <h2>My 적립금</h2>
 	
 	                    <section id="point_section">
 	                        <table border="1">

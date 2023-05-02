@@ -218,7 +218,7 @@ tbody {
   background-color: #fff;
   position: relative;
   width:100%;               /* 반응형 이기 때문에 가로값 100% */
-  max-width:500px;          /* 팝업의 최대 크기 */
+  max-width:700px;          /* 팝업의 최대 크기 */
   border-radius:15px;       
   overflow:hidden;          /* 각을 없앴을 때 내부 영역이 튀어나오는걸 방지 */
   left: 40%;
@@ -252,7 +252,7 @@ tbody {
 
 .modal_body{
  width: 100%;
- height: 550px;
+ height: 630px;
  display: block;
  overflow-y: auto;
  overflow-x: hidden;
@@ -387,6 +387,13 @@ tbody {
   box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, 0.212);
 }
 
+#productDescription{
+  width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: left;
+}
+
 /* ========================= < 모달 스크롤바 설정 > ========================= */
 .middle_left::-webkit-scrollbar{
   background-color: rgba(52, 52, 52, 0.452);
@@ -405,7 +412,6 @@ tbody {
 .middle_left::-webkit-scrollbar-thumb:hover{
   border: 1px solid rgb(52, 52, 52);
 }
-
 
 /* ============================== < bottom 영역 > ================================== */
 

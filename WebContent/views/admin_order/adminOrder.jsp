@@ -237,13 +237,7 @@
 					</div>
 					
 				</div>
-				<form action="<%=contextPath%>/noticeUpdate.admin" method="get">
-				<input type="hidden" name="boardNo" id="boardNo" value="">
-					<div class="modal_footer">
-						<button type="submit">공지 수정</button>
-						<button type="button" onclick="deleteNotice()">공지 삭제</button>
-					</div>
-				</form>
+
 			</div>
 		</div>
 		
@@ -287,6 +281,7 @@
 							console.log("주문내역 상세조회 실패");
 						}
 					});
+					
 				});
 				
 					$(".modal_content,.modal").click(function(){

@@ -55,6 +55,7 @@ public class MemberSearchAdminController extends HttpServlet {
 
 		String search = "";
 		String barSearch = "";
+		
 		//입력한 검색값
 		if(request.getParameter("memberSearch") != null) {
 			search = request.getParameter("memberSearch");
@@ -97,8 +98,6 @@ public class MemberSearchAdminController extends HttpServlet {
 			request.setAttribute("barSearch", barSearch);
 			request.getRequestDispatcher("/member.admin").forward(request, response);
 		}
-		
-		
 		
 	}
 

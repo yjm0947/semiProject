@@ -1097,6 +1097,8 @@
     	$("#userCoupon").text(useCoupon);
     	// 할인가(사용 포인트)
     	$(".usePoint_span").text(usePoint.toLocaleString());
+    	//보유 포인트 차감
+    	$("#userPoint").text((<%=loginUser.getMemberPoint()%>-usePoint).toLocaleString());
 	}
     
     

@@ -70,6 +70,7 @@ public class OrderPayController extends HttpServlet {
 //		System.out.println(p);
 		
 		if (result>0) {
+			new OrderService().usePoint(userNo,usePoint);
 			new OrderService().completeOrder(userNo);
 			for (int i = 0; i < productNums.length; i++) {
 				new ShoppingCartService().delChecked(productNums[i],Integer.parseInt(userNo));

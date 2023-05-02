@@ -337,17 +337,12 @@
                 	<button onclick="location.href='<%=contextPath%>/item.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
             </div>
-            <div id="con_sel">
-                <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" >전체선택
-                <button>장바구니</button>
-            </div>
         </div>
         <%for(Product p : list) {%>
         <div id="con">
             <div id="con_1"></div>
             <div id="con_2">
                 <div id="con_check">
-                    <input type="checkbox" id="check" name="cart" value="상품번호출력">
                 </div>
                 <div id="con_img">
                     <img src="<%=contextPath + p.getTitleImg() %>" alt="" style="width: 100%; height: 100%;">

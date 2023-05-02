@@ -1,12 +1,17 @@
 package com.semi.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.semi.member.model.service.MemberService;
+import com.semi.member.model.vo.Member;
+import com.semi.order.model.vo.Payment;
 
 /**
  * Servlet implementation class MyCancelListController
@@ -27,7 +32,11 @@ public class MyCancelListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		int memNo = loginUser.getMemberNo();
+		ArrayList<Payment> paylist = new MemberService().selectPaymentList(memNo);
 		
+		request.setAttribute("plist", paylist);
 		request.getRequestDispatcher("views/member/myCancelList.jsp").forward(request, response);
 	}
 

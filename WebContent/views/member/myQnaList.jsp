@@ -11,21 +11,6 @@
 <script src="https://kit.fontawesome.com/7f4a340891.js" crossorigin="anonymous"></script>
 <title>Insert title here</title>
 <style>
-	div{
-        /* border: 1px solid black; */
-        box-sizing: border-box;
-    }
-    .wrap{
-        width: 1400px;
-        margin: auto;
-    }
-	#content{
-        width: 100%;
-        margin-top: 20px;
-    }
-    #c_1{
-    	height: 100%;
-    }
     /*---------------------------------------------------------*/
     #my_qna{
         margin: 50px 0px 0px 30px;
@@ -63,6 +48,8 @@
         border-bottom: 1px solid black;
     }
 	#my-qna-area td{
+		height: auto;
+		overflow: hidden;
         padding: 10px;
         border-bottom: 1px solid black;
     }
@@ -75,9 +62,9 @@
 	}
 	.arrowBtn:hover {
 		padding: 5px;
-		color: rgb(62, 130, 255);
 		border: 2px solid rgb(62, 130, 255);
 		border-radius: 5px;
+		color: rgb(62, 130, 255);
 	}
     .plusIcon .minusIcon{
         font-size: 30px;
@@ -106,8 +93,6 @@
     #chkContent p{
     	margin: 30px 0;
     }
-    
-    
 </style>
 </head>
 <body>
@@ -124,7 +109,7 @@
                     <button type="button" id="write-btn">1:1 문의하기</button>
 
                     <div id="my-qna-area">
-                        <table>
+                        <table id="my_table">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -146,7 +131,7 @@
                         		</tr>
                         <%}else{ %>
                             <%for(Board b : blist) {%>
-                                <tr>
+                                <tr class="show_tr">
                                     <td><%=b.getBoardNo() %></td>
                                     <td><%=b.getCreateDate() %></td>
                                     <td><%=b.getBoardTitle() %></td>
@@ -160,7 +145,7 @@
                                         <i class="fa-solid fa-angles-up arrowBtn" style="display: none;"></i>
                                     </td>
                                 </tr>
-                                <tr style="display: none">
+                                <tr style="display: none" class="my_row">
                                     <td colspan="5">
                                     	<div id="boardContent">
 	                                    	<p>
@@ -199,23 +184,22 @@
 	<script>
         $(function(){
             $(".arrowBtn").on("click",function(){
-
-                var show = $(this);
-				var answer = $(this).parent().prev();
-				
-                if(show.hasClass("fa-angles-down")){
-                    show.hide();
-                    show.next().show();
-                    show.parent().parent().next().show();
-                }else{
-                    show.hide();
-                    show.prev().show();
-                    show.parent().parent().next().hide(); 
-                }
+           	    console.log($("tr.my_row"));
+           		
+            	if($(this).hasClass("fa-angles-down")){
+            		$(this).css("display","none");
+            		$(this).next().css("display","block");
+            		$(this).parents("tr").next().show();
+            	}else{
+            		$(this).css("display","none");
+            		$(this).prev().css("display","block");
+            		$(this).parents("tr").next().hide();
+            	}
+            	
             });
-            
         });
     </script>
+    
 	<%@ include file = "../common/myPageCate.jsp" %>
 	<%@ include file = "../common/footer.jsp" %>
 </body>

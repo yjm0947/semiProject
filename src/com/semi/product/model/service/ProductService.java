@@ -7,6 +7,7 @@ import com.semi.board.inquiry.model.vo.Board;
 import com.semi.board.review.model.vo.Review;
 import com.semi.common.JDBCTemplate;
 import com.semi.common.vo.PageInfo;
+import com.semi.member.model.dao.MemberDao;
 import com.semi.product.model.dao.ProductDao;
 import com.semi.product.model.vo.Attachment;
 import com.semi.product.model.vo.Product;
@@ -88,11 +89,22 @@ public class ProductService {
 	}
 		
 	//도서 검색
-	public ArrayList<Product> searchBook(String search, PageInfo pi) {
+//	public ArrayList<Product> searchBook(String search, PageInfo pi) {
+//		
+//		Connection conn = JDBCTemplate.getConnection();
+//			
+//		ArrayList<Product> list = new ProductDao().searchBook(conn,search,pi);
+//			
+//		JDBCTemplate.close(conn);
+//			
+//		return list;
+//		}
+	
+		public ArrayList<Product> searchBook(String search) {
 		
 		Connection conn = JDBCTemplate.getConnection();
 			
-		ArrayList<Product> list = new ProductDao().searchBook(conn,search,pi);
+		ArrayList<Product> list = new ProductDao().searchBook(conn,search);
 			
 		JDBCTemplate.close(conn);
 			
@@ -272,11 +284,11 @@ public class ProductService {
 	}
 	
 	//상품관리 조회
-		public ArrayList<Product> selectAdminProduct() {
+		public ArrayList<Product> selectAdminProduct(PageInfo pi) {
 			
 			Connection conn = JDBCTemplate.getConnection();
 			
-			ArrayList<Product> list = new ProductDao().selectAdminProduct(conn);
+			ArrayList<Product> list = new ProductDao().selectAdminProduct(conn,pi);
 			
 			JDBCTemplate.close(conn);
 			
@@ -374,14 +386,38 @@ public class ProductService {
 		}
 
 		//상품관리 키워드 검색 - 관리자
-		public ArrayList<Product> searchProductAdmin(int num, String search) {
+		public ArrayList<Product> searchProductAdmin(int num, String search, PageInfo pi) {
 			
 			Connection conn = JDBCTemplate.getConnection();
 			
-			ArrayList<Product> list = new ProductDao().searchProductAdmin(conn,num,search);
+			ArrayList<Product> list = new ProductDao().searchProductAdmin(conn,num,search,pi);
 			
 			JDBCTemplate.close(conn);
 			
 			return list;
+		}
+
+		//총 상품 개수 (관리자 - 페이징)
+		public int selProductAdminCount() {
+			
+			Connection conn = JDBCTemplate.getConnection();
+					
+			int listCount = new ProductDao().selProductAdminCount(conn);
+			
+			JDBCTemplate.close(conn);
+			
+			return listCount;
+		}
+
+		//상세검색 상품 수
+		public int searchProductCount(int num, String search) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int listCount = new ProductDao().searchProductCount(conn,num,search);
+			
+			JDBCTemplate.close(conn);
+			
+			return listCount;
 		}
 }

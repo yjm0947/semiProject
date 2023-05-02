@@ -3,7 +3,6 @@
 <%
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	
 	/* int cate = Integer.parseInt(String.valueOf((request.getAttribute("cate")))); */
 %>
 <!DOCTYPE html>
@@ -20,6 +19,10 @@
         div{
             /* border: 1px solid black; */
             box-sizing: border-box;
+        }
+        /* float 속성 해제 */
+        .clearfix{
+            clear: both;
         }
         /*-----------------콘텐츠------------------------*/
         #content{
@@ -153,7 +156,6 @@
             background-color: rgb(246, 243, 243);
         }
         /*페이지*/
-
         /*전체선택, 장바구니*/
         #list_menu_3>input{
             border: 1px solid rgb(202, 195, 195);
@@ -200,14 +202,12 @@
             width: 15%;
             /* background-color: brown; */
         }
-
         #book_2>img{
             width:165px;
             height:210px;
             position: relative;
             top: 40px;
         }
-
         #book_3>button{
             /* display:inline-block; */
             position: relative;
@@ -254,7 +254,6 @@
             position: relative;
             left: -8px;
         }
-
         #page{
             /* background-color: aqua; */
             width: 1200px;
@@ -315,6 +314,62 @@
         cursor : pointer;
         background-color: white;
         }
+        
+        /*카테고리 목록 추가================================*/
+        #all_content{
+            width: 1400px;
+            margin: auto;
+            /* background-color: aqua; */
+         	/*height: 2730px;*/
+         	position: relative;
+         	left: 200px;
+         	height: auto;
+         	display: inline-block;
+        }
+        #all_content>div{
+            float: left;
+        }
+        #all_content_1{
+            width: 200px;
+            /* height: 1000px; */
+            /* background-color: blue; */
+        }
+        #all_content_2{
+            width: 1200px;
+            /*height: 1000px;*/
+            /* background-color: brown; */
+        }
+        #all_content_2>*{
+        	position: relative;
+        	left : -105px
+        }
+        #all_none{
+            width: 200px;
+            /* background-color: yellowgreen; */
+            height: 205px;
+        }
+        #all_cate{
+            width: 170px;
+            border: 1px solid rgb(167, 167, 167);
+            /* height: 400px; */
+            border-radius: 8px;
+            font-size: 20px;
+            margin: auto;
+            font-weight: 600;
+            color: rgb(44, 44, 65);
+            position: fixed;
+            /* box-sizing: border-box; */
+            padding: 9px;
+            /* box-shadow: 0 1rem 5rem -2rem rgba(black,0.5); */
+            /* transition: transform 100ms linear; */
+            /* background-color: rgb(207, 218, 228); */
+        }
+        #all_cate a{
+            text-decoration: none;
+            color: rgb(86, 86, 95);
+            font-size: 15px;
+            font-weight: 500;
+        }
         </style>
 </head>
 <body>
@@ -337,7 +392,6 @@
             </div>
         </div>
         <div id="all_content_2">
-
                     <div id="content">
                      <div id="con_1">
                         <p id="con_title">도서 전체 목록</p>
@@ -371,64 +425,28 @@
                 	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
 
-                          
-                        </div>
-                        <div id="list_menu_3">
-                            <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" >전체선택
-                            <button type="button">장바구니</button>
                         </div>
                     </div>
-                    
-                    <%if(list.isEmpty()) {%>
-
             </div>
-            
          </div>
             	<%if(list.isEmpty()) {%>
             		<div id="none_div">
 			        	<div id="none_td">도서 목록이 존재하지 않습니다.</div>
 			        </div>
             	<%} else {%>
-            	
+
             	<%for(Product p : list) {%>
 
-                            
-                     <div id="book">
-                        <div id="book_1">
-                            <label for="check"></label>
-                            <input type="checkbox" id="check" name="cart" value="상품번호출력">
-                        </div>
-                        <div id="book_2">
-                       
-                            <table id="con_table">
-
-            	
-         <div class="book_list" id="book">
+         <div class="book_list" id="book"  style="position: relative; background-color:; left: 192px;" >
             <div id="book_1">
-                <input type="checkbox" class="checkbox" id="check" name="cart" value="상품번호출력">
                 <input type="hidden" value="<%=p.getProductNo()%>">
             </div>
-            <div id="book_2">
-           
-                <table >
+            <div id="book_2" >
+
+                <table>
                     <tr id="num">
                         <td rowspan="4" style="width: 150px; height: 250px;"><img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204);" width="135px" height="200px" id="imgthumb">
-                        <div style="position: relative; left: 0px;">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        <img alt="" src="<%=contextPath %>/resources/star-void.png" style="" width="20px" height="20px" class="void">
-                        </div>
-                        <div  style="position: relative; top: -21px; left: -2px;">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1;" width="21px" height="21px" class="star" hidden="">
-                        <img alt="" src="<%=contextPath %>/resources/star-yellow.png" style="position: relative; z-index: 1; left: -1px;" width="21px" height="21px" class="star" hidden="">
-                        </div>
-                        <input type="hidden" id="star" value="<%=p.getStarAvg()%>">
-                        <input type="hidden" value="<%=p.getProductNo()%>">
+                        <input type="hidden" value="<%=p.getProductNo()%>">                       
                         </td>
                         <td id="title" style="font-size: 16px; font-weight: 600; position: relative; top: 45px;"><%=p.getProductName() %></td>
                     </tr>
@@ -472,9 +490,11 @@
             <%} %>
         </div>
                 <%} %>
-				<%} %>
-                        <div id="page">
-                             <!-- 왼쪽 가기 버튼 -->
+			
+			<%} %>
+
+                <div id="page" style="position: relative; left: 200px;">
+                	<!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
                 	<button type="button" onclick="location.href='<%=contextPath %>/book.list?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
                 <%} %>
@@ -492,21 +512,16 @@
                 <%} %>
                         </div>
                     </div>
-        </div>
-    </div>
-        
         <script>
-        	//별점 표시
-            
         
-		      //스크롤 부드럽게 따라오게 하기
+		      /* //스크롤 부드럽게 따라오게 하기
 		        $(document).ready(function(){
 		            var currentPosition = parseInt($("#all_cate").css("top"));
 		            $(window).scroll(function() {
 		                var position = $(window).scrollTop(); 
 		                $("#all_cate").stop().animate({"top":position+currentPosition+"px"},1000);
 		            });
-	            });
+	            }); */
         	
         	//디테일 페이지 이동
             $(function(){
@@ -633,9 +648,7 @@
    					location.href = "<%=contextPath%>/logform.me"
       			};
     		<%}%>
-    		<%}%>
           </script>
-        
        	<%@include file = "../common/footer.jsp" %>
 </body>
 </html>

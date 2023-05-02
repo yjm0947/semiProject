@@ -320,7 +320,11 @@
             width: 1400px;
             margin: auto;
             /* background-color: aqua; */
-         	height: 2730px;
+         	/*height: 2730px;*/
+         	position: relative;
+         	left: 200px;
+         	height: auto;
+         	display: inline-block;
         }
         #all_content>div{
             float: left;
@@ -424,8 +428,7 @@
                           
                         </div>
                         <div id="list_menu_3">
-                            <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" >전체선택
-                            <button type="button">장바구니</button>
+                            
                         </div>
                     </div>
                     
@@ -439,8 +442,7 @@
                             
                      <div id="book">
                         <div id="book_1">
-                            <label for="check"></label>
-                            <input type="checkbox" id="check" name="cart" value="상품번호출력">
+                           
                         </div>
                         <div id="book_2">
                        
@@ -495,19 +497,19 @@
                         <div id="page">
                              <!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
-                	<button type="button" onclick="location.href='<%=contextPath %>/book.list?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
+                	<button type="button" onclick="location.href='<%=contextPath %>/cate.b?cate=<%=cate%>&currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
                 <%} %>
                 
                 <%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++) {%>
                 	<%if(i!=pi.getCurrentPage()) {%>
-                		<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=i%>';"><%=i %></button>
+                		<button type="button" onclick="location.href='<%=contextPath%>/cate.b?cate=<%=cate%>&currentPage=<%=i%>';"><%=i %></button>
                 	<%}else {%>
                 		<button type="button" disabled><%=i %></button>
                 	<%} %>
                 <%} %>
                 <!-- 오른쪽으로 가는 버튼 -->
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
-                	<button type="button" onclick="location.href='<%=contextPath%>/book.list?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+                	<button type="button" onclick="location.href='<%=contextPath%>/cate.b?cate=<%=cate%>&currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
                         </div>
                     </div>
@@ -517,13 +519,13 @@
         <script>
         
 		      //스크롤 부드럽게 따라오게 하기
-		        $(document).ready(function(){
+		     /*    $(document).ready(function(){
 		            var currentPosition = parseInt($("#all_cate").css("top"));
 		            $(window).scroll(function() {
 		                var position = $(window).scrollTop(); 
 		                $("#all_cate").stop().animate({"top":position+currentPosition+"px"},1000);
 		            });
-	            });
+	            }); */
 		      
         	
         	

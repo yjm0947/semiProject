@@ -28,6 +28,7 @@
         /*높이 자동*/
         #re_con{
             width: 1050px;
+            /* height: 660px; */
             height: 660px;
             background-color: white;
             margin: auto;
@@ -149,11 +150,9 @@
 	            </div>
 	            <div id="re_co_table">
 	                <div id="re_co_table_1">
-<pre style=" white-space: pre-wrap; word-wrap: break-word;">
+						<div style="white-space: pre-wrap; word-wrap: break-word;">
 <%=b.getBoardContent() %>
-
-
-</pre>
+						</div>
 	                </div>
 	            </div>
 	            <div id="re_co_page">

@@ -202,4 +202,32 @@ public class OrderService {
 		return result;
 	}
 
+	//사용한 포인트 차감 메소드
+	public void usePoint(String userNo, int usePoint) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new OrderDao().usePoint(conn,userNo,usePoint);
+		
+		if (result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+	}
+
+	//사용한 쿠폰 상태 변경 메소드
+	public void useCoupon(String userNo, int useCoupon) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new OrderDao().useCoupon(conn,userNo,useCoupon);
+		
+		if (result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+	}
+
 }

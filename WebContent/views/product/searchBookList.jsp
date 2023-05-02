@@ -295,7 +295,7 @@
         <div id="con_menu_1">
             <div id="con_menu_1a"></div>
             <div id="con_page">
-                <!-- 왼쪽 가기 버튼 -->
+                <%-- <!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
                 	<button onclick="location.href='<%=contextPath %>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
                 <%} %>
@@ -310,11 +310,7 @@
                 <!-- 오른쪽으로 가는 버튼 -->
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
                 	<button onclick="location.href='<%=contextPath%>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
-                <%} %>
-            </div>
-            <div id="con_sel">
-                <input type="checkbox" id="checkbox" name="cart" value="전체선택" onclick="selectAll(this)">전체선택
-                <button>장바구니</button>
+                <%} %> --%>
             </div>
         </div>
         <%if(list.isEmpty()){ %>
@@ -332,7 +328,6 @@
             <div id="con_1"></div>
             <div id="con_2">
                 <div id="con_check">
-                    <input type="checkbox" id="check" name="cart" value="상품번호출력">
                 </div>
                 <div id="con_img">
                     <img src="<%=contextPath + p.getTitleImg() %>" alt="" style="border: 1px solid rgb(204, 204, 204); width: 100%; height: 100%;">
@@ -374,7 +369,7 @@
         </div>
         <%}} %>
         <div id="page">
-            <!-- 왼쪽 가기 버튼 -->
+            <%-- <!-- 왼쪽 가기 버튼 -->
                 <!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
                 	<button type="button" onclick="location.href='<%=contextPath %>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
@@ -390,7 +385,7 @@
                 <!-- 오른쪽으로 가는 버튼 -->
                 <%if(pi.getCurrentPage()!=pi.getMaxPage()) {%>
                 	<button type="button" onclick="location.href='<%=contextPath%>/search.bo?search=<%=search%>&currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
-                <%} %>
+                <%} %> --%>
         </div>
         <pre>
 
@@ -398,17 +393,12 @@
     </div>
 
     <script>
-        function selectAll(selectAll){
-            var checkboxes = document.getElementsByName('cart');
-            /*console.log(checkboxes)*/
 
-            checkboxes.forEach((checkboxes)=>checkboxes.checked=selectAll.checked);
-        }
         $(function(){
         	$("#con>#con_2>#con_img").click(function(){
         		//console.log(this);
         		var pno = $(this).children("input[type=hidden]").val();
-        		//console.log(pno);
+        		/* console.log(pno); */
         		location.href="<%=contextPath%>/book.de?pno="+pno;
         	});
         });

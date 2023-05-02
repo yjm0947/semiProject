@@ -43,7 +43,7 @@ public class BookBestController extends HttpServlet {
 		int startPage; //페이지 하단에 보여질 페이징바의 시작수
 		int endPage; //페이지 하단에 보여질 페이징바의 끝 수
 				
-		listCount = 30; /*보여줄 총 게시물 수@@@@@@@@@@@ 베스트 셀러라서 30개만보여줄거임*/
+		listCount = 30; /*보여줄 총 게시물 수@@@@@@@@@@@ 베스트 셀러 30개만보여줄거임*/
 		currentPage = Integer.parseInt(request.getParameter("currentPage").trim());
 		pageLimit = 10;
 		boardLimit = 8;
@@ -58,16 +58,16 @@ public class BookBestController extends HttpServlet {
 				
 		PageInfo pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
 				
-		int cate = Integer.parseInt(request.getParameter("cate"));
+//		int cate = Integer.parseInt(request.getParameter("cate"));
 				
 		ArrayList<Product> list = null;
 				
 		//페이지에 보여질 게시글 리스트
-		if(cate==0) {
+//		if(cate==0) {
 			list = new ProductService().selectBestAttachList(pi);
-		}else {
-			list = new ProductService().selectAttachmentCList(pi,cate);
-		}
+//		}else {
+//			list = new ProductService().selectAttachmentCList(pi,cate);
+//		}
 				
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);

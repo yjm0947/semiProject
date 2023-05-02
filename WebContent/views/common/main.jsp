@@ -94,6 +94,9 @@
             border-bottom-color: rgb(148, 146, 146);
 
         }
+        #con_bt:hover{
+        	cursor: default;
+        }
         #con_bi,#con_new_1,#con_pro_1{
             /* background-color: blue; */
             width: 100%;
@@ -205,7 +208,7 @@
       		});
       	};
       	
-      	/* $(function(){//베스트도서 4개
+      /* $(function(){//베스트도서 4개
       		$.ajax({
       			url : "main.be",
       			data : {currentPage : 1},
@@ -226,7 +229,7 @@
 		                        +'<div>'
 		                      		+'<div id="con_new_pu">'+bestList[i].productPublisher+'</div>'
 		                    		+'</div>'
-		                  		+'<div id="con_new_pri">'+Math.round((1-((bestList[i].productSalesRate)*0.01))*bestList[i].productPrice)+'원</div>'
+		                  		+'<div id="con_new_pri">'+Math.round((1-((bestList[i].productSalesRate)*0.01))*bestList[i].productPrice).toLocaleString()+'원</div>'
 		                      +'</div>'
 		                        +'</a>'
 		                  +'</div>'
@@ -256,7 +259,7 @@
 		      		                        +'<div>'
 		      		                      		+'<div id="con_new_pu">'+newBook[i].productPublisher+'</div>'
 		      		                    		+'</div>'
-		      		                  		+'<div id="con_new_pri">'+Math.round((1-((newBook[i].productSalesRate)*0.01))*newBook[i].productPrice)+'원</div>'
+		      		                  		+'<div id="con_new_pri">'+Math.round((1-((newBook[i].productSalesRate)*0.01))*newBook[i].productPrice).toLocaleString()+'원</div>'
 		      		                      +'</div>'
 		      		                        +'</a>'
 		      		                  +'</div>'
@@ -287,7 +290,7 @@
 			      		                        +'<div>'
 			      		                      		+'<div id="con_pro_pu">'+newPro[i].productPublisher+'</div>'
 			      		                    		+'</div>'
-			      		                  		+'<div id="con_pro_pri">'+Math.round((1-((newPro[i].productSalesRate)*0.01))*newPro[i].productPrice)+'원</div>'
+			      		                  		+'<div id="con_pro_pri">'+Math.round((1-((newPro[i].productSalesRate)*0.01))*newPro[i].productPrice).toLocaleString()+'원</div>'
 			      		                      +'</div>'
 			      		                    +'</a>'
 			      		                  +'</div>'

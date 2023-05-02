@@ -95,7 +95,7 @@
             margin: 6px;
             position: relative;
             top: 84px;
-            left: 190px;
+            left: 90px;
         }
         /*------------------------메뉴바------------------------------*/
         #header_2>div{
@@ -401,5 +401,10 @@
             </div>
         </div>
         
+        <script>
+        	<%-- function search(){
+        		location.href="<%=contextPath%>/search.bo?search=나&currentPage=1"
+        	} --%>
+        </script>
 </body>
 </html>

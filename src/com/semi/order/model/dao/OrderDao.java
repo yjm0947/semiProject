@@ -107,13 +107,14 @@ public class OrderDao {
 			pstmt.setString(6, p.getBankName());
 			pstmt.setString(7, p.getDepositName());
 			pstmt.setInt(8, p.getUsePoint());
-			pstmt.setString(9, p.getAddressName());
-			pstmt.setString(10, p.getPhone());
-			pstmt.setString(11, p.getEmail());
-			pstmt.setString(12, p.getPost());
-			pstmt.setString(13, p.getRoadAddress());
-			pstmt.setString(14, p.getDetailAddress());
-			pstmt.setInt(15, p.getDeliveryCost());
+			pstmt.setInt(9, p.getUseCoupon());
+			pstmt.setString(10, p.getAddressName());
+			pstmt.setString(11, p.getPhone());
+			pstmt.setString(12, p.getEmail());
+			pstmt.setString(13, p.getPost());
+			pstmt.setString(14, p.getRoadAddress());
+			pstmt.setString(15, p.getDetailAddress());
+			pstmt.setInt(16, p.getDeliveryCost());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -399,19 +400,66 @@ public class OrderDao {
 			pstmt.setInt(4, p.getPayment());
 			pstmt.setString(5, p.getOrderRequest());
 			pstmt.setInt(6, p.getUsePoint());
-			pstmt.setString(7, p.getAddressName());
-			pstmt.setString(8, p.getPhone());
-			pstmt.setString(9, p.getEmail());
-			pstmt.setString(10, p.getPost());
-			pstmt.setString(11, p.getRoadAddress());
-			pstmt.setString(12, p.getDetailAddress());
-			pstmt.setInt(13, p.getDeliveryCost());
+			pstmt.setInt(7, p.getUseCoupon());
+			pstmt.setString(8, p.getAddressName());
+			pstmt.setString(9, p.getPhone());
+			pstmt.setString(10, p.getEmail());
+			pstmt.setString(11, p.getPost());
+			pstmt.setString(12, p.getRoadAddress());
+			pstmt.setString(13, p.getDetailAddress());
+			pstmt.setInt(14, p.getDeliveryCost());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		return result;
+	}
+
+	//사용한 포인트 차감 메소드
+	public int usePoint(Connection conn, String userNo, int usePoint) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("usePoint");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, usePoint);
+			pstmt.setString(2, userNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+	
+		return result;
+	}
+	
+	//사용한 쿠폰 상태 변경 메소드
+	public int useCoupon(Connection conn, String userNo, int useCoupon) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("useCoupon");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, useCoupon);
+			pstmt.setString(2, userNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+	
 		return result;
 	}
 

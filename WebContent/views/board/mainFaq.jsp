@@ -150,13 +150,12 @@
 
         $(function(){
             $("#re_co_table>div").click(function(){
-                //console.log(this);
 
                 //해당 뒤에있는 요소가르킴.. 변수명에도 제이쿼리라고 표시해서 알려줌
                 var $p = $(this).next();
-                console.log($p);
 
                 if($p.css("display")=="none"){
+                	$(this).siblings("p").slideUp(1000);
                     $p.slideDown(1000);
                     //$(this).siblings("p").slideUp(1000); 열려있는 시간.. 호버로 하고싶은데..?
                 }else{

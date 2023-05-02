@@ -348,10 +348,6 @@
                 	<button type="button" onclick="location.href='<%=contextPath%>/book.new?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
                 <%} %>
             </div>
-            <div id="list_menu_3">
-                <input type="checkbox" id="checkbox" name="cart" onclick="selectAll(this)" >전체선택
-                <button type="button">장바구니</button>
-            </div>
          </div>
                
                 
@@ -370,8 +366,6 @@
             	
          <div id="book">
             <div id="book_1">
-                <label for="check"></label>
-                <input type="checkbox" id="check" name="cart" value="상품번호출력">
             </div>
             <div id="book_2">
            

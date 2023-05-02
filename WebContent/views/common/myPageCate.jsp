@@ -102,7 +102,7 @@
 	                        <li><h3>쇼핑정보</h3></li>
 	                        <ul>
 	                            <li><a href="<%=contextPath1%>/shoppingList.me">주문목록 / 배송조회</a></li>
-                            	<li><a href="<%=contextPath1%>/cancelList.me">취소 / 반품 / 교환 내역</a></li>
+                            	<li><a href="<%=contextPath1%>/cancelList.me">취소 / 교환 내역</a></li>
 	                            <li><a href="<%=contextPath1%>/myPayList.me">환불 / 입금 내역</a></li>
 	                            <li><a href="<%=contextPath1%>/myReviewList.me">나의 쇼핑 후기</a></li>
 	                        </ul>

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import com.semi.board.review.model.dao.ReviewDao;
 import com.semi.board.review.model.vo.Review;
 import com.semi.common.JDBCTemplate;
-import com.semi.event.point.model.service.PointService;
 
 public class ReviewService {
 	

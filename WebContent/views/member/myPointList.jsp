@@ -75,7 +75,7 @@
 	<%@ include file = "../common/header.jsp" %>
 	<%@ include file = "../common/myInfo.jsp" %>
 	<%
-	int memPoint = loginUser.getMemberPoint();
+		int memPoint = loginUser.getMemberPoint();
 	%>
 	<div class="wrap">
 		<div id="content">

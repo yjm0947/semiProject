@@ -98,7 +98,7 @@
 		<div id="content">
 	            <div id="c_1">
 	                <div id="refund_info">
-	                    <h2>환불 / 입금 내역 상세 조회</h2>
+	                    <h2>환불 / 입금 상세 조회</h2>
 	                    <input type="radio" id="refund" name="tab" checked>
 	                    <label for="refund">환불 내역</label>
 	

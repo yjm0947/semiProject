@@ -188,18 +188,6 @@ public class MemberService {
 		return clist;
 	}
 	
-	//주문 조회
-	public ArrayList<Payment> selectShoppingList(int memNo) {
-		Connection conn = JDBCTemplate.getConnection();
-		
-		ArrayList<Payment> list = new MemberDao().selectShoppingList(conn,memNo);
-		
-		JDBCTemplate.close(conn);
-
-		
-		return list;
-	}
-	
 	//주문 상세 조회 모달
 	public ArrayList<Payment> selectModal(int orderNo) {
 		Connection conn = JDBCTemplate.getConnection();
@@ -354,6 +342,18 @@ public class MemberService {
 			JDBCTemplate.close(conn);
 			
 			return blist;
+		}
+		
+		//결제내역 조회 리스트
+		public ArrayList<Payment> selectPaymentList(int memNo) {
+
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Payment> payList = new MemberDao().selectPaymentList(conn, memNo);
+			
+			JDBCTemplate.close(conn);
+			
+			return payList;
 		}
 
 

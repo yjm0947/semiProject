@@ -214,7 +214,6 @@
                         <label for="pro_Publisher" id="pro_Publisher1" style="position: relative;  top: -32px;">제조사</label>
                         <input type="text" id="pro_Publisher2" name="pro_Publisher" style="position: relative; top: -30px; left: 56px; width: 200px; height: 30px;"/>
                     </div>
-                    <br>
                     <div class="inputArea">
                         <label for="pro_Price" id="pro_Price1">상품가격(원)</label>
                         <input type="number" id="pro_Price2" name="pro_Price" />

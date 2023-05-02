@@ -88,11 +88,22 @@ public class ProductService {
 	}
 		
 	//도서 검색
-	public ArrayList<Product> searchBook(String search, PageInfo pi) {
+//	public ArrayList<Product> searchBook(String search, PageInfo pi) {
+//		
+//		Connection conn = JDBCTemplate.getConnection();
+//			
+//		ArrayList<Product> list = new ProductDao().searchBook(conn,search,pi);
+//			
+//		JDBCTemplate.close(conn);
+//			
+//		return list;
+//		}
+	
+		public ArrayList<Product> searchBook(String search) {
 		
 		Connection conn = JDBCTemplate.getConnection();
 			
-		ArrayList<Product> list = new ProductDao().searchBook(conn,search,pi);
+		ArrayList<Product> list = new ProductDao().searchBook(conn,search);
 			
 		JDBCTemplate.close(conn);
 			

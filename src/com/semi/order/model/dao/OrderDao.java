@@ -463,4 +463,65 @@ public class OrderDao {
 		return result;
 	}
 
+	//주문내역 키워드 검색 - 관리자
+	public ArrayList<Payment> searchOrderAdmin(Connection conn, int num, String search) {
+		ArrayList<Payment> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = "";
+		
+		switch(num) {
+		case 1 : sql = prop.getProperty("searchOrderPno");
+			break;
+		case 2 : sql = prop.getProperty("searchOrderName");
+			break;
+		case 3 : sql = prop.getProperty("searchOrderAddress");
+			break;
+		case 4 : sql = prop.getProperty("searchOrderDate");
+			break;
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			//주문번호 키워드 검색시 문자열로 들어왔을때 처리
+			char chkSearch = '\u0000';
+			
+			for(int i=0; i<search.length(); i++) {
+				chkSearch = search.charAt(i); 
+			}
+			
+			if(num == 1 && ((int)chkSearch < 48 ||(int)chkSearch >57)) {
+				return list;
+			}
+			
+			if(num == 1) {
+				pstmt.setInt(1, Integer.parseInt(search));
+			}else {
+				pstmt.setString(1, search);
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Payment(rset.getInt("ORDER_NO")
+						,rset.getString("MEMBER_NAME")
+						,rset.getDate("CREATED_AT")
+						,rset.getInt("PAYMENT")
+						,rset.getString("ORDER_REQUEST")
+						,rset.getString("ADDRESS_NAME")
+						,rset.getString("ROAD_ADDRESS")
+						,rset.getString("DETAIL_ADDRESS")
+						,rset.getString("CHECK_PAY")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
 }

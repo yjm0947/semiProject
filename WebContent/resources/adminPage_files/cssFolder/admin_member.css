@@ -190,7 +190,7 @@
     background-color: #fff;
     position: relative;
     width:100%;               /* 반응형 이기 때문에 가로값 100% */
-    max-width:500px;          /* 팝업의 최대 크기 */
+    max-width:625px;          /* 팝업의 최대 크기 */
     border-radius:15px;       
     overflow:hidden;          /* 각을 없앴을 때 내부 영역이 튀어나오는걸 방지 */
     left: 40%;

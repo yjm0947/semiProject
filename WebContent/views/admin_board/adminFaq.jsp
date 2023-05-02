@@ -77,7 +77,7 @@
 						
 						<div class="faq_box_answer">
 							<div>
-								<%=b.getBoardContent() %>
+								<pre><%=b.getBoardContent() %></pre>
 							</div>
 						</div>
 						<%} %>

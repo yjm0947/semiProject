@@ -44,7 +44,7 @@
 			<script>
 				function blankSearch(){
 					if($("#memberSearch").val().length == 0){
-						alert("다시 입력해주시길 바랍니다.");
+						alert("다시 입력해 주시길 바랍니다.");
 						return false;
 					}
 				};

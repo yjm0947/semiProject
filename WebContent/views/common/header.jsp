@@ -95,7 +95,7 @@
             margin: 6px;
             position: relative;
             top: 84px;
-            left: 190px;
+            left: 90px;
         }
         /*------------------------메뉴바------------------------------*/
         #header_2>div{

@@ -47,6 +47,10 @@ public class OrderCardController extends HttpServlet {
 		int price = Integer.parseInt(request.getParameter("finalPrice"));
 		String msg = request.getParameter("selectMsg");
 		int usePoint = Integer.parseInt(request.getParameter("inputPoint"));
+		int useCoupon = 0;
+		if(request.getParameter("inputCoupon")!=null) {
+			useCoupon = Integer.parseInt(request.getParameter("inputCoupon"));
+		}
 		String name = request.getParameter("selectName");
 		String phone = request.getParameter("selectPhone");
 		String email = request.getParameter("selectEmail");
@@ -55,7 +59,7 @@ public class OrderCardController extends HttpServlet {
 		String detail = request.getParameter("selectDetail");
 		int deliveryCost = Integer.parseInt(request.getParameter("deliveryCost"));
 		
-		Payment p = new Payment(orderNo,userNo,productNo,price,msg,usePoint,name,phone,email,post,road,detail,deliveryCost);
+		Payment p = new Payment(orderNo,userNo,productNo,price,msg,usePoint,useCoupon,name,phone,email,post,road,detail,deliveryCost);
 		
 		int result = new OrderService().orderCard(p);
 		
@@ -68,6 +72,10 @@ public class OrderCardController extends HttpServlet {
 //		System.out.println(p);
 		
 		if (result>0) {
+			new OrderService().usePoint(userNo,usePoint);
+			if (useCoupon != 0) {
+				new OrderService().useCoupon(userNo,useCoupon);
+			}
 			new OrderService().completeOrder(userNo);
 			for (int i = 0; i < productNums.length; i++) {
 				new ShoppingCartService().delChecked(productNums[i],Integer.parseInt(userNo));

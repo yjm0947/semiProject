@@ -20,6 +20,10 @@
             /* border: 1px solid black; */
             box-sizing: border-box;
         }
+        /* float 속성 해제 */
+        .clearfix{
+            clear: both;
+        }
         /*-----------------콘텐츠------------------------*/
         #content{
             /* background-color: antiquewhite; */
@@ -316,7 +320,11 @@
             width: 1400px;
             margin: auto;
             /* background-color: aqua; */
-         	height: 2730px;
+         	/*height: 2730px;*/
+         	position: relative;
+         	left: 200px;
+         	height: auto;
+         	display: inline-block;
         }
         #all_content>div{
             float: left;
@@ -482,10 +490,10 @@
             <%} %>
         </div>
                 <%} %>
-
+			
 			<%} %>
 
-                <div id="page">
+                <div id="page" style="position: relative; left: 200px;">
                 	<!-- 왼쪽 가기 버튼 -->
                 <%if(pi.getCurrentPage()!=1) {%>
                 	<button type="button" onclick="location.href='<%=contextPath %>/book.list?currentPage=<%=pi.getCurrentPage()-1 %>'">&lt;</button>
@@ -641,7 +649,6 @@
       			};
     		<%}%>
           </script>
-
        	<%@include file = "../common/footer.jsp" %>
 </body>
 </html>

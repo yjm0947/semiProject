@@ -24,12 +24,14 @@
             margin: auto;
         }
 		#content{
-            width: 100%;
+            height: auto;
             margin-top: 20px;
+            position: 
         }
 		#c_1{
             width: 80%;
-            height: 100%;
+            height:auto;
+            display : inline-block;
             float: right;
         }
         #my_info{
@@ -135,7 +137,7 @@
                 </div>
 			</div>
 		</div>
-		
+			
 		<script>
 			const infoBox = document.getElementById('my_info');
 			const infoBorder = document.getElementById('my_benefit');

@@ -25,7 +25,7 @@
         /*--------------마이페이지 사용자 프로필 영역-----------------*/
         #c_2{
             width: 20%;
-            height: 300px;
+            height: auto;
             text-align: center;
             padding: 10px 0px;
             border-right: 1px solid lightgray;
@@ -40,20 +40,19 @@
             color: black;
         }
         #userName{
-            margin: 10px 0px 0px 0px;
+            margin: 10px 0px 20px 0px;
         }
 
         /*--------------마이페이지 사용자 카테고리 영역-----------------*/
         #c_3{
             width: 20%;
-            height: 700px;
+            height: auto;
             border-top: 1px solid lightgray;
             padding: 10px 0px;
             border-right: 1px solid lightgray;
         }
         #my_nav {
             list-style: none;
-            
         }
         #my_nav>ul{
             list-style: none;
@@ -71,7 +70,6 @@
             font-weight: bold;
             text-decoration: underline;
 		}
-		
 </style>
 </head>
 <body>
@@ -103,7 +101,7 @@
 	                        <ul>
 	                            <li><a href="<%=contextPath1%>/shoppingList.me">주문목록 / 배송조회</a></li>
                             	<li><a href="<%=contextPath1%>/cancelList.me">취소 / 교환 내역</a></li>
-	                            <li><a href="<%=contextPath1%>/myPayList.me">환불 / 입금 내역</a></li>
+	                            <li><a href="<%=contextPath1%>/myPayList.me">환불 / 결제 내역</a></li>
 	                            <li><a href="<%=contextPath1%>/myReviewList.me">나의 쇼핑 후기</a></li>
 	                        </ul>
 	                    </li>
@@ -124,8 +122,8 @@
 	                       <li><h3>고객센터</h3></li>
 	                        <ul>
 	                            <li><a href="<%=contextPath1%>/myQna.me">나의 문의 내역</a></li>
-	                            <li><a href="">FAQ</a></li>
-	                            <li><a href="">공지사항</a></li>
+	                            <li><a href="<%=contextPath1 %>/mafaq.c">FAQ</a></li>
+	                            <li><a href="<%=contextPath1 %>/noti.ma?currentPage=1">공지사항</a></li>
 	                        </ul>
 	                   </li>
 	                </ul>

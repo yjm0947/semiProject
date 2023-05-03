@@ -149,21 +149,21 @@
 				<div align="center" class="paging-area">
 				<!-- 이전 버튼 -->
 				<%if(pi.getCurrentPage() != 1) {%>
-					<button onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=pi.getCurrentPage()-1%>'">&lt;</button>
+					<button id="searchBtn" onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=pi.getCurrentPage()-1%>'">&lt;</button>
 				<%}%>
 				
 				<!-- 페이징바 -->
 				<%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++){%>
 					<%if(i != pi.getCurrentPage()) {%>
-						<button onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=i%>'"><%=i%></button>
+						<button id="searchBtn" onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=i%>'"><%=i%></button>
 					<%}else {%>
-						<button disabled><%=i%></button>
+						<button id="searchBtn" disabled><%=i%></button>
 					<%} %>
 				<%} %>
 				
 				<!-- 다음 버튼 -->
 				<%if(pi.getCurrentPage() != pi.getMaxPage()){%>
-					<button onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+					<button id="searchBtn" onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
 				<%}%>
 				</div>
 				
@@ -172,21 +172,21 @@
 				<div align="center" class="paging-area">
 				<!-- 이전 버튼 -->
 				<%if(pi.getCurrentPage() != 1) {%>
-					<button onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=pi.getCurrentPage()-1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&lt;</button>
+					<button id="searchBtn" onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=pi.getCurrentPage()-1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&lt;</button>
 				<%}%>
 				
 				<!-- 페이징바 -->
 				<%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++){%>
 					<%if(i != pi.getCurrentPage()) {%>
-						<button onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=i%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'"><%=i%></button>
+						<button id="searchBtn" onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=i%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'"><%=i%></button>
 					<%}else {%>
-						<button disabled><%=i%></button>
+						<button id="searchBtn" disabled><%=i%></button>
 					<%} %>
 				<%} %>
 				
 				<!-- 다음 버튼 -->
 				<%if(pi.getCurrentPage() != pi.getMaxPage() ){%>
-					<button onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=pi.getCurrentPage()+1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&gt;</button>
+					<button id="searchBtn" onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=pi.getCurrentPage()+1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&gt;</button>
 				<%}%>
 				</div>
 			<%} %>		
@@ -242,6 +242,13 @@
 							</div>
 		
 							<div>
+								&lt;상품 사진&gt;
+								<div id="product_Div">
+									<img id="product_img" src="">
+								</div>
+							</div>
+		
+							<div>
 								&lt;상품설명&gt;
 								<div><pre id="productDescription"></pre>
 									
@@ -290,14 +297,13 @@
 								</div>
 							</div>
 						</div>
-						<%-- <form action="<%=contextPath %>/product.md" method="post"> --%>
+						<form action="<%=contextPath %>/product.md" method="get">
 						<div class="modal_footer">
-							<button type="button" onclick="modifiProduct()">상품 수정</button>
-							<!-- <input type="hidden" name="productNo" id="productNo" value="">
-							<button type="submit"">상품 수정</button> -->
+							<input type="hidden" name="ppro" id="ppro" value="">
+							<button type="submit"">상품 수정</button>
 							<button type="button" onclick="deleteProduct()">상품 삭제</button>
 						</div>						
-						<!-- </form> -->
+						</form>
 					</div>
 				</div>
 
@@ -331,8 +337,11 @@
 				
 					//상품번호 추출
 					var pno = $(this).children().eq(0).text();
-					//console.log(pno);
-
+					
+					//상품 수정시 상품 번호 추출을 위해 클릭시 히든값에 넣어주기
+					var ppro = document.getElementById("ppro");
+					ppro.value = pno;
+					
 					//검색결과에 따른 조회값 추출 및 삽입
 					$.ajax({
 						
@@ -370,22 +379,50 @@
 							$(".modal_body").children().children().eq(3).text(result.productPublisher);
 							$("#productDescription").text(result.productText);
 							//$(".modal_body").children().children().eq(4).text(result.productText);
-							$(".modal_body").children().children().eq(5).text(result.productPrice);
-							$(".modal_body").children().children().eq(6).text(result.productSalesRate);
+							$(".modal_body").children().children().eq(6).text(result.productPrice);
+							$(".modal_body").children().children().eq(7).text(result.productSalesRate);
 							if(rel > 0){
-								$(".modal_body").children().children().eq(7).text(rel);
+								$(".modal_body").children().children().eq(8).text(rel);
 							}else{
-								$(".modal_body").children().children().eq(7).text(0);
+								$(".modal_body").children().children().eq(8).text(0);
 							}
-							$(".modal_body").children().children().eq(8).text(result.author);
-							$(".modal_body").children().children().eq(9).text(result.createDate);
-							$(".modal_body").children().children().eq(10).text(result.status);
+							$(".modal_body").children().children().eq(9).text(result.author);
+							$(".modal_body").children().children().eq(10).text(result.createDate);
+							$(".modal_body").children().children().eq(11).text(result.status);
 						},
 						
 						error : function(){
 							console.log("상품조회 실패");
 						}
 						
+					});
+					
+					$.ajax({
+						
+						url : "detailItems.admin?pno="+pno,
+						
+						type : "get",
+						
+						success : function(result){
+							console.log(result[0].titleImg);
+							var img = "";
+							
+							for(var i=0; i<result.length; i++){
+								
+								img += "<img id='product_img"+i+"'>"
+
+							}
+							
+								$(".modal_body").children().children().eq(4).html(img);
+								
+							for(var i=0; i<result.length; i++){
+								
+
+								$("#product_img"+i).attr('src',"<%=contextPath%>"+result[i].titleImg);
+							}
+							
+						}
+								
 					});
 				});
 				
@@ -400,33 +437,6 @@
 					});
 					
 				});	
-				
-				//상품 수정 버튼 클릭시
-				function modifiProduct(){
-					/* var proNo = $(".list-area>tbody>tr").eq(0).children().eq(0).text(); */
-					
-					//상품 번호 보내주기
-					var pNo = $(".modal_body").children().children().eq(0).text();
-					console.log(pNo);		
-				
-					<%-- location.href="<%=request.getContextPath()%>/product.md"; --%>
-					
-					$.ajax({
-						url : "product.md",
-						data : {productNo : pNo},
-						type : "post",
-						success : function(productNo){
-							
-							console.log(productNo);
-							<%-- location.replace="<%=request.getContextPath()%>/product.md?productNo='+productNo'"; --%>
-							
-							//let url = '/SemiProject/product.md?pNo='+pno'';
-							
-							location.replace("/SemiProject/product.md?pNo="+productNo);
-						}
-					});
-				}
-				
 				
 				//상품삭제 버튼 클릭시
 				function deleteProduct(){

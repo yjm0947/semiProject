@@ -149,7 +149,7 @@ a{
 /* ===== 위로가기 버튼 ===== */
 #scroll{
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 60px;
+    right: 90px;
     z-index: 11;
 }

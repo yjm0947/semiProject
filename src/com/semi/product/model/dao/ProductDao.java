@@ -530,7 +530,8 @@ public class ProductDao {
 	
 		//상품 상세 정보
 		public Product productItemDetail(Connection conn, int pno) {
-			Product p = null;
+
+			Product p = new Product();
 			ResultSet rset = null;
 			PreparedStatement pstmt = null;
 			
@@ -538,18 +539,19 @@ public class ProductDao {
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, pno);
+					pstmt.setInt(1, pno);
 				
 				rset = pstmt.executeQuery();
 				
 				if(rset.next()) {
 					p = new Product(rset.getInt("PRODUCT_NO"),
-							rset.getString("PRODUCT_NAME"),
-							rset.getString("PRODUCT_PUBLISHER"),
-							rset.getString("PRODUCT_TEXT"),
-							rset.getInt("PRODUCT_PRICE"),
-							rset.getInt("PRODUCT_SALES_RATE"),
-							rset.getString("TITLEIMG"));
+									rset.getString("PRODUCT_CATEGORY"),
+									rset.getString("PRODUCT_NAME"),
+									rset.getString("PRODUCT_PUBLISHER"),
+									rset.getString("PRODUCT_TEXT"),
+									rset.getInt("PRODUCT_PRICE"),
+									rset.getInt("PRODUCT_SALES_RATE"),
+									rset.getString("TITLEIMG"));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -578,12 +580,14 @@ public class ProductDao {
 			
 			if(rset.next()) {
 				p = new Product(rset.getInt("PRODUCT_NO"),
+								rset.getString("PRODUCT_CATEGORY"),
 								rset.getString("PRODUCT_NAME"),
 								rset.getString("PRODUCT_PUBLISHER"),
 								rset.getString("PRODUCT_TEXT"),
 								rset.getInt("PRODUCT_PRICE"),
 								rset.getInt("PRODUCT_SALES_RATE"),
 								rset.getString("AUTHOR"),
+								rset.getInt("ATTACHMENT_ID"),
 								rset.getString("TITLEIMG"));
 			}
 		} catch (SQLException e) {
@@ -612,7 +616,8 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				p2 = new Product(rset.getString("TITLEIMG"));
+				p2 = new Product(rset.getInt("ATTACHMENT_ID"),
+							rset.getString("TITLEIMG"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1302,33 +1307,114 @@ public class ProductDao {
 			}
 		return listCount;
 }
+		//도서 수정
+		public int updateProduct(Connection conn, Product p) {
 
-		//상품 수정시 불러올 상품 리스트 조회
-//		public Product modifiPro(Connection conn, int proNo) {
-//			
-//			Product pro = ;
-//			PreparedStatement pstmt = null;
-//			ResultSet rset = null;
-//
-//			String sql = prop.getProperty("modifiPro");
-//			
-//			try {
-//				pstmt = conn.prepareStatement(sql);
-//					pstmt.setInt(1, proNo);
-//					
-//				rset = pstmt.executeQuery();
-//				
-//				if(rset.next()) {
-//						
-//				}
-//				
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			
-//			
-//			return null;
-//		}	
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("updatepro");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, p.getProductCategory());
+					pstmt.setString(2, p.getProductName());
+					pstmt.setString(3, p.getProductPublisher());
+					pstmt.setString(4, p.getAuthor());
+					pstmt.setInt(5, p.getProductPrice());
+					pstmt.setInt(6, p.getProductSalesRate());
+					pstmt.setInt(7, p.getProductStock());
+					pstmt.setString(8, p.getProductText());
+					pstmt.setInt(9, p.getProductNo());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return result;
+		}
+		
+		//기존파일 정보 수정하기
+		public int updateAttachment(Connection conn, Attachment at) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+					
+			String sql = prop.getProperty("updateAttachment");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, at.getAttachmentName());
+					pstmt.setString(2, at.getAttachmentName());
+					pstmt.setString(3, at.getAttachmentPath());
+					pstmt.setInt(4, at.getAttachmentId());
+			
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+			return result;
+		}
+
+		//상품 상세조회 이미지 - 관리자
+		public ArrayList<Product> detailAdminPath(Connection conn, int pno) {
+			ArrayList<Product> Path = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("detailAdminPath");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pno);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					Path.add(new Product(rset.getString("PATH")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return Path;
+		}
+
+		//새로운 파일정보 넣기
+		public int newInsertAttachment(Connection conn, Attachment at) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+					
+			String sql = prop.getProperty("newInsertAttachment");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, at.getBoardNo());
+					pstmt.setString(2, at.getAttachmentName());
+					pstmt.setString(3, at.getAttachmentChange());
+					pstmt.setString(4, at.getAttachmentPath());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+			return result;
+		}
+		
 }

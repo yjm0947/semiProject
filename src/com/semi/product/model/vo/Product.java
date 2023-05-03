@@ -19,13 +19,15 @@ public class Product {
 	//썸네일 이미지 (경로+파일명)담을 필드 생성
 	private String titleImg;
 	
+	//파일번호 담을 필드 생성
+	private int attachmentId;
+	
 	//별점 담을 필드
 	private int starAvg;
 
 	public Product() {
 		super();
 	}
-	
 	
 	
 	//출고조회 리스트(관리자)
@@ -50,8 +52,9 @@ public class Product {
 		this.createDate = createDate;
 	}
 	
-	public Product(String titleImg) {
+	public Product(int attachmentId, String titleImg) {
 		super();
+		this.attachmentId = attachmentId;
 		this.titleImg = titleImg;
 	}
 
@@ -67,10 +70,11 @@ public class Product {
 		this.titleImg = titleImg;
 	}
 	//상품 상세 페이지
-	public Product(int productNo, String productName, String productPublisher, String productText, int productPrice,
+	public Product(int productNo, String productCategory, String productName, String productPublisher, String productText, int productPrice,
 			int productSalesRate, String titleImg) {
 		super();
 		this.productNo = productNo;
+		this.productCategory = productCategory;
 		this.productName = productName;
 		this.productPublisher = productPublisher;
 		this.productText = productText;
@@ -78,17 +82,35 @@ public class Product {
 		this.productSalesRate = productSalesRate;
 		this.titleImg = titleImg;
 	}
-	public Product(int productNo, String productName, String productPublisher, String productText, int productPrice,
-			int productSalesRate, String author,String titleImg) {
+	public Product(int productNo, String productCategory, String productName, String productPublisher, String productText, int productPrice,
+			int productSalesRate, String author,int attachmentId, String titleImg) {
 		super();
 		this.productNo = productNo;
+		this.productCategory = productCategory;
 		this.productName = productName;
 		this.productPublisher = productPublisher;
 		this.productText = productText;
 		this.productPrice = productPrice;
 		this.productSalesRate = productSalesRate;
 		this.author = author;
+		this.attachmentId = attachmentId;
 		this.titleImg = titleImg;
+	}
+	
+	
+	
+	public Product(int productNo, String productCategory, String productName, String productPublisher,
+			String productText, int productPrice, int productSalesRate, int productStock, String author) {
+		super();
+		this.productNo = productNo;
+		this.productCategory = productCategory;
+		this.productName = productName;
+		this.productPublisher = productPublisher;
+		this.productText = productText;
+		this.productPrice = productPrice;
+		this.productSalesRate = productSalesRate;
+		this.productStock = productStock;
+		this.author = author;
 	}
 	public Product(int productNo, String productName, String productPublisher, String productText, int productPrice,
 			int productSalesRate, Date createDate, String titleImg) {
@@ -136,6 +158,11 @@ public class Product {
 	}
 
 
+	//상품관리 상세조회 이미지 생성자 - 관리자
+	public Product(String titleImg) {
+		super();
+		this.titleImg = titleImg;
+	}
 
 	public Product(int productNo, String productCategory, String productName, String productPublisher,
 			String productText, int productPrice, int productSalesRate, int productStock, String author,
@@ -257,6 +284,14 @@ public class Product {
 	public void setStarAvg(int starAvg) {
 		this.starAvg = starAvg;
 	}
+	public int getAttachmentId() {
+		return attachmentId;
+	}
+	public void setAttachmentId(int attachmentId) {
+		this.attachmentId = attachmentId;
+	}
+
+
 
 	@Override
 	public String toString() {

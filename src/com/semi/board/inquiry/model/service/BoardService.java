@@ -326,4 +326,23 @@ public class BoardService {
 	}
 
 
+	//조회수 증가
+	public int NoticeDetailCount(int bno) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().NoticeDetailCount(conn,bno);
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+
 }

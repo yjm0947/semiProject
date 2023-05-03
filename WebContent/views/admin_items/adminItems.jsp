@@ -300,6 +300,7 @@
 						<form action="<%=contextPath %>/product.md" method="get">
 						<div class="modal_footer">
 							<input type="hidden" name="ppro" id="ppro" value="">
+							<input type="hidden" name="cate" id="cate" value="">
 							<button type="submit"">상품 수정</button>
 							<button type="button" onclick="deleteProduct()">상품 삭제</button>
 						</div>						
@@ -337,10 +338,15 @@
 				
 					//상품번호 추출
 					var pno = $(this).children().eq(0).text();
+					//카테고리번호 추출
+					var ca1 = $(this).children().eq(1).text();
 					
 					//상품 수정시 상품 번호 추출을 위해 클릭시 히든값에 넣어주기
 					var ppro = document.getElementById("ppro");
 					ppro.value = pno;
+					
+					var cate = document.getElementById("cate");
+					cate.value = ca1;
 					
 					//검색결과에 따른 조회값 추출 및 삽입
 					$.ajax({

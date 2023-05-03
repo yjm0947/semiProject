@@ -378,4 +378,14 @@ public class MemberService {
 			return result;
 		}
 
+		public ArrayList<Payment> cancelMyOrder(int memNo) {
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Payment> cclist = new MemberDao().cancelMyOrder(conn, memNo);
+			
+			JDBCTemplate.close(conn);
+			
+			return cclist;
+		}
+
 }

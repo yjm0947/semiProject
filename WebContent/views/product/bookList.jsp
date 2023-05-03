@@ -322,7 +322,7 @@
             /* background-color: aqua; */
          	/*height: 2730px;*/
          	position: relative;
-         	left: 200px;
+         	left: 565px;
          	height: auto;
          	display: inline-block;
         }

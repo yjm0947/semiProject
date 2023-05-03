@@ -290,14 +290,13 @@
 								</div>
 							</div>
 						</div>
-						<%-- <form action="<%=contextPath %>/product.md" method="post"> --%>
+						<form action="<%=contextPath %>/product.md" method="get">
 						<div class="modal_footer">
-							<button type="button" onclick="modifiProduct()">상품 수정</button>
-							<!-- <input type="hidden" name="productNo" id="productNo" value="">
-							<button type="submit"">상품 수정</button> -->
+							<input type="hidden" name="ppro" id="ppro" value="">
+							<button type="submit"">상품 수정</button>
 							<button type="button" onclick="deleteProduct()">상품 삭제</button>
 						</div>						
-						<!-- </form> -->
+						</form>
 					</div>
 				</div>
 
@@ -331,8 +330,11 @@
 				
 					//상품번호 추출
 					var pno = $(this).children().eq(0).text();
-					//console.log(pno);
-
+					
+					//상품 수정시 상품 번호 추출을 위해 클릭시 히든값에 넣어주기
+					var ppro = document.getElementById("ppro");
+					ppro.value = pno;
+					
 					//검색결과에 따른 조회값 추출 및 삽입
 					$.ajax({
 						
@@ -400,33 +402,6 @@
 					});
 					
 				});	
-				
-				//상품 수정 버튼 클릭시
-				function modifiProduct(){
-					/* var proNo = $(".list-area>tbody>tr").eq(0).children().eq(0).text(); */
-					
-					//상품 번호 보내주기
-					var pNo = $(".modal_body").children().children().eq(0).text();
-					console.log(pNo);		
-				
-					<%-- location.href="<%=request.getContextPath()%>/product.md"; --%>
-					
-					$.ajax({
-						url : "product.md",
-						data : {productNo : pNo},
-						type : "post",
-						success : function(productNo){
-							
-							console.log(productNo);
-							<%-- location.replace="<%=request.getContextPath()%>/product.md?productNo='+productNo'"; --%>
-							
-							//let url = '/SemiProject/product.md?pNo='+pno'';
-							
-							location.replace("/SemiProject/product.md?pNo="+productNo);
-						}
-					});
-				}
-				
 				
 				//상품삭제 버튼 클릭시
 				function deleteProduct(){

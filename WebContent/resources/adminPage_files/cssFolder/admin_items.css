@@ -102,7 +102,6 @@
   height: 1152px;
   margin: 0 auto;
   margin-right: 0;
-  overflow-y: auto;
 }
 
 #ml_table{
@@ -132,7 +131,7 @@ thead>#ml_tr {
   background-clip: padding-box;
   width: 100%;
   height: 100%;
-  background-color: rgba(255,255,192,0.1);
+  background-color: rgba(41, 127, 185, 0);
   backdrop-filter: blur(2px);
   border-left: 0;
   border-right: 0;
@@ -218,10 +217,10 @@ tbody {
   background-color: #fff;
   position: relative;
   width:100%;               /* 반응형 이기 때문에 가로값 100% */
-  max-width:700px;          /* 팝업의 최대 크기 */
+  max-width:1000px;          /* 팝업의 최대 크기 */
   border-radius:15px;       
   overflow:hidden;          /* 각을 없앴을 때 내부 영역이 튀어나오는걸 방지 */
-  left: 40%;
+  left: 28%;
   /* 팝업이 허공에 떠있는 듯한 느낌을 주기 위한 그림자 효과. */
   box-shadow: 5px 10px 10px 1px rgba(0,0,0,.7); 
 }
@@ -252,7 +251,7 @@ tbody {
 
 .modal_body{
  width: 100%;
- height: 630px;
+ height: 730px;
  display: block;
  overflow-y: auto;
  overflow-x: hidden;
@@ -278,7 +277,7 @@ tbody {
   display: table;
   margin-left: 15px;
   color: black;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 #modal_member{
@@ -392,6 +391,20 @@ tbody {
   white-space: pre-wrap;
   word-wrap: break-word;
   text-align: left;
+}
+
+#searchBtn{
+  position: relative;
+  top: 15px;
+  width: 25px;
+  height: 25px;
+  background-color: rgba(41, 127, 185, 0.22);
+  border: 1px solid transparent;
+}
+
+#product_Div img{
+  width: 880px;
+  object-fit: cover;
 }
 
 /* ========================= < 모달 스크롤바 설정 > ========================= */

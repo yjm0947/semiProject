@@ -215,9 +215,9 @@ tbody {
   background-color: #fff;
   position: relative;
   width:100%;               /* 반응형 이기 때문에 가로값 100% */
-  max-width:830px;  /* 팝업의 최대 크기 */
+  max-width:1000px;  /* 팝업의 최대 크기 */
   height: 100%;
-  max-height: 870px;
+  max-height: 980px;
   border-radius:15px;       
   overflow:hidden;          /* 각을 없앴을 때 내부 영역이 튀어나오는걸 방지 */
   left: 30%;
@@ -253,7 +253,7 @@ tbody {
 
 .modal_body{
  width: 100%;
- height: 620px;
+ height: 730px;
  display: block;
  overflow-y: auto;
  overflow-x: auto;
@@ -279,7 +279,7 @@ tbody {
   display: table;
   margin-left: 15px;
   color: black;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 #modal_member{
@@ -338,13 +338,17 @@ tbody {
 
 #imgDiv{
   position: relative;
-  max-width: 600px;
+  max-width: 800px;
 }
 
 #imgDiv>*{
   display: inline-block;
   position: relative;
-  max-width: 500px;
+}
+
+#imgDiv img{
+  width: 880px;
+  object-fit: cover;
 }
 
 #noticeContent_area{
@@ -356,6 +360,11 @@ tbody {
   background-color: rgb(32, 112, 165);
   box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, 0.212);
 }
+
+#noticeText{
+  text-align: left;
+}
+
 
 /* ========================= < 모달 스크롤바 설정 > ========================= */
 .middle_left::-webkit-scrollbar{

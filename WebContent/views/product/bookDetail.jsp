@@ -725,7 +725,8 @@
         $(function(){ //상품 구매한 회원일시 버튼 보이기
         	$.ajax({
         		url : "review.btn",
-        		data : {productNo : <%=p.getProductNo()%>},
+        		data : {productNo : <%=p.getProductNo()%>,
+        				memberNo : <%=loginUser.getMemberNo()%>},
         		type : "post",
         		success : function(count){
         			if(count>0){
@@ -733,7 +734,31 @@
         			}
         		}
         	});
-        });
+        })
+        
+        
+        function oneCk(){//한번 작성했으면 버튼 없애기
+        	$.ajax({
+        		url : "one.me",
+        		data : {productNo : <%=p.getProductNo()%>,
+    					memberNo : <%=loginUser.getMemberNo()%>},
+        		type : "post",
+        		success : function(count){
+        			
+        			console.log("성공");
+        			console.log(count);
+        			
+        			if(count>0){//댓글이 작성되어있으면
+        				$("#R_btn").css('display','none');
+        				console.log($("#R_btn"));        				
+        			}
+        				/* location.reload(); */
+        		}
+        	});
+        	
+        }
+        
+        
         <%}%>
         
       //댓글 등록
@@ -755,9 +780,15 @@
         			$("#replyContent").val("");
         			
         			selectReview();
+        			/* oncCk(); */
         		}
         	});
-        };
+        	
+        	
+        }
+        
+        
+        
       <%}%>
       
       	$(function(){
@@ -766,7 +797,7 @@
       	
       	
       	//댓글 목록
-      	function selectReview(){
+      function selectReview(){
       		$.ajax({
       			url : "review.li",
       			data : {productNo : <%=p.getProductNo()%>},

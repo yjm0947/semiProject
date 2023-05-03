@@ -79,7 +79,14 @@
             border: 3px dashed lightblue;
             /*box-sizing: border-box;
             border-radius: 10px;*/
+            height : 800px;
+            overflow : auto;
+            -ms-overflow-style: none;
+       		scrollbar-width: none;
         }
+        #shopping_detail::-webkit-scrollbar {
+    	display: none;
+		}
         #order_detail{
             margin: 0px 30px 0px 0px;
             padding: 10px 0px;

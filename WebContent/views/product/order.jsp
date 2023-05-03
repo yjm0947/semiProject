@@ -1149,7 +1149,9 @@
     	
     	/* 사용 포인트 */
     	usePoint = $("#input-point").val();
-    	
+    	if(usePoint>finalTotalPrice){
+    		$("#input-point").val(finalTotalPrice);
+    	}
     	finalTotalPrice = finalTotalPrice - usePoint;
     	
     	/* 값 삽입 */

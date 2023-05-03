@@ -84,6 +84,10 @@
         #payback:checked ~ #payback_cont{
             display: block;
         }
+        #payback_cont{
+        	height: 800px;
+        	overflow: auto;
+        }
 		#refund_info i{
             font-size: 25px;
         }

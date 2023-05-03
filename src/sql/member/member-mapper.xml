@@ -340,4 +340,16 @@
 		JOIN P_ORDER PO USING (ORDER_NO)
 		WHERE P.MEMBER_NO = ?
 	</entry>
+	
+	<entry key="selectMyCoupon">
+		SELECT *
+		FROM COUPON
+		WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 마이페이지에서 1:1문의 등록 -->
+	<entry key="enrollMyQna">
+		INSERT INTO BOARD(BOARD_NO,MEMBER_NO,BOARD_CATEGORY,BOARD_TITLE,BOARD_CONTENT,CREATE_DATE)
+		VALUES (SEQ_BNO.NEXTVAL,?,3,?,?,SYSDATE)
+	</entry>
 </properties>

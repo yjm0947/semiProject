@@ -164,10 +164,6 @@ tbody {
   position: relative;
 }
 
-.list-area>tbody>tr{
-  cursor: pointer;
-}
-
 .list-area>tbody>tr:hover{
   background-color: rgba(52, 52, 52, 0.2);
 } 

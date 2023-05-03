@@ -103,4 +103,28 @@ private Properties prop = new Properties();
 		return result;
 	}
 
+	//출석체크 날짜 체크 메소드
+	public int attendanceOX(Connection conn, int userNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("attendanceOX");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

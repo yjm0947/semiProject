@@ -1,7 +1,6 @@
 package com.semi.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,19 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.semi.member.model.service.MemberService;
-import com.semi.order.model.vo.Payment;
 
 /**
- * Servlet implementation class ShoppingListController
+ * Servlet implementation class MyQnaEnrollController
  */
-@WebServlet("/shoppingList.me")
-public class ShoppingListController extends HttpServlet {
+@WebServlet("/enrollQna.me")
+public class MyQnaEnrollController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShoppingListController() {
+    public MyQnaEnrollController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,37 +30,25 @@ public class ShoppingListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.getRequestDispatcher("views/member/myShoppingList.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int orderNo = Integer.parseInt(request.getParameter("orderNo"));
 		
-		ArrayList<Payment> plist = new MemberService().selectModal(orderNo);
+		int memNo = Integer.parseInt(request.getParameter("memNo"));
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		
-		System.out.println(plist);
+		int result = new MemberService().enrollMyQna(memNo,title,content);
 		
 		response.setContentType("json/application; charset=UTF-8");
 		Gson gson = new Gson();
 		
-		Payment p = null;
-		
-		if(plist.get(0).getOrderNo() == orderNo) {
-			for(int i=0; i<plist.size(); i++) {
-				p = plist.get(i);
-			}
-		}else {
-			System.out.println("다시");
-		}
-		
-		System.out.println(p);
-		
-		gson.toJson(p,response.getWriter());
-		
+		gson.toJson(result,response.getWriter());
 	}
 
 }

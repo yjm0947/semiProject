@@ -39,13 +39,13 @@ public class MypageConteroller extends HttpServlet {
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		int memNo = loginUser.getMemberNo();
 		
-		ArrayList<Coupon> clist = new MemberService().selectCoupon(memNo);
+		ArrayList<Coupon> cplist = new MemberService().selectMyCoupon(memNo);
 		ArrayList<Payment> plist = new MemberService().selectPaymentList(memNo);
 		
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("pList", plist);
-		session.setAttribute("clist", clist);
+		session.setAttribute("cplist", cplist);
 		request.getRequestDispatcher("views/member/myPage.jsp").forward(request, response);
 		
 	}

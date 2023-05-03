@@ -149,7 +149,7 @@
 		                                <td colspan="2"><%=p.getOrderNo() %></td>
 		                                <td colspan="2"><%=p.getCreatedAt() %></td>
 		                                <td colspan="3"><%=p.getProductNo() %></td>
-		                                <td><%=p.getUsePoint() %></td>
+		                                <td><%=p.getQuantity() %> 권</td>
 		                                <td colspan="2"><%=p.getDeliveryCost() + p.getPayment() %></td>
 		                            </tr>
 	                            <%} %>

@@ -356,5 +356,30 @@ public class MemberService {
 			return payList;
 		}
 
+		public ArrayList<Coupon> selectMyCoupon(int memNo) {
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Coupon> cplist = new MemberDao().selectMyCoupon(conn, memNo);
+			
+			JDBCTemplate.close(conn);
+			
+			return cplist;
+		}
+		
+		//마이페이지에서 1:1문의 등록하기
+		public int enrollMyQna(int memNo, String title, String content) {
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int result = new MemberDao().enrollMyQna(conn, memNo,title,content);
+			
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+			
+			return result;
+		}
+
 
 }

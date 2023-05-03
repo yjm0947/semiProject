@@ -197,6 +197,8 @@
 	<%@ include file = "../common/header.jsp" %>
 	<%@ include file = "../common/myInfo.jsp" %>
 	<%
+		System.out.println(plist);
+	
 		int state1 = 0;
 		int state2 = 0;
 		int state3 = 0;

@@ -945,7 +945,7 @@ public class ProductDao {
 					chkSearch = search.charAt(i); 
 				}
 				
-				if(num == 1 && (int)chkSearch < 48 ||(int)chkSearch >57) {
+				if(num == 1 && ((int)chkSearch < 48 ||(int)chkSearch >57)) {
 					return list;
 				}
 				

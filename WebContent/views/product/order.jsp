@@ -33,6 +33,8 @@
 		}else{
 			name = name+" 외 "+count+"개";
 		}
+		
+		if($("#sn").val()!='' && $("#sp").val()!='' && $("#se").val()!='' && $("#spo").val()!='' && $("#sr").val()!='' && $("#sd").val()!=''){
 		//가맹점 식별코드
 		IMP.init('imp06731188');
 		IMP.request_pay({
@@ -82,6 +84,7 @@
 		    	alert(msg);
 		    }
 		});
+		}
 	}
 </script>
 <title>[파랑서점] 주문/결제</title>
@@ -689,6 +692,8 @@
 	                        	<div class="paymentInfo_button_div" style="float: left;">
 	                                <button type="button" class="payment_btn payment_btn_1" onclick="showPayment('1')" style="background-color: #365fdd;">무통장 입금</button>
 	                                <button type="button" class="payment_btn payment_btn_2" onclick="showPayment('2')">신용카드</button>
+	                                <input type="checkbox" name="payChk" checked="checked" id="pay1" hidden>
+					        		<input type="checkbox" name="payChk" id="pay2" hidden>
 	                            </div>
                         </div>
                             <div class="clearfix"></div>
@@ -734,7 +739,7 @@
 					        <input type="text" name="selectPost" id="spo" required>
 					        <input type="text" name="selectRoad" id="sr" required>
 					        <input type="text" name="selectDetail" id="sd" required>
-					        <input type="text" name="selectMsg" id="sm" required>
+					        <input type="text" name="selectMsg" id="sm">
 					        <input type="text" name="deliveryCost" id="dc" required>
 					        <input type="text" name="finalPrice" id="fp" required>
 					    </div>
@@ -773,7 +778,7 @@
 
                     <!-- 버튼 영역 -->
                     <div class="total_info_btn_div">
-						<button type="submit" class="order_btn" id="pay-btn1">결제하기</button>
+						<button type="button" class="order_btn" id="pay-btn1">결제하기</button>
                     </div>
                 </div>
                 
@@ -819,7 +824,7 @@
             </div>
         </div>
     </div>
-    
+    </div>
 
 <script>
 	$(function() {
@@ -839,6 +844,28 @@
 			}
     	});
 	    
+    	//주소 버튼 바꾸면 입력되는 정보 달라짐
+    	$(".address_btn_1").click(function() {
+    	    $("#sc1").prop("checked", true);
+    	    $("#sc2").prop("checked", false);
+    	  });
+
+		$(".address_btn_2").click(function() {
+    	    $("#sc1").prop("checked", false);
+    	    $("#sc2").prop("checked", true);
+    	  });
+		
+		//결제 수단 버튼 바꾸면 통장 정보 빈칸 알림
+    	$(".payment_btn_1").click(function() {
+    	    $("#pay1").prop("checked", true);
+    	    $("#pay2").prop("checked", false);
+    	  });
+
+		$(".payment_btn_2").click(function() {
+    	    $("#pay1").prop("checked", false);
+    	    $("#pay2").prop("checked", true);
+    	  });		
+    	
 	});
 	
 	/*기본주소지 입력 */
@@ -872,6 +899,27 @@
 			}else{
 				selectInput2();
 			}
+			if ($("#sn").val()=='') {
+				alert("받으시는 분 이름을 입력해주세요.");
+			}else if ($("#sp").val()=='') {
+				alert("연락처를 입력해주세요.");
+			}else if ($("#se").val()=='') {
+				alert("이메일을 입력해주세요.");
+			}else if ($("#spo").val()=='') {
+				alert("우편번호를 입력해주세요.");
+			}else if ($("#sr").val()=='') {
+				alert("주소를 입력해주세요.");
+			}else if ($("#sd").val()=='') {
+				alert("상세주소를 입력해주세요.");
+			}else if ($("#pay1").is(":checked")) {
+				if ($("#input-17").val()=='') {
+					alert("입금자명을 입력해주세요.");
+				}else if ($("select[name=select-bank]").val()=='') {
+					alert("입금하실 은행을 선택해주세요.");
+				}else {
+					$('form').submit();
+				}
+			}
 		});
     	$("#pay-btn2").click(function() {
     		let check1 = $('#sc1').is(':checked');
@@ -879,6 +927,19 @@
 				selectInput1();
 			}else{
 				selectInput2();
+			}
+			if ($("#sn").val()=='') {
+				alert("받으시는 분 이름을 입력해주세요.");
+			}else if ($("#sp").val()=='') {
+				alert("연락처를 입력해주세요.");
+			}else if ($("#se").val()=='') {
+				alert("이메일을 입력해주세요.");
+			}else if ($("#spo").val()=='') {
+				alert("우편번호를 입력해주세요.");
+			}else if ($("#sr").val()=='') {
+				alert("주소를 입력해주세요.");
+			}else if (!$("#sd").val()) {
+				alert("상세주소를 입력해주세요.");
 			}
 		});
     });

@@ -34,7 +34,10 @@ public class MainNoticeDetailController extends HttpServlet {
 
 		//pno 받기
 		int bno = Integer.parseInt(request.getParameter("bno"));
-				
+		
+		//조회수 증가
+		int result = new BoardService().NoticeDetailCount(bno);
+		
 		Board b = new BoardService().NoticeDetail(bno);
 				
 		request.setAttribute("Board", b);

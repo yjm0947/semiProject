@@ -262,4 +262,11 @@
 		WHERE MEMBER_NO = ?
 		AND REVIEW_NO = ?
 	</entry>
+	
+	<!-- 공지사항 조회수 증가 -->
+	<entry key="NoticeDetailCount">
+		UPDATE BOARD
+		SET BOARD_COUNT = BOARD_COUNT+1
+		WHERE BOARD_NO = ?
+	</entry>
 </properties>

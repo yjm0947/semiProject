@@ -607,4 +607,25 @@ public class BoardDao {
 			return list;
 		}
 
+		//조회수 증가
+		public int NoticeDetailCount(Connection conn, int bno) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("NoticeDetailCount");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, bno);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(pstmt);
+			}
+			return result;
+		}
+
 }

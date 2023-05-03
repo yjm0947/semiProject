@@ -372,7 +372,6 @@
 	        				},
 	        			async: false,
 	        			success : function(p){
-	        				console.log(p);
 	        				switch(p.state){
 	        				case "1" : p.state = "준비중"; $("#refund-btn").css("display", "block"); break;
 	        				case "2" : p.state = "배송중"; $("#refund-btn").css("display", "none"); break;

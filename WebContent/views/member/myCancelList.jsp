@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	//ArrayList<Payment> pmlist = (ArrayList<Payment>)request.getAttribute("plist");
+	ArrayList<Payment> cclist = (ArrayList<Payment>)request.getAttribute("cclist");
 %>
 <!DOCTYPE html>
 <html>
@@ -100,14 +100,14 @@
 		int cancel = 0;
 		int refund = 0;
 		
-		for(int i=0; i<plist.size(); i++){
-			if(plist.get(i).getState().equals("5")){
+		for(int i=0; i<cclist.size(); i++){
+			if(cclist.get(i).getState().equals("5")){
 				cancel += 1;			
 			}
 		}
 		
-		for(int i=0; i<plist.size(); i++){
-			if(plist.get(i).getState().equals("4")){
+		for(int i=0; i<cclist.size(); i++){
+			if(cclist.get(i).getState().equals("4")){
 				refund += 1;			
 			}
 		}
@@ -143,7 +143,7 @@
 	                            </tr>
                      	<%}else {%>
 	                            <!--조회결과 있을 때-->
-	                        <%for(Payment p : plist) {%>
+	                        <%for(Payment p : cclist) {%>
 	                            <%if(p.getState().charAt(0) == '5') {%>
 		                            <tr>
 		                                <td colspan="2"><%=p.getOrderNo() %></td>
@@ -177,7 +177,7 @@
 	                            </tr>
                        <%}else { %>
 	
-	                       <%for(Payment p : plist) {%>
+	                       <%for(Payment p : cclist) {%>
 		                       <%if(p.getState().charAt(0) == '4') {%>
 		                            <!-- 조회 결과 있을 때 -->
 		                            <tr>

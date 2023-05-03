@@ -29,7 +29,7 @@
 	<div>
 		<div class="main_category">
 			<ul>
-				<li id="mc_admin">ADMIN</li>
+				<li id="mc_admin" onclick="location.href='<%=contextPath%>/member.admin?currentPage=1'">ADMIN</li>
 				<hr>
 				<li id="mc_admin_detail"><span>관리자 계정 접속중</span></li>
 				<li id="mc_admin_logout">

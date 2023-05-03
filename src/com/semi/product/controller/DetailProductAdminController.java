@@ -1,6 +1,7 @@
 package com.semi.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,8 +32,14 @@ public class DetailProductAdminController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		
+		ArrayList<Product> Path = new ProductService().detailAdminPath(pno);
+		
+		response.setContentType("json/application; charset=UTF-8");
+		Gson gson = new Gson();
+		gson.toJson(Path,response.getWriter());
 	}
 
 	/**
@@ -45,7 +52,7 @@ public class DetailProductAdminController extends HttpServlet {
 		
 		Product item = new ProductService().detailAdminProduct(pno); 
 		
-		response.setContentType("json/applicaion; charset=UTF-8");
+		response.setContentType("json/application; charset=UTF-8");
 		Gson gson = new Gson();
 		gson.toJson(item,response.getWriter());
 	}

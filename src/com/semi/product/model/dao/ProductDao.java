@@ -1303,6 +1303,32 @@ public class ProductDao {
 		return listCount;
 }
 
+		//상품 상세조회 이미지 - 관리자
+		public ArrayList<Product> detailAdminPath(Connection conn, int pno) {
+			ArrayList<Product> Path = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("detailAdminPath");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pno);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					Path.add(new Product(rset.getString("PATH")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return Path;
+		}
+
 		//상품 수정시 불러올 상품 리스트 조회
 //		public Product modifiPro(Connection conn, int proNo) {
 //			

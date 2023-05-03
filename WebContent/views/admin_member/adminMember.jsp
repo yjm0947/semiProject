@@ -151,21 +151,21 @@
 				<div align="center" class="paging-area">
 				<!-- 이전 버튼 -->
 				<%if(pi.getCurrentPage() != 1) {%>
-					<button onclick="location.href='<%=contextPath%>/member.admin?currentPage=<%=pi.getCurrentPage()-1%>'">&lt;</button>
+					<button id="searchBtn" onclick="location.href='<%=contextPath%>/member.admin?currentPage=<%=pi.getCurrentPage()-1%>'">&lt;</button>
 				<%}%>
 				
 				<!-- 페이징바 -->
 				<%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++){%>
 					<%if(i != pi.getCurrentPage()) {%>
-						<button onclick="location.href='<%=contextPath%>/member.admin?currentPage=<%=i%>'"><%=i%></button>
+						<button id="searchBtn" onclick="location.href='<%=contextPath%>/member.admin?currentPage=<%=i%>'"><%=i%></button>
 					<%}else {%>
-						<button disabled><%=i%></button>
+						<button id="searchBtn" disabled><%=i%></button>
 					<%} %>
 				<%} %>
 				
 				<!-- 다음 버튼 -->
 				<%if(pi.getCurrentPage() != pi.getMaxPage()){%>
-					<button onclick="location.href='<%=contextPath%>/member.admin?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+					<button id="searchBtn" onclick="location.href='<%=contextPath%>/member.admin?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
 				<%}%>
 				</div>
 				
@@ -174,21 +174,21 @@
 				<div align="center" class="paging-area">
 				<!-- 이전 버튼 -->
 				<%if(pi.getCurrentPage() != 1) {%>
-					<button onclick="location.href='<%=contextPath%>/searchMember.admin?currentPage=<%=pi.getCurrentPage()-1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&lt;</button>
+					<button id="searchBtn" onclick="location.href='<%=contextPath%>/searchMember.admin?currentPage=<%=pi.getCurrentPage()-1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&lt;</button>
 				<%}%>
 				
 				<!-- 페이징바 -->
 				<%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++){%>
 					<%if(i != pi.getCurrentPage()) {%>
-						<button onclick="location.href='<%=contextPath%>/searchMember.admin?currentPage=<%=i%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'"><%=i%></button>
+						<button id="searchBtn" onclick="location.href='<%=contextPath%>/searchMember.admin?currentPage=<%=i%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'"><%=i%></button>
 					<%}else {%>
-						<button disabled><%=i%></button>
+						<button id="searchBtn" disabled><%=i%></button>
 					<%} %>
 				<%} %>
 				
 				<!-- 다음 버튼 -->
 				<%if(pi.getCurrentPage() != pi.getMaxPage() ){%>
-					<button onclick="location.href='<%=contextPath%>/searchMember.admin?currentPage=<%=pi.getCurrentPage()+1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&gt;</button>
+					<button id="searchBtn" onclick="location.href='<%=contextPath%>/searchMember.admin?currentPage=<%=pi.getCurrentPage()+1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&gt;</button>
 				<%}%>
 				</div>
 			<%} %>

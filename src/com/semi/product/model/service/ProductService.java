@@ -295,7 +295,7 @@ public class ProductService {
 			return list;
 		}
 
-		//상품 상세조회
+		//상품 상세조회 - 관리자
 		public Product detailAdminProduct(int pno) {
 			
 			Connection conn = JDBCTemplate.getConnection();
@@ -307,6 +307,18 @@ public class ProductService {
 			return item;
 		}
 
+		//상품 상세조회 이미지 - 관리자
+		public ArrayList<Product> detailAdminPath(int pno) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			ArrayList<Product> Path = new ProductDao().detailAdminPath(conn,pno);
+			
+			JDBCTemplate.close(conn);
+			
+			return Path;
+		}
+		
 		//입고조회 리스트
 		public ArrayList<Product> selectReceiveAdmin() {
 			
@@ -432,4 +444,7 @@ public class ProductService {
 			
 			return listCount;
 		}
+
+		
+
 }

@@ -27,7 +27,6 @@ public class Product {
 	}
 	
 	
-	
 	//출고조회 리스트(관리자)
 	public Product(int productNo, String productCategory, String productName, int productStock, String author,
 			Date createDate) {

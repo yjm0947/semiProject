@@ -91,7 +91,7 @@ private Properties prop = new Properties();
 		}
 
 		//구매한 상품시에만 댓글 버튼 보이기
-		public int rBtnCk(Connection conn, String productNo) {
+		public int rBtnCk(Connection conn, String productNo, String memberNo) {
 			
 			int count = 0;
 			ResultSet rset = null;
@@ -102,6 +102,7 @@ private Properties prop = new Properties();
 			try {
 				pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, productNo);
+					pstmt.setString(2, memberNo);
 					
 				
 				rset = pstmt.executeQuery();
@@ -142,6 +143,33 @@ private Properties prop = new Properties();
 			}
 			
 			return result;
+		}
+
+		//리뷰 작성하거 있으면 버튼 없애기
+		public int oneCk(Connection conn, String productNo, String memberNo) {
+			
+			int count = 0;
+			ResultSet rset = null;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("oneCk");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, productNo);
+					pstmt.setString(2, memberNo);
+					
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					count = 1; //1이면 작성 리뷰가 있다는 뜻
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("dao"+count);
+			return count;
 		}
 
 }

@@ -44,8 +44,6 @@ public class ShoppingListController extends HttpServlet {
 		
 		ArrayList<Payment> plist = new MemberService().selectModal(orderNo);
 		
-		System.out.println(plist);
-		
 		response.setContentType("json/application; charset=UTF-8");
 		Gson gson = new Gson();
 		
@@ -59,10 +57,7 @@ public class ShoppingListController extends HttpServlet {
 			System.out.println("다시");
 		}
 		
-		System.out.println(p);
-		
 		gson.toJson(p,response.getWriter());
-		
 	}
 
 }

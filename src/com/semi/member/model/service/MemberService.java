@@ -72,12 +72,9 @@ public class MemberService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		Member pwdM = new MemberDao().searchPwd(conn,srcPwdM);
-		
-		 
-		
-		
-		
+
 		JDBCTemplate.close(conn);
+		
 		return pwdM;
 	}
 	
@@ -380,6 +377,5 @@ public class MemberService {
 			
 			return result;
 		}
-
 
 }

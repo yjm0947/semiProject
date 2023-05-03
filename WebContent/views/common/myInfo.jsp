@@ -5,7 +5,7 @@
 	String contextPath2 = request.getContextPath();
 	Member loginMem = (Member)session.getAttribute("loginUser");
 	ArrayList<Coupon> cplist = (ArrayList<Coupon>)session.getAttribute("cplist");
-	ArrayList<Payment> plist = (ArrayList<Payment>)session.getAttribute("pList");
+	ArrayList<Payment> plist = (ArrayList<Payment>)session.getAttribute("payList");
 %>
 <!DOCTYPE html>
 <html>

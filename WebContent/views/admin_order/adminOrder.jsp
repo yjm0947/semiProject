@@ -109,7 +109,7 @@
 								<%}else if(ss == 'Y') {%>
 									<button id="chkPay" style="background-color: transparent;"><%=chk%></button>
 								<%}else if(ss == 'R') {%>
-									<button onclick="location.href='<%=contextPath%>/refundPay.admin?orderNo=<%=pay.getOrderNo()%>&payment=<%=pay.getPayment()%>'" id="chkPay" style="color:red;"><%=chk%></button>
+									<button onclick="location.href='<%=contextPath%>/refundPay.admin?orderNo=<%=pay.getOrderNo()%>&payment=<%=pay.getPayment()%>'" id="chkPay" style="color: rgb(41, 128, 185);"><%=chk%></button>
 								<%}else {%>
 									<button id="chkPay" style="background-color: transparent;"><%=chk%></button>
 								<%} %>

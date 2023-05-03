@@ -30,7 +30,6 @@ public class Product {
 	}
 	
 	
-	
 	//출고조회 리스트(관리자)
 	public Product(int productNo, String productCategory, String productName, int productStock, String author,
 			Date createDate) {
@@ -159,6 +158,11 @@ public class Product {
 	}
 
 
+	//상품관리 상세조회 이미지 생성자 - 관리자
+	public Product(String titleImg) {
+		super();
+		this.titleImg = titleImg;
+	}
 
 	public Product(int productNo, String productCategory, String productName, String productPublisher,
 			String productText, int productPrice, int productSalesRate, int productStock, String author,

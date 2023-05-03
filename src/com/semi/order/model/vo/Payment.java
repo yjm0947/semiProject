@@ -25,7 +25,7 @@ public class Payment {
 	private String checkPay;		//CHECK_PAY	CHAR(2 BYTE) 입금확인
 	
 	//결제내역 리스트랑 같이 조회할 구매 수량
-	private int quantity;
+	private String quantity;
 	
 	public Payment() {
 		super();
@@ -34,7 +34,7 @@ public class Payment {
 	public Payment(long paymentNumber, int orderNo, String memberNo, String productNo, Date createdAt, int payment,
 			String orderRequest, String bankName, String depositName, int usePoint, String addressName, String phone,
 			String email, String post, String roadAddress, String detailAddress, String state, int deliveryCost,
-			String checkPay, int quantity) {
+			String checkPay, String quantity) {
 		super();
 		this.paymentNumber = paymentNumber;
 		this.orderNo = orderNo;
@@ -58,6 +58,29 @@ public class Payment {
 		this.quantity = quantity;
 	}
 
+	public Payment(int orderNo, String memberNo, String productNo, Date createdAt, int payment, String orderRequest,
+			String bankName, String depositName, int usePoint, String addressName, String phone, String email,
+			String roadAddress, String detailAddress, int deliveryCost, String checkPay, String state) {
+		super();
+		this.orderNo = orderNo;
+		this.memberNo = memberNo;
+		this.productNo = productNo;
+		this.createdAt = createdAt;
+		this.payment = payment;
+		this.orderRequest = orderRequest;
+		this.bankName = bankName;
+		this.depositName = depositName;
+		this.usePoint = usePoint;
+		this.addressName = addressName;
+		this.phone = phone;
+		this.email = email;
+		this.roadAddress = roadAddress;
+		this.detailAddress = detailAddress;
+		this.deliveryCost = deliveryCost;
+		this.checkPay = checkPay;
+		this.state = state;
+	}
+	
 	//주문관리 상세조회 (관리자)
 	public Payment(int orderNo, String memberNo, String productNo, Date createdAt, int payment, String orderRequest,
 			String bankName, String depositName, int usePoint, String addressName, String phone, String email,
@@ -220,11 +243,11 @@ public class Payment {
 		this.useCoupon = useCoupon;
 	}
 
-	public int getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 

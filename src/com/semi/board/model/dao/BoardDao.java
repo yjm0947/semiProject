@@ -586,8 +586,19 @@ public class BoardDao {
 			
 			pstmt = conn.prepareStatement(sql);
 			
+			//공지사항 키워드 검색시 문자열로 들어왔을때 처리
+			char chkSearch = '\u0000';
+			
+			for(int i=0; i<search.length(); i++) {
+				chkSearch = search.charAt(i); 
+			}
+			
+			if(num == 1 && ((int)chkSearch < 48 ||(int)chkSearch >57)) {
+				return list;
+			}
+			
 			if(num == 1) {
-				pstmt.setString(1, search);
+				pstmt.setInt(1, Integer.parseInt(search));
 			}else {
 				pstmt.setString(1, search);
 				pstmt.setString(2, search);
@@ -637,11 +648,29 @@ public class BoardDao {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			if(num == 3) {
-				pstmt.setString(1, search);
-				pstmt.setString(2, search);
-			}else {
-				pstmt.setString(1, search);
+			//1:1문의 키워드 검색시 문자열로 들어왔을때 처리
+			char chkSearch = '\u0000';
+			
+			for(int i=0; i<search.length(); i++) {
+				chkSearch = search.charAt(i); 
+			}
+			
+			if(num == 1 && ((int)chkSearch < 48 ||(int)chkSearch >57)) {
+				return list;
+			}
+			
+			if(num == 2 && ((int)chkSearch < 48 ||(int)chkSearch >57)) {
+				return list;
+			}
+			
+			switch(num) {
+			case 1 : 
+			case 2 :pstmt.setInt(1, Integer.parseInt(search));
+				break;
+			case 3 : pstmt.setString(1, search);
+					 pstmt.setString(2, search);
+				break;
+			default : pstmt.setString(1, search);
 			}
 			
 			rset = pstmt.executeQuery();

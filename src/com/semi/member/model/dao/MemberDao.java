@@ -1051,4 +1051,52 @@ public class MemberDao {
 			return result;
 		}
 
+
+		public ArrayList<Payment> cancelMyOrder(Connection conn, int memNo) {
+			
+			ArrayList<Payment> cclist = new ArrayList<Payment>();
+			
+			ResultSet rset = null;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("cancelMyOrder");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, memNo);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					cclist.add(new Payment(rset.getLong("PAYMENT_NUMBER"),
+											rset.getInt("ORDER_NO"),
+											rset.getString("MEMBER_NAME"),
+											rset.getString("PRODUCT_NAME"),
+											rset.getDate("CREATED_AT"),
+											rset.getInt("PAYMENT"),
+											rset.getString("ORDER_REQUEST"),
+											rset.getString("BANK_NAME"),
+											rset.getString("DEPOSIT_NAME"),
+											rset.getInt("USE_POINT"),
+											rset.getString("ADDRESS_NAME"),
+											rset.getString("PHONE"),
+											rset.getString("EMAIL"),
+											rset.getString("POST"),
+											rset.getString("ROAD_ADDRESS"),
+											rset.getString("DETAIL_ADDRESS"),
+											rset.getString("STATE"),
+											rset.getInt("DELIVERY_COST"),
+											rset.getString("CHECK_PAY"),
+											rset.getString("QUANTITY")));
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return cclist;
+		}
+
 }

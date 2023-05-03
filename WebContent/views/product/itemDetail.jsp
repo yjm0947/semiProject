@@ -594,6 +594,30 @@
     </div>
 
     <script>
+    
+		    <%if(loginUser!=null){%>
+			$(function(){
+				$.ajax({
+		    		url : "one.me",
+		    		data : {productNo : <%=p.getProductNo()%>,
+							memberNo : <%=loginUser.getMemberNo()%>},
+		    		type : "post",
+		    		success : function(count){
+		    			
+		    			console.log("성공");
+		    			console.log(count);
+		    			
+		    			if(count>0){//댓글이 작성되어있으면
+		    				$("#R_btn").css('display','none');
+		    				console.log($("#R_btn"));     
+		    				
+		    			}
+		    				/* location.reload(); */
+		    		}
+		    	});
+			})
+		
+		<%}%>
         //수량 -
         function minus(){
             //요소 잡기

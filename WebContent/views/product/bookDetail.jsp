@@ -316,7 +316,7 @@
 <body>
     <%@include file = "../common/header.jsp" %>
     
-    <div id="content">
+    <div id="content" >
         <div id="con_head">
             <table  style="position: relative; top: 40px; margin: auto; width: 1150px;">
                 <tr>
@@ -589,6 +589,33 @@
     </div>
 
     <script>
+   
+        	//작성 한번만 뜨게 하기
+        <%if(loginUser!=null){%>
+        	$(function(){
+        		$.ajax({
+            		url : "one.me",
+            		data : {productNo : <%=p.getProductNo()%>,
+        					memberNo : <%=loginUser.getMemberNo()%>},
+            		type : "post",
+            		success : function(count){
+            			
+            			console.log("성공");
+            			console.log(count);
+            			
+            			if(count>0){//댓글이 작성되어있으면
+            				$("#R_btn").css('display','none');
+            				console.log($("#R_btn"));     
+            				
+            			}
+            				/* location.reload(); */
+            		}
+            	});
+        	})
+        
+        <%}%>
+			        
+			        
         //수량 -
         function minus(){
             //요소 잡기
@@ -633,6 +660,9 @@
         
         <%if (loginUser!=null){%> //로그인 되어있으면
         var cartNo = 0;
+        
+        
+        
 		//장바구니 조회
 		function selectCart() {
 			$.ajax({
@@ -732,31 +762,12 @@
         			if(count>0){
         				$("#R_btn").css('visibility','visible');
         			}
+        			
         		}
         	});
-        })
+        });
         
         
-        function oneCk(){//한번 작성했으면 버튼 없애기
-        	$.ajax({
-        		url : "one.me",
-        		data : {productNo : <%=p.getProductNo()%>,
-    					memberNo : <%=loginUser.getMemberNo()%>},
-        		type : "post",
-        		success : function(count){
-        			
-        			console.log("성공");
-        			console.log(count);
-        			
-        			if(count>0){//댓글이 작성되어있으면
-        				$("#R_btn").css('display','none');
-        				console.log($("#R_btn"));        				
-        			}
-        				/* location.reload(); */
-        		}
-        	});
-        	
-        }
         
         
         <%}%>
@@ -780,7 +791,8 @@
         			$("#replyContent").val("");
         			
         			selectReview();
-        			/* oncCk(); */
+        			/* oneCk(); */
+        			location.replace("<%=request.getContextPath()%>/book.de?pno=<%=p.getProductNo()%>");
         		}
         	});
         	

@@ -432,6 +432,7 @@
 
         <script>
         	//체크박스 전체 선택
+        	
             function selectAll(selectAll){
                 var checkboxes = document.getElementsByName('cart');
                 /*console.log(checkboxes)*/
@@ -448,6 +449,7 @@
             		location.href="<%=contextPath%>/book.de?pno="+pno;
             	});
             });
+        	
         	
 			<%if (loginUser!=null){%> //로그인 되어있으면
             

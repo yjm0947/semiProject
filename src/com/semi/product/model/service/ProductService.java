@@ -397,7 +397,7 @@ public class ProductService {
 			return list;
 		}
 
-		//상품 수정시 불러올 상품 리스트
+		//도서 수정시 불러올 상품 리스트
 		public Product modifiPro(int proNo) {
 			
 			Connection conn = JDBCTemplate.getConnection();
@@ -461,4 +461,16 @@ public class ProductService {
 			
 			return result*result2;
 		}
+
+		/*
+		 * public Product modiItem(int proNo, int cateNum) {
+		 * 
+		 * Connection conn = JDBCTemplate.getConnection();
+		 * 
+		 * Product pro = new ProductDao().productItemDetail(conn,proNo,cateNum);
+		 * 
+		 * JDBCTemplate.close(conn);
+		 * 
+		 * return pro; }
+		 */
 }

@@ -589,6 +589,7 @@ public class ProductDao {
 								rset.getString("AUTHOR"),
 								rset.getInt("ATTACHMENT_ID"),
 								rset.getString("TITLEIMG"));
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1390,5 +1391,44 @@ public class ProductDao {
 			}
 			return result;
 		}
+
+//		//상품 수정시 불러올 상품 리스트
+//		public Product productItemDetail(Connection conn, int proNo, int cateNum) {
+//			
+//			Product item = null;
+//			PreparedStatement pstmt = null;
+//			ResultSet rset = null;
+//			String sql = prop.getProperty("");
+//			
+//			try {
+//				pstmt = conn.prepareStatement(sql);
+//					pstmt.setInt(1, proNo);
+//					pstmt.setInt(2, cateNum);
+//					
+//				
+//				rset = pstmt.executeQuery();
+//				
+//				if(rset.next()) {
+//					item = new Product(rset.getInt("PRODUCT_NO")
+//							  ,rset.getString("PRODUCT_CATEGORY")
+//							  ,rset.getString("PRODUCT_NAME")
+//							  ,rset.getString("PRODUCT_PUBLISHER")
+//							  ,rset.getString("PRODUCT_TEXT")
+//							  ,rset.getInt("PRODUCT_PRICE")
+//							  ,rset.getInt("PRODUCT_SALES_RATE")
+//							  ,rset.getInt("PRODUCT_STOCK")
+//							  ,rset.getString("AUTHOR")
+//							  ,rset.getDate("CREATE_DATE")
+//							  ,rset.getString("STATUS"));
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			} finally {
+//				JDBCTemplate.close(rset);
+//				JDBCTemplate.close(pstmt);
+//			}
+//			
+//			return item;
+//		}
 		
 }

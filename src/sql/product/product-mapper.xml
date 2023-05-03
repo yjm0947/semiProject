@@ -72,9 +72,10 @@
                     FROM P_ORDER O
                     JOIN PRODUCT P ON (O.PRODUCT_NO=P.PRODUCT_NO)
                     JOIN ATTACHMENT A ON (O.PRODUCT_NO=A.BOARD_NO)
+                    JOIN PAYMENT M ON (O.ORDER_NO = M.ORDER_NO)
                     WHERE FILE_LEVEL = '1'
                     AND PRODUCT_CATEGORY IN (1,2,3,4,5,6)
-                    AND P.STATUS= 'Y'
+                    AND M.CHECK_PAY= 'Y'
                     GROUP BY P.PRODUCT_NO,PRODUCT_CATEGORY, PRODUCT_NAME, PRODUCT_PUBLISHER, PRODUCT_TEXT, PRODUCT_PRICE, 
                                 PRODUCT_SALES_RATE, AUTHOR, P.CREATE_DATE, ATTACHMENT_PATH||ATTACHMENT_CHANGE)A)
                     WHERE RNUM BETWEEN ? AND ?
@@ -506,7 +507,6 @@ WHERE RNUM BETWEEN ? AND ?
 			,ATTACHMENT_PATH = ?
 			,UPDATE_DATE = SYSDATE
 		WHERE ATTACHMENT_ID = ?
-		AND STATUS ='Y'
 </entry>
 
 <!-- 새로운 파일정보 넣기 -->

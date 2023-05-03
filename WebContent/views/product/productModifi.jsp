@@ -37,6 +37,7 @@
                          <option name="category" value="4">경제/경영</option>
                          <option name="category" value="5">인문학</option>
                          <option name="category" value="6">정치/사회</option>
+                         <option name="category" value="7">상품</option>
                         </select>
                     </div>
                     <div class="inputArea">
@@ -47,10 +48,17 @@
                         <label for="pro_Publisher" id="pro_Publisher1">출판사</label>
                         <input type="text" id="pro_Publisher2" name="pro_Publisher" value="<%=pro.getProductPublisher()%>"/>
                     </div>
+                    <%if(pro.getAuthor()!=null) {%>
                     <div class="inputArea">
                         <label for="pro_author" id="pro_author1">저자</label>
                         <input type="text" id="pro_author2" name="pro_author" value="<%=pro.getAuthor()%>"/>
                     </div>
+                    <%}else {%>
+                    <div class="inputArea">
+                        <label for="pro_author" id="pro_author1">저자</label>
+                        <input type="text" id="pro_author2" name="pro_author" disabled/>
+                    </div>
+                    <%} %>
                        
                     <div class="inputArea">
                         <label for="pro_Price" id="pro_Price1">상품가격(원)</label>
@@ -82,16 +90,16 @@
 					 <div class="inputArea">
                         <label id="img">상세이미지</label>
 					    <img id="contentImg1" width="150" height="120" name="contentImg1" src="<%=contextPath+pro2.getTitleImg()%>" required>
-				        <img id="contentImg2" width="150" height="120" name="contentImg2">     
-				        <img id="contentImg3" width="150" height="120" name="contentImg3">     
+				        <!-- <img id="contentImg2" width="150" height="120" name="contentImg2">     
+				        <img id="contentImg3" width="150" height="120" name="contentImg3">   -->   
                     </div>
                     
 				<!--파일 첨부 영역 -->
 				<div id="file-area" align="center">
-					<input type="file" id="file1" name="file1" onchange="loadImg(this,1);"><!-- 대표이미지라서 필수입력사항 -->
-					<input type="file" id="file2" name="file2" onchange="loadImg(this,2);">
-					<input type="file" id="file3" name="file3" onchange="loadImg(this,3);">
-					<input type="file" id="file4" name="file4" onchange="loadImg(this,4);">
+					<input type="file" id="file1" name="reUpfile" onchange="loadImg(this,1);"><!-- 대표이미지라서 필수입력사항 -->
+					<input type="file" id="file2" name="reUpfile2" onchange="loadImg(this,2);">
+					<!-- <input type="file" id="file3" name="file3" onchange="loadImg(this,3);">
+					<input type="file" id="file4" name="file4" onchange="loadImg(this,4);"> -->
 				</div>
 
                     <button type="submit" id="register_Btn">등록</button>
@@ -109,12 +117,12 @@
     				$("#contentImg1").click(function(){
     					$("#file2").click();
     				});
-    				$("#contentImg2").click(function(){
+    				/* $("#contentImg2").click(function(){
     					$("#file3").click();
     				});
     				$("#contentImg3").click(function(){
     					$("#file4").click();
-    				});
+    				}); */
     			});
                 
                 function loadImg(inputFile,num){
@@ -129,16 +137,16 @@
                 			switch(num){
 							case 1 :$("#thum2").attr("src",e.target.result); break;
 							case 2 :$("#contentImg1").attr("src",e.target.result); break;
-							case 3 :$("#contentImg2").attr("src",e.target.result); break;
-							case 4 :$("#contentImg3").attr("src",e.target.result); break;
+							/* case 3 :$("#contentImg2").attr("src",e.target.result); break;
+							case 4 :$("#contentImg3").attr("src",e.target.result); break; */
                 		}
 					}
 				}else{
 					switch(num){
 						case 1 :$("#thum2").attr("src",null); break;
 						case 2 :$("#contentImg1").attr("src",null); break;
-						case 3 :$("#contentImg2").attr("src",null); break;
-						case 4 :$("#contentImg3").attr("src",null); break;
+						/* case 3 :$("#contentImg2").attr("src",null); break;
+						case 4 :$("#contentImg3").attr("src",null); break; */
 					}
                 		}
                 	}

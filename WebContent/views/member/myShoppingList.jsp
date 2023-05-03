@@ -137,14 +137,13 @@
         }
         .modal-content th,td {
             border: 1px solid black;
-            padding: 5px ;
+            padding: 5px;
         }
         .modal-content th{
             text-align: center;
         }
-        .modal-body img{
-            height: 100px;
-            margin: 0%;
+        .modal-content td:nth-child(0){
+            width: 50px;
         }
         .modal-body{
             text-align: left;
@@ -189,7 +188,9 @@
             font-weight: bolder;
             font-size: 15px;
         }
-        
+        #basicInfo td:nth-child(2) {
+			width:50px;
+		}
 </style>
 </head>
 <body>
@@ -197,8 +198,6 @@
 	<%@ include file = "../common/header.jsp" %>
 	<%@ include file = "../common/myInfo.jsp" %>
 	<%
-		System.out.println(plist);
-	
 		int state1 = 0;
 		int state2 = 0;
 		int state3 = 0;
@@ -214,6 +213,7 @@
 				case '5' : state5 = state5 + 1; break;
 			}
 		}
+		
 	%>
 	<div class="wrap">
 		<div id="content">
@@ -306,7 +306,8 @@
 	                                <h2 class="modal-title">주문 상세 조회</h2>
 	                                
 	                                <h4>기본정보</h4>
-	                                <input type="hidden" name="hideOno"> 
+	                                <input type="hidden" name="hideOno">
+	                                <input type="hidden" name="hidePname">  
 		                                <table id="basicInfo">
 		                                    <tbody>
 		                                    	
@@ -354,6 +355,7 @@
 	            });
 	            $(".openModal").on("click",function(){
 	            	var ono = $(this).parents("tr").children().eq(0).text();
+	            	
 	            	$.ajax({
 	        			
 	        			url : "shoppingList.me",
@@ -363,6 +365,7 @@
 	        				},
 	        			async: false,
 	        			success : function(p){
+	        				console.log(p);
 	        				switch(p.state){
 	        				case "1" : p.state = "준비중"; $("#refund-btn").css("display", "block"); break;
 	        				case "2" : p.state = "배송중"; $("#refund-btn").css("display", "none"); break;
@@ -405,22 +408,21 @@
 	                           	+"<td>"+"상세주소"+"</td>"
 	                            +"<td colspan=3>"+p.detailAddress+"</td>"
 	                       	+"</tr>";
-	               			
-	               			var bookStr = "<tr>"
+	                       	
+	                       	
+		                    var bookStr = "<tr>"
 	                            +"<td>"+p.productNo+"</td>"
-	                            +"<td>"+p.usePoint+" 권"+"</td>"
-	                            +"<td>"+p.payment+" 원"+"</td>"
-	                        "</tr>";
-	                        
+	                            +"<td>"+p.quantity+"</td>"
+	                            +"<td>"+p.payment+"</td>"
+	                        +"</tr>";
+	                       	
 	                        $('input[name=hideOno]').attr('value',p.orderNo);
 	              			$("#basicInfo tbody").html(basicStr);
-	                       	$("#bookDetail tbody").html(bookStr);
-	                       	console.log(p);
+	              			$("#bookDetail tbody").html(bookStr);
 	                       return p;
 	        			},
 	        			error : function(){
 	        				console.log("error");
-	        				console.log(p);
 	        			}
 	        		});
 	            });
@@ -439,7 +441,7 @@
 	        				console.log(data);
 	        				if(data > 0){
 	        					alert("환불 신청이 완료되었습니다.");
-	        					location.href = "<%=contextPath%>/cancelList.me";
+	        					location.href = "<%=contextPath %>/cancelList.me";
 	        				}else{
 	        					alert("환불 신청을 실패했습니다.");
 	        				}

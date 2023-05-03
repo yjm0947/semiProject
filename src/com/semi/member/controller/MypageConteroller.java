@@ -40,11 +40,11 @@ public class MypageConteroller extends HttpServlet {
 		int memNo = loginUser.getMemberNo();
 		
 		ArrayList<Coupon> cplist = new MemberService().selectMyCoupon(memNo);
-		ArrayList<Payment> plist = new MemberService().selectPaymentList(memNo);
+		ArrayList<Payment> payList = new MemberService().selectPaymentList(memNo);
 		
 		HttpSession session = request.getSession();
 		
-		session.setAttribute("pList", plist);
+		session.setAttribute("payList", payList);
 		session.setAttribute("cplist", cplist);
 		request.getRequestDispatcher("views/member/myPage.jsp").forward(request, response);
 		

@@ -1,7 +1,7 @@
-package com.semi.member.controller;
+package com.semi.event.attendance.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.semi.member.model.service.MemberService;
-import com.semi.order.model.vo.Payment;
+import com.semi.event.attendance.model.service.AttendanceService;
+import com.semi.order.model.service.OrderService;
+import com.semi.shoppingcart.model.service.ShoppingCartService;
 
 /**
- * Servlet implementation class ShoppingListController
+ * Servlet implementation class AttendanceOXController
  */
-@WebServlet("/shoppingList.me")
-public class ShoppingListController extends HttpServlet {
+@WebServlet("/atdateOX.me")
+public class AttendanceOXController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShoppingListController() {
+    public AttendanceOXController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,37 +32,24 @@ public class ShoppingListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.getRequestDispatcher("views/member/myShoppingList.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+		request.setCharacterEncoding("UTF-8");
 		
-		ArrayList<Payment> plist = new MemberService().selectModal(orderNo);
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
 		
-		System.out.println(plist);
+		int result = new AttendanceService().attendanceOX(userNo);
 		
 		response.setContentType("json/application; charset=UTF-8");
-		Gson gson = new Gson();
-		
-		Payment p = null;
-		
-		if(plist.get(0).getOrderNo() == orderNo) {
-			for(int i=0; i<plist.size(); i++) {
-				p = plist.get(i);
-			}
+		if (result>0) {
+			response.getWriter().print("1");
 		}else {
-			System.out.println("다시");
+			response.getWriter().print("0");
 		}
-		
-		System.out.println(p);
-		
-		gson.toJson(p,response.getWriter());
-		
 	}
 
 }

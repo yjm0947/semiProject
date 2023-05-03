@@ -530,7 +530,8 @@ public class ProductDao {
 	
 		//상품 상세 정보
 		public Product productItemDetail(Connection conn, int pno) {
-			Product p = null;
+
+			Product p = new Product();
 			ResultSet rset = null;
 			PreparedStatement pstmt = null;
 			
@@ -538,18 +539,19 @@ public class ProductDao {
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, pno);
+					pstmt.setInt(1, pno);
 				
 				rset = pstmt.executeQuery();
 				
 				if(rset.next()) {
 					p = new Product(rset.getInt("PRODUCT_NO"),
-							rset.getString("PRODUCT_NAME"),
-							rset.getString("PRODUCT_PUBLISHER"),
-							rset.getString("PRODUCT_TEXT"),
-							rset.getInt("PRODUCT_PRICE"),
-							rset.getInt("PRODUCT_SALES_RATE"),
-							rset.getString("TITLEIMG"));
+									rset.getString("PRODUCT_CATEGORY"),
+									rset.getString("PRODUCT_NAME"),
+									rset.getString("PRODUCT_PUBLISHER"),
+									rset.getString("PRODUCT_TEXT"),
+									rset.getInt("PRODUCT_PRICE"),
+									rset.getInt("PRODUCT_SALES_RATE"),
+									rset.getString("TITLEIMG"));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -578,12 +580,14 @@ public class ProductDao {
 			
 			if(rset.next()) {
 				p = new Product(rset.getInt("PRODUCT_NO"),
+								rset.getString("PRODUCT_CATEGORY"),
 								rset.getString("PRODUCT_NAME"),
 								rset.getString("PRODUCT_PUBLISHER"),
 								rset.getString("PRODUCT_TEXT"),
 								rset.getInt("PRODUCT_PRICE"),
 								rset.getInt("PRODUCT_SALES_RATE"),
 								rset.getString("AUTHOR"),
+								rset.getInt("ATTACHMENT_ID"),
 								rset.getString("TITLEIMG"));
 			}
 		} catch (SQLException e) {
@@ -612,7 +616,8 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				p2 = new Product(rset.getString("TITLEIMG"));
+				p2 = new Product(rset.getInt("ATTACHMENT_ID"),
+							rset.getString("TITLEIMG"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -940,7 +945,7 @@ public class ProductDao {
 					chkSearch = search.charAt(i); 
 				}
 				
-				if(num == 1 && (int)chkSearch < 48 ||(int)chkSearch >57) {
+				if(num == 1 && ((int)chkSearch < 48 ||(int)chkSearch >57)) {
 					return list;
 				}
 				
@@ -1300,6 +1305,90 @@ public class ProductDao {
 				JDBCTemplate.close(rset);
 				JDBCTemplate.close(pstmt);
 			}
-			return listCount;
-		}	
+		return listCount;
+}
+		//도서 수정
+		public int updateProduct(Connection conn, Product p) {
+
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("updatepro");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, p.getProductCategory());
+					pstmt.setString(2, p.getProductName());
+					pstmt.setString(3, p.getProductPublisher());
+					pstmt.setString(4, p.getAuthor());
+					pstmt.setInt(5, p.getProductPrice());
+					pstmt.setInt(6, p.getProductSalesRate());
+					pstmt.setInt(7, p.getProductStock());
+					pstmt.setString(8, p.getProductText());
+					pstmt.setInt(9, p.getProductNo());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return result;
+		}
+		
+		//기존파일 정보 수정하기
+		public int updateAttachment(Connection conn, Attachment at) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+					
+			String sql = prop.getProperty("updateAttachment");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, at.getAttachmentName());
+					pstmt.setString(2, at.getAttachmentName());
+					pstmt.setString(3, at.getAttachmentPath());
+					pstmt.setInt(4, at.getAttachmentId());
+			
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+			return result;
+		}
+
+		//새로운 파일정보 넣기
+		public int newInsertAttachment(Connection conn, Attachment at) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+					
+			String sql = prop.getProperty("newInsertAttachment");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, at.getBoardNo());
+					pstmt.setString(2, at.getAttachmentName());
+					pstmt.setString(3, at.getAttachmentChange());
+					pstmt.setString(4, at.getAttachmentPath());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+			return result;
+		}
+		
 }

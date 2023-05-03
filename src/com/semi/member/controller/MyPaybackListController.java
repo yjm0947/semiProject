@@ -1,6 +1,7 @@
 package com.semi.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.semi.member.model.service.MemberService;
 import com.semi.member.model.vo.Member;
+import com.semi.order.model.vo.Payment;
 
 /**
  * Servlet implementation class MyPaybackListController
@@ -31,6 +33,13 @@ public class MyPaybackListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		int memNo = loginUser.getMemberNo();
+		
+		ArrayList<Payment> plist = new MemberService().selectPaymentList(memNo);
+		
+		request.setAttribute("payList", plist);
 		request.getRequestDispatcher("views/member/myPayList.jsp").forward(request, response);
 	}
 

@@ -4,7 +4,7 @@
 <%
 	String contextPath2 = request.getContextPath();
 	Member loginMem = (Member)session.getAttribute("loginUser");
-	ArrayList<Coupon> clist = (ArrayList<Coupon>)session.getAttribute("clist");
+	ArrayList<Coupon> cplist = (ArrayList<Coupon>)session.getAttribute("cplist");
 	ArrayList<Payment> plist = (ArrayList<Payment>)session.getAttribute("pList");
 %>
 <!DOCTYPE html>
@@ -24,12 +24,14 @@
             margin: auto;
         }
 		#content{
-            width: 100%;
+            height: auto;
             margin-top: 20px;
+            position: 
         }
 		#c_1{
             width: 80%;
-            height: 100%;
+            height:auto;
+            display : inline-block;
             float: right;
         }
         #my_info{
@@ -101,8 +103,8 @@
 		
 		int couponCount = 0;
 		
-		for(int i=0; i<clist.size(); i++){
-			if(clist.get(i).getStatus().charAt(0) == 'Y') {
+		for(int i=0; i<cplist.size(); i++){
+			if(cplist.get(i).getStatus().charAt(0) == 'Y') {
 				couponCount += 1;		
 			}
 		}
@@ -135,7 +137,7 @@
                 </div>
 			</div>
 		</div>
-		
+			
 		<script>
 			const infoBox = document.getElementById('my_info');
 			const infoBorder = document.getElementById('my_benefit');

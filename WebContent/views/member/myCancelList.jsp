@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	//ArrayList<Payment> payList = (ArrayList<Payment>)session.getAttribute("payList");
+	ArrayList<Payment> pmlist = (ArrayList<Payment>)request.getAttribute("plist");
 %>
 <!DOCTYPE html>
 <html>
@@ -97,18 +97,18 @@
 	<%@ include file = "../common/header.jsp" %>
 	<%@ include file = "../common/myInfo.jsp" %>
 	<%
-		int rst1 = 0;
-		int rst2 = 0;
+		int cancel = 0;
+		int refund = 0;
 		
-		for(int i=0; i<plist.size(); i++){
-			if(plist.get(i).getState() == "5"){
-				rst1 += 1;			
+		for(int i=0; i<pmlist.size(); i++){
+			if(pmlist.get(i).getState().equals("5")){
+				cancel += 1;			
 			}
 		}
 		
-		for(int i=0; i<plist.size(); i++){
-			if(plist.get(i).getState() == "4"){
-				rst2 += 1;			
+		for(int i=0; i<pmlist.size(); i++){
+			if(pmlist.get(i).getState().equals("4")){
+				refund += 1;			
 			}
 		}
 	%>
@@ -134,7 +134,7 @@
 	                                <th colspan="2">상품금액</th>
 	                            </tr>
 		                
-	                    <%if(rst1 == 0) {%>
+	                    <%if(cancel < 1) {%>
 	                            <tr>
 	                                <td colspan="12" style="height: 200px;">
 	                                    <i class="fa-solid fa-circle-exclamation"></i>
@@ -143,14 +143,16 @@
 	                            </tr>
                      	<%}else {%>
 	                            <!--조회결과 있을 때-->
-	                        <%for(Payment p : plist) {%>
-	                            <tr>
-	                                <td colspan="2"><%=p.getOrderNo() %></td>
-	                                <td colspan="2"><%=p.getCreatedAt() %></td>
-	                                <td colspan="3"><%=p.getProductNo() %></td>
-	                                <td><%=p.getUsePoint() %></td>
-	                                <td colspan="2"><%=p.getDeliveryCost() + p.getPayment() %></td>
-	                            </tr>
+	                        <%for(Payment p : pmlist) {%>
+	                            <%if(p.getState().charAt(0) == '5') {%>
+		                            <tr>
+		                                <td colspan="2"><%=p.getOrderNo() %></td>
+		                                <td colspan="2"><%=p.getCreatedAt() %></td>
+		                                <td colspan="3"><%=p.getProductNo() %></td>
+		                                <td><%=p.getQuantity() %> 권</td>
+		                                <td colspan="2"><%=p.getDeliveryCost() + p.getPayment() %></td>
+		                            </tr>
+	                            <%} %>
                      		<%} %>
                    		<%} %>
 	                        </table>
@@ -166,7 +168,7 @@
 	                                <th>상품수량</th>
 	                                <th colspan="2">상품금액</th>
 	                            </tr>
-	                   <%if(rst2 < 0) {%>
+	                   <%if(refund < 1) {%>
 	                            <tr>
 	                                <td colspan="12" style="height: 200px;">
 	                                    <i class="fa-solid fa-circle-exclamation"></i>
@@ -175,16 +177,18 @@
 	                            </tr>
                        <%}else { %>
 	
-	                        <%for(Payment p : plist) {%>
-	                            <!-- 조회 결과 있을 때 -->
-	                            <tr>
-	                                <td colspan="2"><%=p.getOrderNo() %></td>
-	                                <td colspan="2"><%=p.getCreatedAt() %></td>
-	                                <td colspan="3"><%=p.getProductNo() %></td>
-	                                <td><%=p.getUsePoint() %></td>
-	                                <td colspan="2"><%=p.getDeliveryCost() + p.getPayment() %></td>
-	                            </tr>
-	                            <%} %>
+	                       <%for(Payment p : pmlist) {%>
+		                       <%if(p.getState().charAt(0) == '4') {%>
+		                            <!-- 조회 결과 있을 때 -->
+		                            <tr>
+		                                <td colspan="2"><%=p.getOrderNo() %></td>
+		                                <td colspan="2"><%=p.getCreatedAt() %></td>
+		                                <td colspan="3"><%=p.getProductNo() %></td>
+		                                <td><%=p.getUsePoint() %></td>
+		                                <td colspan="2"><%=p.getDeliveryCost() + p.getPayment() %></td>
+		                            </tr>
+	                       		<%} %>    
+                       		<%} %>
                      	<%} %>
 	                        </table>
 	                    </section>

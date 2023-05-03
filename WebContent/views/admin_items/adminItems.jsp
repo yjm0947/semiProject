@@ -55,7 +55,7 @@
 			<script>
 				function blankSearch(){
 					if($("#memberSearch").val().length == 0){
-						alert("다시 입력해주시길 바랍니다.");
+						alert("다시 입력해 주시길 바랍니다.");
 						return false;
 					}
 				};
@@ -207,10 +207,6 @@
 							<img src="resources/adminPage_files/iconFolder/product_icon.png">
 						</div>
 		
-						<div class="modal_header">
-							
-						</div>
-		
 						<div id="modal_member">
 							상품 정보
 						</div>
@@ -218,90 +214,89 @@
 						<div class="modal_body">
 		
 							<div id="productN">
-								상품 번호
+								&lt;상품 번호&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								상품 카테고리
+								&lt;상품 카테고리&gt;
 								<div>
 		
 								</div>
 							</div>
 		
 							<div>
-								상품명
+								&lt;상품명&gt;
 								<div>
 									
 								</div>
 							</div>	
 		
 							<div>
-								출판사
+								&lt;출판사&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								상품설명
+								&lt;상품설명&gt;
+								<div><pre id="productDescription"></pre>
+									
+								</div>
+							</div>
+		
+							<div>
+								&lt;가격&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								가격
+								&lt;할인율&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								할인율
+								&lt;재고수량&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								재고수량
+								&lt;저자&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								저자
+								&lt;등록일&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								등록일
-								<div>
-									
-								</div>
-							</div>
-		
-							<div>
-								삭제유무
+								&lt;삭제유무&gt;
 								<div>
 									
 								</div>
 							</div>
 						</div>
-						<%-- <form action="<%=contextPath %>/product.md" method="post"> --%>
+						<form action="<%=contextPath %>/product.md" method="get">
 						<div class="modal_footer">
-							<button type="button" onclick="modifiProduct()">상품 수정</button>
-							<!-- <input type="hidden" name="productNo" id="productNo" value="">
-							<button type="submit"">상품 수정</button> -->
+							<input type="hidden" name="ppro" id="ppro" value="">
+							<button type="submit"">상품 수정</button>
 							<button type="button" onclick="deleteProduct()">상품 삭제</button>
 						</div>						
-						<!-- </form> -->
+						</form>
 					</div>
 				</div>
 
@@ -336,8 +331,10 @@
 					//상품번호 추출
 					var pno = $(this).children().eq(0).text();
 					
-					console.log(pno);
-
+					//상품 수정시 상품 번호 추출을 위해 클릭시 히든값에 넣어주기
+					var ppro = document.getElementById("ppro");
+					ppro.value = pno;
+					
 					//검색결과에 따른 조회값 추출 및 삽입
 					$.ajax({
 						
@@ -373,7 +370,8 @@
 							$(".modal_body").children().children().eq(1).text(category);
 							$(".modal_body").children().children().eq(2).text(result.productName);
 							$(".modal_body").children().children().eq(3).text(result.productPublisher);
-							$(".modal_body").children().children().eq(4).text(result.productText);
+							$("#productDescription").text(result.productText);
+							//$(".modal_body").children().children().eq(4).text(result.productText);
 							$(".modal_body").children().children().eq(5).text(result.productPrice);
 							$(".modal_body").children().children().eq(6).text(result.productSalesRate);
 							if(rel > 0){
@@ -404,30 +402,6 @@
 					});
 					
 				});	
-				
-				//상품 수정 버튼 클릭시
-				function modifiProduct(){
-					/* var proNo = $(".list-area>tbody>tr").eq(0).children().eq(0).text(); */
-					
-					//상품 번호 보내주기
-					var pNo = $(".modal_body").children().children().eq(0).text();
-					console.log(pNo);		
-				
-					<%-- location.href="<%=request.getContextPath()%>/product.md"; --%>
-					
-					$.ajax({
-						url : "product.md",
-						data : {productNo : pNo},
-						type : "post",
-						success : function(){
-							location.href="<%=request.getContextPath()%>/product.md";
-						},
-						complete : function(){
-							console.log("ㄴㄴㄴ");
-						}
-					});
-				}
-				
 				
 				//상품삭제 버튼 클릭시
 				function deleteProduct(){

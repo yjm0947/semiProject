@@ -51,4 +51,21 @@ public class AttendanceService {
 		JDBCTemplate.close(conn);
 		
 	}
+	
+	//출석체크 날짜 체크 메소드
+	public int attendanceOX(int userNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new AttendanceDao().attendanceOX(conn,userNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
 }

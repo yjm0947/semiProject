@@ -47,7 +47,7 @@ public class DeleteProductAdmin extends HttpServlet {
 		
 		if(result > 0) {
 			request.getSession().setAttribute("alertMsg", "상품 삭제 완료");
-			response.sendRedirect(request.getContextPath()+"/items.admin");
+			response.sendRedirect(request.getContextPath()+"/items.admin?currentPage=1");
 		}else {
 			request.setAttribute("errorMsg", "상품 삭제 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

@@ -192,9 +192,9 @@
         }
         .find-post-no{
         	background-color: white;
-        	color: white;
+        	color: rgb(62, 130, 255);
         	font-weight: bold;
-            border: none;
+            border: 2px solid rgb(62, 130, 255);
             border-radius: 10px;
             width: 150px;
             height: 30px;

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.semi.member.model.service.MemberService;
 import com.semi.member.model.vo.Coupon;
@@ -15,9 +16,6 @@ import com.semi.member.model.vo.Member;
 import com.semi.order.model.vo.Payment;
 
 
-/**
- * Servlet implementation class MypageConteroller
- */
 /**
  * Servlet implementation class MypageConteroller
  */
@@ -41,15 +39,24 @@ public class MypageConteroller extends HttpServlet {
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		int memNo = loginUser.getMemberNo();
 		
-		ArrayList<Coupon> clist = new MemberService().selectCoupon(memNo);
+		ArrayList<Coupon> cplist = new MemberService().selectMyCoupon(memNo);
 		ArrayList<Payment> plist = new MemberService().selectPaymentList(memNo);
 		
-		request.setAttribute("clist", clist);
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("pList", plist);
+		session.setAttribute("cplist", cplist);
 		request.getRequestDispatcher("views/member/myPage.jsp").forward(request, response);
 		
 	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		
+	}
 
 }

@@ -338,10 +338,10 @@
 	        			success : function(data){
 	        				if(data>0){
 	        					alert("선택하신 리뷰를 삭제했습니다.")
-	        					history.back();
+	        					location.reload();
 	        				}else{
 	        					alert("리뷰를 삭제하지 못했습니다.")
-	        					history.back();
+	        					location.reload();
 	        				}
 	        			},
 	        			error : function(){

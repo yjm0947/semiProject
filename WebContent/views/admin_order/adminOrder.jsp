@@ -27,14 +27,27 @@
 		</div>
 		<div class="middle">
 			<div id="mid_search">
+				<form action="<%=contextPath%>/searchOrder.admin" method="get" onsubmit="return blankSearch()">
 				<select name="ms_select" id="ms_select">
-					<option value="">주문번호</option>
-					<option value="">주문자명</option>
-					<option value="">배송상태</option>
+					<option value="1">주문번호</option>
+					<option value="2">주문자명</option>
+					<option value="3">주소</option>
+					<option value="4">결제일시</option>
 				</select>
 				<input type="search" name="memberSearch" id="memberSearch">
-					<button id="ms_img"></button>
+				<button type="submit" id="ms_img"></button>
+			</form>
 			</div>
+			
+			<script>
+				function blankSearch(){
+					if($("#memberSearch").val().length == 0){
+						alert("다시 입력해 주시길 바랍니다.")
+						return false;
+					}
+				}
+			</script>
+			
 		</div>
 		<div class="middle_left">
 			<div id="ml_table">
@@ -80,7 +93,7 @@
 									char ss = s.charAt(0);
 									String chk = "";
 									switch(ss){
-									case 'N' : chk = "입금완료";
+									case 'N' : chk = "입금확인 요청";
 										break;
 									case 'Y' : chk = "입금확인 완료";
 										break;
@@ -92,7 +105,7 @@
 								%>
 								
 								<%if(ss == 'N') {%>
-									<button onclick="location.href='<%=contextPath%>/chkPay.admin?orderNo=<%=pay.getOrderNo()%>&payment=<%=pay.getPayment()%>'" id="chkPay" style="color:red;"><%=chk%></button>
+									<button onclick="location.href='<%=contextPath%>/chkPay.admin?orderNo=<%=pay.getOrderNo()%>&payment=<%=pay.getPayment()%>'" id="chkPay" style="color: rgb(41, 128, 185);"><%=chk%></button>
 								<%}else if(ss == 'Y') {%>
 									<button id="chkPay" style="background-color: transparent;"><%=chk%></button>
 								<%}else if(ss == 'R') {%>
@@ -131,77 +144,77 @@
 				<div class="modal_body">
 
 					<div>
-						주문 번호
+						&lt;주문 번호&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						주문자명
+						&lt;주문자명&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						상품명
+						&lt;상품명&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						받는사람
+						&lt;받는사람&gt;
 						<div>
 						
 						</div>
 					</div>
 					
 					<div>
-						받는주소
+						&lt;받는주소&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						요청사항
+						&lt;요청사항&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						전화번호
+						&lt;전화번호&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						이메일
+						&lt;이메일&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						은행명
+						&lt;은행명&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						입금자명
+						&lt;입금자명&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						사용한 포인트
+						&lt;사용한 포인트&gt;
 						<div>
 							
 						</div>
@@ -209,41 +222,35 @@
 					
 					
 					<div>
-						배송비
+						&lt;배송비&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						결제금액
+						&lt;결제금액&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						결제일시
+						&lt;결제일시&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 					<div>
-						입금확인
+						&lt;입금확인&gt;
 						<div>
 							
 						</div>
 					</div>
 					
 				</div>
-				<form action="<%=contextPath%>/noticeUpdate.admin" method="get">
-				<input type="hidden" name="boardNo" id="boardNo" value="">
-					<div class="modal_footer">
-						<button type="submit">공지 수정</button>
-						<button type="button" onclick="deleteNotice()">공지 삭제</button>
-					</div>
-				</form>
+
 			</div>
 		</div>
 		
@@ -287,6 +294,7 @@
 							console.log("주문내역 상세조회 실패");
 						}
 					});
+					
 				});
 				
 					$(".modal_content,.modal").click(function(){

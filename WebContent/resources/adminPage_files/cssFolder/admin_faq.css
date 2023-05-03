@@ -173,6 +173,10 @@
   text-align: left;
 }
 
+.faq_box_answer>div>pre{
+  text-align: left;
+}
+
 .faq_box li{
   border-bottom: 1px solid rgba(128, 128, 128, 0.332);
 }

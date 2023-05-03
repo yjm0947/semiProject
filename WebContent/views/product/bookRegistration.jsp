@@ -14,7 +14,6 @@
 <body>
 	<div class="wrap">
 		<%@include file="/views/common/admin_Category.jsp" %>
-		<%-- <%@include file="/views/common/admin_Category.jsp" %> --%>
         <div id="content">
             <div id="con_1">도서등록</div>
             <div id="con_2">

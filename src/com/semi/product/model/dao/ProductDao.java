@@ -729,7 +729,7 @@ public class ProductDao {
 	}
 	
 	//상품관리 조회
-		public ArrayList<Product> selectAdminProduct(Connection conn) {
+		public ArrayList<Product> selectAdminProduct(Connection conn, PageInfo pi) {
 			
 			ArrayList<Product> list = new ArrayList<>();
 			PreparedStatement pstmt = null;
@@ -738,6 +738,11 @@ public class ProductDao {
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
+				
+				int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit()+1;
+				int endRow = (startRow + pi.getBoardLimit()-1);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
 				
 				rset = pstmt.executeQuery();
 				
@@ -935,7 +940,7 @@ public class ProductDao {
 					chkSearch = search.charAt(i); 
 				}
 				
-				if(num == 1 && (int)chkSearch < 48 ||(int)chkSearch >57) {
+				if(num == 1 && ((int)chkSearch < 48 ||(int)chkSearch >57)) {
 					return list;
 				}
 				
@@ -1082,7 +1087,7 @@ public class ProductDao {
 		}
 
 		//상품관리 키워드 검색 - 관리자
-		public ArrayList<Product> searchProductAdmin(Connection conn, int num, String search) {
+		public ArrayList<Product> searchProductAdmin(Connection conn, int num, String search, PageInfo pi) {
 			ArrayList<Product> list = new ArrayList<>();
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
@@ -1113,8 +1118,138 @@ public class ProductDao {
 					chkSearch = search.charAt(i); 
 				}
 				
-				if(num == 1 && (int)chkSearch < 48 ||(int)chkSearch >57) {
+				if(num == 1 && ((int)chkSearch < 48 ||(int)chkSearch >57)) {
 					return list;
+				}
+				
+				int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit()+1;
+				int endRow = (startRow + pi.getBoardLimit()) - 1;
+				
+				switch(num) {
+					case 1 : pstmt.setInt(1, Integer.parseInt(search));
+							 pstmt.setInt(2, startRow);
+							 pstmt.setInt(3, endRow);
+						break;
+					case 2 : switch(search) {
+								case "소설" : search = "1";
+									break;
+								case "에세이" : search = "2";
+									break;
+								case "자기계발" : search = "3";
+									break;
+								case "경제" : search = "4";
+									break;
+								case "경영" : search = "4";
+									break;
+								case "경제/경영" : search = "4";
+									break;
+								case "인문학" : search = "5";
+									break;
+								case "정치" : search = "6";
+									break;
+								case "사회" : search = "6";
+									break;
+								case "정치/사회" : search = "6";
+									break;
+								case "아이템" : search = "7";
+									break;
+							}
+						pstmt.setString(1, search);
+						pstmt.setInt(2, startRow);
+						pstmt.setInt(3, endRow);
+							break;
+					case 3 :
+					case 4 :
+					case 5 :
+					case 6 : pstmt.setString(1, search);
+							 pstmt.setInt(2, startRow);
+							 pstmt.setInt(3, endRow);
+						break;
+				}
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Product(rset.getInt("PRODUCT_NO")
+									  ,rset.getString("PRODUCT_CATEGORY")
+									  ,rset.getString("PRODUCT_NAME")
+									  ,rset.getString("PRODUCT_PUBLISHER")
+									  ,rset.getString("PRODUCT_TEXT")
+									  ,rset.getInt("PRODUCT_PRICE")
+									  ,rset.getInt("PRODUCT_SALES_RATE")
+									  ,rset.getInt("PRODUCT_STOCK")
+									  ,rset.getString("AUTHOR")
+									  ,rset.getDate("CREATE_DATE")
+									  ,rset.getString("STATUS")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return list;
+		}
+
+		//총 상품 개수 (관리자 - 페이징)
+		public int selProductAdminCount(Connection conn) {
+			
+			int listCount = 0;
+			Statement stmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("selProductAdminCount");
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(sql);
+				if(rset.next()) {
+					listCount = rset.getInt("COUNT");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(stmt);
+			}
+			return listCount;
+		}
+
+		//상세검색 상품 수
+		public int searchProductCount(Connection conn, int num, String search) {
+			
+			int listCount = 0;
+			ResultSet rset = null;
+			PreparedStatement pstmt = null;
+			String sql = "";
+			
+			switch(num) {
+				case 1 : sql = prop.getProperty("selPnoCount");
+					break;
+				case 2 : sql = prop.getProperty("selCateCount");
+					break;
+				case 3 : sql = prop.getProperty("selPnameCount");
+					break;
+				case 4 : sql = prop.getProperty("selPubCount");
+					break;
+				case 5 : sql = prop.getProperty("selAthorCount");
+					break;
+				case 6 : sql = prop.getProperty("selDateCount");
+					break;
+			}
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				//상품번호 키워드 검색시 문자열로 들어왔을때 처리
+				char chkSearch = '\u0000';
+				
+				for(int i=0; i<search.length(); i++) {
+					chkSearch = search.charAt(i); 
+				}
+				
+				if(num == 1 && ((int)chkSearch < 48 ||(int)chkSearch >57)) {
+					return listCount;
 				}
 				
 				switch(num) {
@@ -1155,18 +1290,8 @@ public class ProductDao {
 				
 				rset = pstmt.executeQuery();
 				
-				while(rset.next()) {
-					list.add(new Product(rset.getInt("PRODUCT_NO")
-									  ,rset.getString("PRODUCT_CATEGORY")
-									  ,rset.getString("PRODUCT_NAME")
-									  ,rset.getString("PRODUCT_PUBLISHER")
-									  ,rset.getString("PRODUCT_TEXT")
-									  ,rset.getInt("PRODUCT_PRICE")
-									  ,rset.getInt("PRODUCT_SALES_RATE")
-									  ,rset.getInt("PRODUCT_STOCK")
-									  ,rset.getString("AUTHOR")
-									  ,rset.getDate("CREATE_DATE")
-									  ,rset.getString("STATUS")));
+				if(rset.next()) {
+					listCount = rset.getInt("COUNT");
 				}
 				
 			} catch (SQLException e) {
@@ -1175,6 +1300,35 @@ public class ProductDao {
 				JDBCTemplate.close(rset);
 				JDBCTemplate.close(pstmt);
 			}
-			return list;
-		}	
+		return listCount;
+}
+
+		//상품 수정시 불러올 상품 리스트 조회
+//		public Product modifiPro(Connection conn, int proNo) {
+//			
+//			Product pro = ;
+//			PreparedStatement pstmt = null;
+//			ResultSet rset = null;
+//
+//			String sql = prop.getProperty("modifiPro");
+//			
+//			try {
+//				pstmt = conn.prepareStatement(sql);
+//					pstmt.setInt(1, proNo);
+//					
+//				rset = pstmt.executeQuery();
+//				
+//				if(rset.next()) {
+//						
+//				}
+//				
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			
+//			
+//			return null;
+//		}	
 }

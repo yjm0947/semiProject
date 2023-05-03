@@ -24,7 +24,7 @@
 					<tr>
 						<td id="own" onclick="location.href='<%=contextPath%>/receive.admin'">입고 조회</td>
 						<td onclick="location.href='<%=contextPath%>/release.admin'">출고 조회</td>
-						<td onclick="location.href='<%=contextPath%>/items.admin'">상품 관리</td>
+						<td onclick="location.href='<%=contextPath%>/items.admin?currentPage=1'">상품 관리</td>
 					</tr>
 				</table>
 		</div>
@@ -44,7 +44,7 @@
 			<script>
 				function blankSearch(){
 					if($("#memberSearch").val().length == 0){
-						alert("다시 입력해주시길 바랍니다.");
+						alert("다시 입력해 주시길 바랍니다.");
 						return false;
 					}
 				};

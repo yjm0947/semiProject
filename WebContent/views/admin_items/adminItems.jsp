@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.product.model.vo.Product"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.product.model.vo.Product,com.semi.common.vo.PageInfo"%>
     
  <%
  	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
- int[] relist = (int[])request.getAttribute("relist");
+	int[] relist = (int[])request.getAttribute("relist");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int bar = (int)request.getAttribute("bar");
+	int barNum = (int)request.getAttribute("barNum");
+	String barSearch = (String)request.getAttribute("barSearch");
  %>
 <!DOCTYPE html>
 <html>
@@ -27,13 +31,14 @@
 					<tr>
 						<td onclick="location.href='<%=contextPath%>/receive.admin'">입고 조회</td>
 						<td onclick="location.href='<%=contextPath%>/release.admin'">출고 조회</td>
-						<td id="own" onclick="location.href='<%=contextPath%>/items.admin'">상품 관리</td>
+						<td onclick="location.href='<%=contextPath%>/items.admin?currentPage=1'" id="own" >상품 관리</td>
 					</tr>
 				</table>
 		</div>
 		<div class="middle">
 			<div id="mid_search">
-				<form action="<%=contextPath%>/searchProduct.admin" method="get" onsubmit="return blankSearch()">
+				<form action="<%=contextPath%>/searchProduct.admin?currentPage=1" method="get" onsubmit="return blankSearch()">
+					<input type="hidden" name="currentPage" value="1">
 					<select name="ms_select" id="ms_select">
 						<option value="1">상품 번호</option>
 						<option value="2">상품 카테고리</option>
@@ -50,7 +55,7 @@
 			<script>
 				function blankSearch(){
 					if($("#memberSearch").val().length == 0){
-						alert("다시 입력해주시길 바랍니다.");
+						alert("다시 입력해 주시길 바랍니다.");
 						return false;
 					}
 				};
@@ -138,6 +143,53 @@
 					</tbody>
 				</table>
 			</div>
+			
+			<!-- 일반 조회 시 페이징 바 -->
+			<%if(bar == 0) {%>
+				<div align="center" class="paging-area">
+				<!-- 이전 버튼 -->
+				<%if(pi.getCurrentPage() != 1) {%>
+					<button onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=pi.getCurrentPage()-1%>'">&lt;</button>
+				<%}%>
+				
+				<!-- 페이징바 -->
+				<%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++){%>
+					<%if(i != pi.getCurrentPage()) {%>
+						<button onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=i%>'"><%=i%></button>
+					<%}else {%>
+						<button disabled><%=i%></button>
+					<%} %>
+				<%} %>
+				
+				<!-- 다음 버튼 -->
+				<%if(pi.getCurrentPage() != pi.getMaxPage()){%>
+					<button onclick="location.href='<%=contextPath%>/items.admin?currentPage=<%=pi.getCurrentPage()+1%>'">&gt;</button>
+				<%}%>
+				</div>
+				
+			<!--  ===== ===== ===== 검색기능 사용시 페이징 바 ===== ===== ===== -->
+			<%}else{ %>
+				<div align="center" class="paging-area">
+				<!-- 이전 버튼 -->
+				<%if(pi.getCurrentPage() != 1) {%>
+					<button onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=pi.getCurrentPage()-1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&lt;</button>
+				<%}%>
+				
+				<!-- 페이징바 -->
+				<%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++){%>
+					<%if(i != pi.getCurrentPage()) {%>
+						<button onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=i%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'"><%=i%></button>
+					<%}else {%>
+						<button disabled><%=i%></button>
+					<%} %>
+				<%} %>
+				
+				<!-- 다음 버튼 -->
+				<%if(pi.getCurrentPage() != pi.getMaxPage() ){%>
+					<button onclick="location.href='<%=contextPath%>/searchProduct.admin?currentPage=<%=pi.getCurrentPage()+1%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'">&gt;</button>
+				<%}%>
+				</div>
+			<%} %>		
 		</div>
 		
 		<div class="bottom">
@@ -155,10 +207,6 @@
 							<img src="resources/adminPage_files/iconFolder/product_icon.png">
 						</div>
 		
-						<div class="modal_header">
-							
-						</div>
-		
 						<div id="modal_member">
 							상품 정보
 						</div>
@@ -166,77 +214,77 @@
 						<div class="modal_body">
 		
 							<div id="productN">
-								상품 번호
+								&lt;상품 번호&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								상품 카테고리
+								&lt;상품 카테고리&gt;
 								<div>
 		
 								</div>
 							</div>
 		
 							<div>
-								상품명
+								&lt;상품명&gt;
 								<div>
 									
 								</div>
 							</div>	
 		
 							<div>
-								출판사
+								&lt;출판사&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								상품설명
+								&lt;상품설명&gt;
+								<div><pre id="productDescription"></pre>
+									
+								</div>
+							</div>
+		
+							<div>
+								&lt;가격&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								가격
+								&lt;할인율&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								할인율
+								&lt;재고수량&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								재고수량
+								&lt;저자&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								저자
+								&lt;등록일&gt;
 								<div>
 									
 								</div>
 							</div>
 		
 							<div>
-								등록일
-								<div>
-									
-								</div>
-							</div>
-		
-							<div>
-								삭제유무
+								&lt;삭제유무&gt;
 								<div>
 									
 								</div>
@@ -283,8 +331,7 @@
 				
 					//상품번호 추출
 					var pno = $(this).children().eq(0).text();
-					
-					console.log(pno);
+					//console.log(pno);
 
 					//검색결과에 따른 조회값 추출 및 삽입
 					$.ajax({
@@ -321,7 +368,8 @@
 							$(".modal_body").children().children().eq(1).text(category);
 							$(".modal_body").children().children().eq(2).text(result.productName);
 							$(".modal_body").children().children().eq(3).text(result.productPublisher);
-							$(".modal_body").children().children().eq(4).text(result.productText);
+							$("#productDescription").text(result.productText);
+							//$(".modal_body").children().children().eq(4).text(result.productText);
 							$(".modal_body").children().children().eq(5).text(result.productPrice);
 							$(".modal_body").children().children().eq(6).text(result.productSalesRate);
 							if(rel > 0){
@@ -367,11 +415,14 @@
 						url : "product.md",
 						data : {productNo : pNo},
 						type : "post",
-						success : function(){
-							location.href="<%=request.getContextPath()%>/product.md";
-						},
-						complete : function(){
-							console.log("ㄴㄴㄴ");
+						success : function(productNo){
+							
+							console.log(productNo);
+							<%-- location.replace="<%=request.getContextPath()%>/product.md?productNo='+productNo'"; --%>
+							
+							//let url = '/SemiProject/product.md?pNo='+pno'';
+							
+							location.replace("/SemiProject/product.md?pNo="+productNo);
 						}
 					});
 				}

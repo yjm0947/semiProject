@@ -11,21 +11,6 @@
 <script src="https://kit.fontawesome.com/7f4a340891.js" crossorigin="anonymous"></script>
 <title>Insert title here</title>
 <style>
-	div{
-        /* border: 1px solid black; */
-        box-sizing: border-box;
-    }
-    .wrap{
-        width: 1400px;
-        margin: auto;
-    }
-	#content{
-        width: 100%;
-        margin-top: 20px;
-    }
-    #c_1{
-    	height: 100%;
-    }
     /*---------------------------------------------------------*/
     #my_qna{
         margin: 50px 0px 0px 30px;
@@ -50,9 +35,16 @@
         font-weight: bold;
     }
     #my-qna-area {
+    	overflow: scroll;
+    	-ms-overflow-style: none;
+       	scrollbar-width: none;
+    	height: 800px;
         margin-right: 30px;
         width: 100%;
     }
+    #my-qna-area::-webkit-scrollbar {
+    	display: none;
+	}	
     #my-qna-area table{
         width: 100%;
         border-collapse: collapse;
@@ -63,24 +55,10 @@
         border-bottom: 1px solid black;
     }
 	#my-qna-area td{
+		height: auto;
+		overflow: hidden;
         padding: 10px;
         border-bottom: 1px solid black;
-    }
-	.arrowBtn {
-		font-size: 20px;
-		padding: 5px;
-		border: 2px solid white;
-		border-radius: 5px;
-		font-weight: bold;
-	}
-	.arrowBtn:hover {
-		padding: 5px;
-		color: rgb(62, 130, 255);
-		border: 2px solid rgb(62, 130, 255);
-		border-radius: 5px;
-	}
-    .plusIcon .minusIcon{
-        font-size: 30px;
     }
     #boardContent {
     	margin: 20px 0;
@@ -106,8 +84,127 @@
     #chkContent p{
     	margin: 30px 0;
     }
-    
-    
+    i {
+    	font-size:25px;
+    	color: rgb(62, 130, 255);
+    }
+    i:hover {
+    	color: #FFC93C;
+    }
+    /*----------------------------------------Modal----------------------------------------*/
+        .modal{ 
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background-color:rgba(0,0,0,.5);
+            display:none;
+            justify-content:center;
+            align-items:center;
+        }
+        .modal-back{
+            background-color: rgba(0,0,0,0.6);
+            border-radius: 10px;
+            position: absolute;
+        }
+        .modal-title{
+        	text-align: center;
+        }
+        .modal-content{
+            background-color: white;
+            padding: 30px;
+            position: relative;
+            border-radius: 10px;
+            width: 700px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        }
+        .modal-body{
+            text-align: left;
+        }
+        .modal-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .modal-footer button{
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .openModal{
+            cursor: pointer;
+        }
+        .closeModal {
+            width: 100px;
+            height: 40px;
+            border-radius: 10px;
+            border: 2px solid rgb(255, 50, 50);
+            background-color: white;
+            color: rgb(255, 50, 50);
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .closeModal:hover {
+            border: none;
+            background-color: rgb(255, 50, 50);
+            color: white;
+            font-weight: bolder;
+        }
+        
+        #qna-enroll-btn{
+        	width: 100px;
+            height: 40px;
+            border-radius: 10px;
+            border: 2px solid rgb(62, 130, 255);
+            background-color: white;
+            color: rgb(62, 130, 255);
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #qna-enroll-btn:hover {
+        	border: none;
+        	background-color: rgb(62, 130, 255);
+        	color: white;
+            font-weight: bolder;
+            font-size: 15px;
+        }
+        
+        #my-qna-table {
+        	border-top: 1px solid lightgray;
+        	border-bottom: 1px solid lightgray;
+        	border-collapse:collapse;
+        	width: 100%;
+        	height: 300px;
+        }
+        #my-qna-table td{
+        	border: 1px solid lightgray;
+        	text-align: center;
+        }
+        #my-qna-table td:nth-child(1){
+        	width: 100px;
+        	font-weight: 600;
+        	border-left: none;
+        }
+        #my-qna-table td:nth-child(2){
+        	padding: 10px;
+        	border-right: none;
+        }
+        #my-qna-table input {
+        	border: 1px solid lightgray;
+        	width: 500px;
+        	height: 30px;
+        	font-size: 15px;
+        }
+        
+        #qnaContent{
+        	border: 1px solid lightgray;
+        	outline: none;
+        	width: 500px;
+        	height: 300px;
+        	resize: none;
+        	font-size: 20px;
+        }
 </style>
 </head>
 <body>
@@ -121,10 +218,10 @@
             	<div id="my_qna">
                     <h1>1 : 1 문의 내역</h1>
                     
-                    <button type="button" id="write-btn">1:1 문의하기</button>
-
+                    <button type="button" class="openModal" id="write-btn" data-toggle="modal" data-target="myQnaModal">1:1 문의하기</button>
+                    
                     <div id="my-qna-area">
-                        <table>
+                        <table id="my_table">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -140,13 +237,13 @@
                         			<td>
 	                        			<div id="sh_detail">
 				                            <i class="fa-solid fa-circle-exclamation"></i>
-				                            <h4>해당 기간 내에 주문한 상품이 없습니다.</h4>
+				                            <h4>문의 내역이 없습니다.</h4>
 				                        </div>
 			                        </td>
                         		</tr>
                         <%}else{ %>
                             <%for(Board b : blist) {%>
-                                <tr>
+                                <tr class="show_tr">
                                     <td><%=b.getBoardNo() %></td>
                                     <td><%=b.getCreateDate() %></td>
                                     <td><%=b.getBoardTitle() %></td>
@@ -156,11 +253,11 @@
                                 	<td>Y</td>
                                 <%} %>
                                     <td>
-                                        <i class="fa-solid fa-angles-down arrowBtn"></i>
-                                        <i class="fa-solid fa-angles-up arrowBtn" style="display: none;"></i>
+                                    	<i class="fa-regular fa-square-plus checkBtn"></i>
+                                    	<i class="fa-regular fa-square-minus checkBtn" style="display: none;"></i>
                                     </td>
                                 </tr>
-                                <tr style="display: none">
+                                <tr style="display: none" class="my_row">
                                     <td colspan="5">
                                     	<div id="boardContent">
 	                                    	<p>
@@ -196,26 +293,95 @@
         </div>
     </div>
 	
+	<div class="modal" id="myQnaModal">
+        <div class="modal-back">
+            <div class="modal-content">
+
+                <!-- modal body -->
+               <div class="modal-body">
+                    <h2 class="modal-title">1 : 1 문의 등록</h2>
+                    
+                     <table id="my-qna-table">
+                         	<tr>
+                         		<td>제목</td>
+                         		<td><input type="text" id="qnaTitle" name="qnaTitle" required="required"></td>
+                         	</tr>
+                         	<tr>
+                         		<td rowspan="3">내용</td>
+                         		<td rowspan="3" colspan="3" ><textarea id="qnaContent" name="qnaContent" required="required"></textarea></td>                         		
+                         	</tr>
+                     </table>
+ 
+                </div>
+                 <div class="modal-footer">
+                 	<button type="submit" id="qna-enroll-btn">등록하기</button>
+                    <button type="button" class="closeModal" data-dismiss="modal">닫기</button>
+                 </div>
+                
+            </div>
+        </div>
+    </div>
+	
+	<script>
+		 $(function(){
+	            $(".openModal").on("click",function(){
+	                $(".modal").css("display","flex");
+	                $(".openModal").css("cursor","pointer");
+	            });
+	            $(".closeModal").on("click",function(){
+	                $(".modal").css("display","none");
+	                $(".closeModal").css("cursor","pointer");
+	            });
+	            
+	            $("#qna-enroll-btn").on("click",function(){
+	            	
+	            	var memNo =  "<%=loginUser.getMemberNo()%>";
+	            	
+	            	$.ajax({
+	        			
+	        			url : "enrollQna.me",
+	        			type : "post",
+	        			data : {
+	        				memNo : memNo,
+	        				title : $('input[name=qnaTitle]').val(),
+	        				content : $('textarea[name=qnaContent]').val()
+        				},
+	        			success : function(result){
+	        				if(result>0){
+	        					alert("1:1 문의가 등록되었습니다.");
+	        					location.reload();
+	        				}else{
+	        					alert("1:1 문의 등록을 실패했습니다.");
+	        					history.back();
+	        				}
+	        			},
+	        			error : function(){
+	        				console.log("error");
+	        			}
+	        		});
+	            	
+	            });
+	      });
+	</script>
+	
 	<script>
         $(function(){
-            $(".arrowBtn").on("click",function(){
-
-                var show = $(this);
-				var answer = $(this).parent().prev();
-				
-                if(show.hasClass("fa-angles-down")){
-                    show.hide();
-                    show.next().show();
-                    show.parent().parent().next().show();
-                }else{
-                    show.hide();
-                    show.prev().show();
-                    show.parent().parent().next().hide(); 
-                }
+            $(".checkBtn").on("click",function(){
+           		
+            	if($(this).hasClass("fa-square-plus")){
+            		$(this).css("display","none");
+            		$(this).next().css("display","block");
+            		$(this).parents("tr").next().show();
+            	}else{
+            		$(this).css("display","none");
+            		$(this).prev().css("display","block");
+            		$(this).parents("tr").next().hide();
+            	}
+            	
             });
-            
         });
     </script>
+    
 	<%@ include file = "../common/myPageCate.jsp" %>
 	<%@ include file = "../common/footer.jsp" %>
 </body>

@@ -87,8 +87,8 @@ public class BookRegistration extends HttpServlet {
 			int result = new ProductService().insertProduct(category,productName,publisher,author,price,sale,stock,des,list);
 			
 			if(result>0) {
-//				request.getSession().setAttribute("alertMsg", "상품 등록 완료");
-				response.sendRedirect(request.getContextPath());
+				request.getSession().setAttribute("alertMsg", "상품 등록 완료");
+				response.sendRedirect(request.getContextPath()+"/items.admin?currentPage=1");
 			}else {
 				if(list!=null) {
 					for(int i=0; i<list.size(); i++) {

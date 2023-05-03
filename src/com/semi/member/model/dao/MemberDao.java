@@ -223,6 +223,7 @@ public class MemberDao {
 		return srcPwdM;
 	}
 
+	//총 회원 수
 	public int selMemberAdminCount(Connection conn) {
 		
 		int listCount = 0;
@@ -286,7 +287,7 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			//회원등급 int형 으로 변환
-			if((search == "1" || search == "2" || search == "3" || search == "4") && num == 7) {
+			if(num == 7 && (search == "1" || search == "2" || search == "3" || search == "4")) {
 				//ORA-01722: invalid number 방지
 				pstmt.setInt(1, Integer.parseInt(search));
 				rset = pstmt.executeQuery();
@@ -612,7 +613,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				plist.add( new Payment(rset.getInt("PAYMENT_NUMBER"),
+				plist.add( new Payment(rset.getLong("PAYMENT_NUMBER"),
 										rset.getString("MEMBER_NAME"),
 										rset.getDate("CREATED_AT"),
 										rset.getInt("PAYMENT"),
@@ -984,6 +985,66 @@ public class MemberDao {
 			}
 			
 			return payList;
+		}
+
+
+		public ArrayList<Coupon> selectMyCoupon(Connection conn, int memNo) {
+			ArrayList<Coupon> cplist = new ArrayList<>();
+			ResultSet rset = null;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("selectMyCoupon");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, memNo);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					cplist.add(new Coupon(rset.getInt("COUPON_NO")
+											,rset.getString("MEMBER_NO")
+											,rset.getString("COUPON_NAME")
+											,rset.getInt("COUPON_DC")
+											,rset.getDate("COUPON_PERIOD")
+											,rset.getDate("COUPON_SDATE")
+											,rset.getString("STATUS")));
+				}
+						
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+				
+			return cplist;
+		}
+
+
+		public int enrollMyQna(Connection conn, int memNo, String title, String content) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("enrollMyQna");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, memNo);
+				pstmt.setString(2, title);
+				pstmt.setString(3, content);
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return result;
 		}
 		
 		

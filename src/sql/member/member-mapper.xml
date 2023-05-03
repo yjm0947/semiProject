@@ -241,17 +241,6 @@
 		AND STATUS = 'Y'
 	</entry>
 	
-	<!-- 주문 조회 -->
-	<entry key="selectShoppingList">
-		SELECT ORDER_NO, PRODUCT_NAME, DEPOSIT_NAME, PAYMENT, DELIVERY_COST,USE_POINT,STATE, CREATED_AT, BANK_NAME
-		FROM PAYMENT P
-		JOIN PRODUCT PD USING (PRODUCT_NO)
-		JOIN P_ORDER PO USING (ORDER_NO)
-		WHERE P.MEMBER_NO= ?
-		AND PO.STATUS = 'Y'
-		ORDER BY CREATED_AT ASC
-	</entry>
-	
 	<!-- 주문 상세 조회 -->
 	<entry key="selectModal">
 		SELECT PAYMENT_NUMBER, MEMBER_NAME, CREATED_AT, PAYMENT, ORDER_REQUEST, BANK_NAME, DEPOSIT_NAME, ADDRESS_NAME, POST,
@@ -330,8 +319,8 @@
 	
 	<!-- 마이페이지에서 상품 환불 -->
 	<entry key="refundMyOrder">
-		UPDATE P_ORDER
-		SET STATUS = 'N'
+		UPDATE PAYMENT
+		SET CHECK_PAY = 'R', STATE = 5
 		WHERE MEMBER_NO = ?
 		AND ORDER_NO = ?
 	</entry>
@@ -350,5 +339,17 @@
 		JOIN PRODUCT PD USING (PRODUCT_NO)
 		JOIN P_ORDER PO USING (ORDER_NO)
 		WHERE P.MEMBER_NO = ?
+	</entry>
+	
+	<entry key="selectMyCoupon">
+		SELECT *
+		FROM COUPON
+		WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 마이페이지에서 1:1문의 등록 -->
+	<entry key="enrollMyQna">
+		INSERT INTO BOARD(BOARD_NO,MEMBER_NO,BOARD_CATEGORY,BOARD_TITLE,BOARD_CONTENT,CREATE_DATE)
+		VALUES (SEQ_BNO.NEXTVAL,?,3,?,?,SYSDATE)
 	</entry>
 </properties>

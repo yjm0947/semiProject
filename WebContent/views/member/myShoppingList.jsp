@@ -197,6 +197,8 @@
 	<%@ include file = "../common/header.jsp" %>
 	<%@ include file = "../common/myInfo.jsp" %>
 	<%
+		System.out.println(plist);
+	
 		int state1 = 0;
 		int state2 = 0;
 		int state3 = 0;
@@ -255,8 +257,9 @@
 	                                	<th colspan="3">주문번호</th>
 	                                	<th colspan="2">주문상품</th>
 		                                <th colspan="2">주문자명</th>
-		                                <th colspan="2">결제방식</th>
 		                                <th colspan="3">결제금액</th>
+		                                <th colspan="2">결제방식</th>
+		                               	<th colspan="2">주문상태</th>
 		                                <th colspan="2">조회</th>
 	                                </tr>
                                 </thead>
@@ -272,6 +275,17 @@
 	                                    <%}else { %>
 	                                    	<td colspan="2">카드</td>
 	                                    <%} %>
+	                                    <td colspan="2">
+	                                    	<%	String result = "";
+	                                    		switch(p.getState().charAt(0)){
+												case '1' : result = "준비중"; break;
+												case '2' : result = "배송중"; break;
+												case '3' : result = "배송완료"; break;
+												case '4' : result = "교환"; break;
+												case '5' : result = "취소"; break;
+											}%>
+											<%=result %>
+                                    	</td>
 	                                    <td colspan="2">
 	                                    	<button type="button" class="openModal" data-toggle="modal" data-target="#myOrderModal">조회</button>
 	                                    </td>
@@ -422,10 +436,10 @@
 	        				hideOno : myOno 
 	        				},
 	        			success : function(data){
-	        				
+	        				console.log(data);
 	        				if(data > 0){
 	        					alert("환불 신청이 완료되었습니다.");
-	        					window.location.href = "<%=contextPath%>/myPage.me";
+	        					location.href = "<%=contextPath%>/cancelList.me";
 	        				}else{
 	        					alert("환불 신청을 실패했습니다.");
 	        				}

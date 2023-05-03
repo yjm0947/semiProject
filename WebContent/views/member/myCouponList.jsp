@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,com.semi.member.model.vo.Coupon"%>
-<%
-	ArrayList<Coupon> cplist = (ArrayList<Coupon>)session.getAttribute("clist");
-%>
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>

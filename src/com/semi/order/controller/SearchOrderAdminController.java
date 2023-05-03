@@ -1,6 +1,7 @@
 package com.semi.order.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,21 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.semi.order.model.service.OrderService;
 import com.semi.order.model.vo.Payment;
 
 /**
- * Servlet implementation class OrderDeatilAdminController
+ * Servlet implementation class SearchOrderAdminController
  */
-@WebServlet("/OrderDetail.admin")
-public class OrderDetailAdminController extends HttpServlet {
+@WebServlet("/searchOrder.admin")
+public class SearchOrderAdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderDetailAdminController() {
+    public SearchOrderAdminController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,13 +32,18 @@ public class OrderDetailAdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int Ono = Integer.parseInt(request.getParameter("Ono"));
+		int num = Integer.parseInt(request.getParameter("ms_select"));
+		String search = request.getParameter("memberSearch");
 		
-		Payment pay = new OrderService().detailOrderAdmin(Ono);
+		ArrayList<Payment> list = new OrderService().searchOrderAdmin(num,search);
 		
-		response.setContentType("json/application; charset=UTF-8");
-		Gson gson = new Gson();
-		gson.toJson(pay,response.getWriter());
+		if(list.isEmpty()) {
+			request.getSession().setAttribute("alertMsg", "해당 하는 주문내역이 없습니다.");
+			response.sendRedirect(request.getContextPath()+"/order.admin");
+		}else {
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("views/admin_order/adminOrder.jsp").forward(request, response);
+		}
 		
 	}
 
@@ -46,6 +51,8 @@ public class OrderDetailAdminController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

@@ -400,7 +400,9 @@ tbody {
   height: 25px;
   background-color: rgba(41, 127, 185, 0.22);
   border: 1px solid transparent;
+  cursor: pointer;
 }
+
 
 #product_Div img{
   width: 880px;

@@ -79,6 +79,8 @@
             border: 3px dashed lightblue;
             /*box-sizing: border-box;
             border-radius: 10px;*/
+            height : 800px;
+            overflow : auto;
         }
         #order_detail{
             margin: 0px 30px 0px 0px;

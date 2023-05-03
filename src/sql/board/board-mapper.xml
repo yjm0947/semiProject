@@ -18,6 +18,7 @@
 		FROM REVIEW R
 		JOIN MEMBER USING(MEMBER_NO)
 		WHERE PRODUCT_NO = ?
+		AND R.STATUS = 'Y'
 	</entry>
 	<!--  pna작성-->
 	<entry key="insertQna">

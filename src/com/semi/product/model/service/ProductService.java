@@ -410,16 +410,16 @@ public class ProductService {
 		}
 
 		//상품 수정시 불러올 상품 리스트
-//		public Product modifiPro(int proNo) {
-//			
-//			Connection conn = JDBCTemplate.getConnection();
-//			
-//			Product pro = new ProductDao().modifiPro(conn,proNo);
-//			
-//			JDBCTemplate.close(conn);
-//			
-//			return null;
-//		}
+		public Product modifiPro(int proNo) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			Product pro = new ProductDao().productDetail(conn,proNo);
+			
+			JDBCTemplate.close(conn);
+			
+			return pro;
+		}
 		
 		//총 상품 개수 (관리자 - 페이징)
 		public int selProductAdminCount() {
@@ -447,4 +447,33 @@ public class ProductService {
 
 		
 
+
+		//도서 정보 수정
+		public int updateProduct(Product p, Attachment at) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			//첨부파일없어도 등록
+			int result = new ProductDao().updateProduct(conn,p);
+			
+			int result2 =1;
+			
+			if(at !=null) { //첨부파일이 있는 경우
+				if(at.getAttachmentId() != 0) { //기존의 첨부파일이 있었을 경우 (변경)
+					result2 = new ProductDao().updateAttachment(conn,at);
+				}else {//기존의 첨부파일이 없었을 경우 (추가)
+					result2 = new ProductDao().newInsertAttachment(conn,at);
+				}
+			}
+			
+			if(result>0 && result2>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+			
+			JDBCTemplate.close(conn);
+			
+			return result*result2;
+		}
 }

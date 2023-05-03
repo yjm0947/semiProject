@@ -131,8 +131,8 @@ public class SearchBookController extends HttpServlet {
 //		request.setAttribute("pi", pi);
 		request.setAttribute("search", search);
 		
-		System.out.println(search);
-		System.out.println(searchP.size());
+		//System.out.println(search);
+		//System.out.println(searchP.size());
 		
 //		for(Product p : searchP) {
 //			System.out.println(p);

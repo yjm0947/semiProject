@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.semi.product.model.vo.Product,com.semi.common.vo.PageInfo,com.semi.product.controller.ProductModificationController"%>
+<%
+	Product pro = (Product)request.getAttribute("pro");
+	Product pro2 = (Product)request.getAttribute("pro2");
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,7 +25,9 @@
 
             </div>
             <div id="con_3">
-                <form action="<%=contextPath %>/book.regi" method="post" enctype="multipart/form-data">
+                <form action="<%=contextPath %>/product.md" id="poroduct_o" method="post" enctype="multipart/form-data">
+                	<!-- 상품번호도 같이 보내기 -->
+                	<input type="hidden" name="proNo" value="<%=pro.getProductNo() %>">
                     <div class="inputArea"> 
                         <label>분류</label>
                         <select id="category1" name="category">
@@ -35,40 +41,47 @@
                     </div>
                     <div class="inputArea">
                         <label for="pro_Name" id="pro_Name1">상품명</label>
-                        <input type="text" id="pro_Name2" name="pro_Name" />
+                        <input type="text" id="pro_Name2" name="pro_Name" value="<%=pro.getProductName()%>" />
                     </div>
                     <div class="inputArea">
                         <label for="pro_Publisher" id="pro_Publisher1">출판사</label>
-                        <input type="text" id="pro_Publisher2" name="pro_Publisher"/>
+                        <input type="text" id="pro_Publisher2" name="pro_Publisher" value="<%=pro.getProductPublisher()%>"/>
                     </div>
                     <div class="inputArea">
                         <label for="pro_author" id="pro_author1">저자</label>
-                        <input type="text" id="pro_author2" name="pro_author"/>
+                        <input type="text" id="pro_author2" name="pro_author" value="<%=pro.getAuthor()%>"/>
                     </div>
                        
                     <div class="inputArea">
                         <label for="pro_Price" id="pro_Price1">상품가격(원)</label>
-                        <input type="number" id="pro_Price2" name="pro_Price" />
+                        <input type="number" id="pro_Price2" name="pro_Price" value="<%=pro.getProductPrice() %>" />
                     </div>
                     <div class="inputArea">
                         <label for="pro_sales" id="pro_sales1">할인률(%)</label>
-                        <input type="number" id="pro_sales2" name="pro_sales" value="0" />
+                        <input type="number" id="pro_sales2" name="pro_sales" value="<%=pro.getProductSalesRate() %>" />
                     </div>
                     <div class="inputArea">
                         <label for="pro_Stock" id="pro_Stock1">상품수량</label>
-                        <input type="number" id="pro_Stock2" name="pro_Stock" />
+                        <input type="number" id="pro_Stock2" name="pro_Stock" value="<%=pro.getProductStock() %>" />
                     </div>
                     <div class="inputArea">
                         <label for="pro_Des" id="pro_Des1">상품소개</label>
-                        <textarea id="pro_Des2" name="pro_Des" style="resize: none;"></textarea>
+                        <textarea id="pro_Des2" name="pro_Des" style="resize: none;"><%=pro.getProductText()%></textarea>
                     </div>
+					<!-- 파일번호, 변경된 파일명도 같이 전달하기 -->
+					<!-- 썸네일 -->
+					<input type="hidden" name="fileNo" value="<%=pro.getAttachmentId() %>">
+					<input type="hidden" name="originFileName" value="<%=pro.getTitleImg() %>">
+					<!-- 상세이미지 -->
+					<input type="hidden" name="fileNo2" value="<%=pro2.getAttachmentId()%>">
+					<input type="hidden" name="originFileName2" value="<%=pro2.getTitleImg() %>">
                     <div class="inputArea">
                         <label for="pro_thumb"  id="thum1">대표이미지</label>
-                        <img width="250" height="170" id="thum2" name="pro_thumb">
+                        <img width="250" height="170" id="thum2" name="pro_thumb" src="<%=contextPath+pro.getTitleImg()%>" required>
                     </div>
 					 <div class="inputArea">
                         <label id="img">상세이미지</label>
-					    <img id="contentImg1" width="150" height="120" name="contentImg1">
+					    <img id="contentImg1" width="150" height="120" name="contentImg1" src="<%=contextPath+pro2.getTitleImg()%>" required>
 				        <img id="contentImg2" width="150" height="120" name="contentImg2">     
 				        <img id="contentImg3" width="150" height="120" name="contentImg3">     
                     </div>
@@ -83,9 +96,9 @@
 
                     <button type="submit" id="register_Btn">등록</button>
                     <button type="reset" id="back">취소</button>
-
                 </form>
                 
+
                 <script>
                
                 $(function(){

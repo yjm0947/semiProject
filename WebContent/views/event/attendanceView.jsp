@@ -132,8 +132,9 @@
                      style="position: absolute; width: 285px; height: 95px; top: 62.1%; left: 79.6%; transform: translate(-50%,-50%); visibility: hidden;">
             </div>
             <div id="atten_click">
-                <button id="atten_click_btn" onclick="attendance()"></button>
+                <button id="atten_click_btn" onclick="attendanceChk()"></button>
             </div>
+            <input type="hidden" value="">
         </div>
         
         <script>
@@ -167,7 +168,31 @@
         			});
         		});
 	        
+        	function attendanceChk() {
+        		$.ajax({
+					url : "atdateOX.me",
+					data : {userNo:<%=loginUser.getMemberNo()%>},
+					type : "post",
+					success: function(result){
+						$("input[type=hidden]").val(result);
+						console.log($("input[type=hidden]").val());
+
+						if ($("input[type=hidden]").val() == 1) {
+		        			attendance();
+						}else if($("input[type=hidden]").val() == 0){
+							alert("오늘은 이미 출석체크를 하셨습니다.");
+							$("#atten_click_btn").attr("disabled", true);
+						}
+					},
+					error : function(result){
+						console.log("통신실패");
+					}
+				});
+			}
+        	
         	function attendance(){//도장일 업데이트 및 적립금 더해주기
+        		
+        		/* attendanceChk(); */
 	            /*도장변수에 담기.. img 인덱스 3~38번까지임*/
 	            var img = document.getElementsByTagName("img");
 	            var index = 0;
@@ -184,18 +209,22 @@
             	//console.log(dateString);
 
             	var nextday = parseInt(today.getDate())+1;
+            	
             	var nextdateString = year+month+nextday;  //오늘 날짜 +1
             	//console.log(nextdateString);
             	
             	dateString = parseInt(dateString)+1;
+            	var atCheck = $("input[type=hidden]").val();
+            	console.log(atCheck);
+            	//console.log($("input[type=hidden]").val());
             	
 	            $(function(){
 		        	if(dateString==nextdateString){
-		        		$("#atten_click_btn").attr("disabled", true);
-		        		//alert("막기");
+		        		//$("#atten_click_btn").attr("disabled", true);
+		        		//alert("오늘은 이미 출석체크를 하셨습니다.");
 		        	}
 		        });
-            	
+            	//alert("아무거나");
 	            for(var i=3;i<39;i++){//클릭시 도장 보이기
 	                if(img[i].style.visibility=="hidden"){//visibility가 hidden일시 도장 보이도록
 				         img[i].style.visibility="visible"
@@ -238,23 +267,23 @@
 		                			}
 		                		});
 		                	});
-	                //출석체크 도장 다 찍으면 출석일 다시 0으로 돌리기
-	               if(img[37].style.visibility=="visible"){
-            			alert("다 찍음~!!");
-            			
-            			$.ajax({
-            				url : "atdate.me",
-            				data : {memberNo : <%=loginUser.getMemberNo()%>},
-            				type : "post",
-            				success : function(){//회원들의 출석체크일
-            					console.log("출석체크 되돌림")
-            				},
-            				complete : function(){
-            					console.log("출석체크 되돌림 실행만 됨..")
-            				}
-            			});
-            			
-            		}
+			                //출석체크 도장 다 찍으면 출석일 다시 0으로 돌리기
+			               if(img[37].style.visibility=="visible"){
+		            			alert("다 찍음~!!");
+		            			
+		            			$.ajax({
+		            				url : "atdate.me",
+		            				data : {memberNo : <%=loginUser.getMemberNo()%>},
+		            				type : "post",
+		            				success : function(){//회원들의 출석체크일
+		            					console.log("출석체크 되돌림")
+		            				},
+		            				complete : function(){
+		            					console.log("출석체크 되돌림 실행만 됨..")
+		            				}
+		            			});
+		            			
+		            		}
 	                        break;
 	                    }
 	                	break;

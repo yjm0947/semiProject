@@ -29,4 +29,12 @@
 		SET ATTENDANCE = 0
 		WHERE MEMBER_NO = ?
 	</entry>
+	
+	<!-- 출석체크 날짜 체크 -->
+	<entry key="attendanceOX">
+		UPDATE MEMBER
+		SET ATTENDANCE_DATE = SYSDATE
+		WHERE MEMBER_NO = ?
+		AND TRUNC(ATTENDANCE_DATE) != TRUNC(SYSDATE)
+	</entry>
 </properties>

@@ -167,7 +167,7 @@
         				}
         			});
         		});
-	        
+	        //1회 이상시 출석체크 버튼 막기
         	function attendanceChk() {
         		$.ajax({
 					url : "atdateOX.me",
@@ -224,7 +224,7 @@
 		        		//alert("오늘은 이미 출석체크를 하셨습니다.");
 		        	}
 		        });
-            	//alert("아무거나");
+
 	            for(var i=3;i<39;i++){//클릭시 도장 보이기
 	                if(img[i].style.visibility=="hidden"){//visibility가 hidden일시 도장 보이도록
 				         img[i].style.visibility="visible"

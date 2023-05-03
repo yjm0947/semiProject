@@ -129,9 +129,8 @@
             border-radius: 8px;
             border: 1px solid rgb(131, 131, 131);
         }
-		
-		button{
-		cursor : pointer;
+		 #re_co_page_1 button:hover{
+			cursor: pointer;
 		}
 
     </style>

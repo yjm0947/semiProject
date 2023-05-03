@@ -159,7 +159,7 @@
 					<%if(i != pi.getCurrentPage()) {%>
 						<button id="searchBtn" onclick="location.href='<%=contextPath%>/member.admin?currentPage=<%=i%>'"><%=i%></button>
 					<%}else {%>
-						<button id="searchBtn" disabled><%=i%></button>
+						<button id="searchbtn" disabled><%=i%></button>
 					<%} %>
 				<%} %>
 				
@@ -182,7 +182,7 @@
 					<%if(i != pi.getCurrentPage()) {%>
 						<button id="searchBtn" onclick="location.href='<%=contextPath%>/searchMember.admin?currentPage=<%=i%>&barNum=<%=barNum%>&barSearch=<%=barSearch%>'"><%=i%></button>
 					<%}else {%>
-						<button id="searchBtn" disabled><%=i%></button>
+						<button id="searchbtn" disabled><%=i%></button>
 					<%} %>
 				<%} %>
 				

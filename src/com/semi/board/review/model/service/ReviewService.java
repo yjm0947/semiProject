@@ -40,11 +40,11 @@ public class ReviewService {
 		}
 		
 		//구매한 사람만 댓글버튼 보여주기
-		public int rBtnCk(String productNo) {
+		public int rBtnCk(String productNo, String memberNo) {
 			
 			Connection conn = JDBCTemplate.getConnection();
 			
-			int count = new ReviewDao().rBtnCk(conn,productNo);
+			int count = new ReviewDao().rBtnCk(conn,productNo,memberNo);
 			
 			JDBCTemplate.close(conn);
 			
@@ -65,6 +65,18 @@ public class ReviewService {
 			}
 			
 			return result;
+		}
+
+		//리뷰 작성한거 있으면 버튼 없애기
+		public int oneCk(String productNo, String memberNo) {
+			
+			Connection conn = JDBCTemplate.getConnection();
+			
+			int count = new ReviewDao().oneCk(conn,productNo,memberNo);
+			
+			JDBCTemplate.close(conn);
+			
+			return count;
 		}
 
 }

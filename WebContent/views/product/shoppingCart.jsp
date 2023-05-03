@@ -287,7 +287,7 @@
 			                    <div class="updown">
 			                    	<input type="hidden" id="productnum2" value="<%=sc.getProductNo()%>">
 			                        <button class="fas fa-caret-down down" onclick="javascript:basket.changePNum(<%=i%>);"></button>
-			                        <input type="text" style="height: 30px;" name="p_num<%=i%>" id="p_num<%=i%>" size="2" maxlength="4" class="p_num" value="<%=sc.getquantity() %>" onkeyup="javascript:basket.changePNum(<%=i%>);">
+			                        <input type="text" style="height: 30px; width: 30px;" name="p_num<%=i%>" id="p_num<%=i%>" size="2" maxlength="4" class="p_num" value="<%=sc.getquantity() %>" onkeyup="javascript:basket.changePNum(<%=i%>);" disabled>
 			                        <button class="fas fa-caret-up up" onclick="javascript:basket.changePNum(<%=i%>);"></button>
 			                    </div>
 			                </div>

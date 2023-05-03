@@ -6,6 +6,7 @@
 		SELECT PRODUCT_NO
 		FROM PAYMENT
 		WHERE PRODUCT_NO = ?
+        AND MEMBER_NO = ?
 	</entry>
 	<!--  리뷰작성-->
 	<entry key="insertReview">
@@ -18,6 +19,7 @@
 		FROM REVIEW R
 		JOIN MEMBER USING(MEMBER_NO)
 		WHERE PRODUCT_NO = ?
+		AND R.STATUS = 'Y'
 	</entry>
 	<!--  pna작성-->
 	<entry key="insertQna">
@@ -268,5 +270,11 @@
 		UPDATE BOARD
 		SET BOARD_COUNT = BOARD_COUNT+1
 		WHERE BOARD_NO = ?
+	</entry>
+	<entry key="oneCk">
+		SELECT MEMBER_NO
+		FROM REVIEW
+		WHERE PRODUCT_NO =?
+		AND MEMBER_NO = ?
 	</entry>
 </properties>

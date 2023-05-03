@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.semi.board.review.model.service.ReviewService;
 
 /**
- * Servlet implementation class ReviewBtnController
+ * Servlet implementation class oneBtn
  */
-@WebServlet("/review.btn")
-public class ReviewBtnController extends HttpServlet {
+@WebServlet("/one.me")
+public class oneBtn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewBtnController() {
+    public oneBtn() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,15 +36,12 @@ public class ReviewBtnController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		String productNo = request.getParameter("productNo");
 		String memberNo = request.getParameter("memberNo");
 		
-		//System.out.println(memberNo);
-		
-		int count = new ReviewService().rBtnCk(productNo,memberNo);
-		//1이면 상품 구매한 회원
-		//System.out.println(count);
+		int count = new ReviewService().oneCk(productNo,memberNo);
+		System.out.println("ddd"+count);
 		response.getWriter().print(count);
 		
 	}

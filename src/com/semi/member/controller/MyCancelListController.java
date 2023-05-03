@@ -32,11 +32,6 @@ public class MyCancelListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
-		int memNo = loginUser.getMemberNo();
-		ArrayList<Payment> paylist = new MemberService().selectPaymentList(memNo);
-		
-		request.setAttribute("plist", paylist);
 		request.getRequestDispatcher("views/member/myCancelList.jsp").forward(request, response);
 	}
 

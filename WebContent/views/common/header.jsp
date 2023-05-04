@@ -315,6 +315,17 @@
         </style>
 </head>
 <body>
+		<script>
+		var msg = "<%=alertMsg%>"; //성공적으로 로그인 되었습니다. / null
+		
+		if(msg != "null"){
+			alert(msg);
+			//알람메세지 한번 띄웠으면 지워주기 지우지 않으면 매번 menubar.jsp가 열릴때마다 알림뜸
+			
+			<%session.removeAttribute("alertMsg");%>
+		}
+		</script>
+
         <div id="header">
             <div id="header_1">
                 <div id="logo">
@@ -391,7 +402,7 @@
                         <button type="submit" id="search_btn">
                         <img src="resources/돋보기.png" width="20px" height="20px" alt="" style="position: relative; left: 2px; top: 4px;">
                         	검색</button> <!--검색창에 보내기-->
-                    </form>
+	               </form>
 
                 </div>
             </div>

@@ -234,7 +234,7 @@
                             <tbody>
                         <%if(blist.isEmpty()) {%>
                         		<tr>
-                        			<td>
+                        			<td colspan="8">
 	                        			<div id="sh_detail">
 				                            <i class="fa-solid fa-circle-exclamation"></i>
 				                            <h4>문의 내역이 없습니다.</h4>

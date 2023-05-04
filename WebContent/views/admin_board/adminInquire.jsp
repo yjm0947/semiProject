@@ -17,6 +17,21 @@
 	<div class="wrap">
 		
 		<%@include file="/views/common/admin_Category.jsp" %>
+		
+		<%-- <%
+		//텍스트 없을시 빈 문자열 출력
+		String str = "";
+		
+		for(int i=0; i<list.size(); i++){
+			/* if(list.get(i).getProductNo()==null){
+				String.valueOf(list.get(i).getProductNo())=str; */
+				
+			}
+			
+		/* String productNo = (list.get(i).getProductNo()==null)?"":list.get(i).getProductNo();
+		String createDate = (list.get(i).getCreateDate()==null)?"":list.get(i).getProductNo(); */
+		}
+		%> --%>
 	
 		<div class="top">
 				<table>
@@ -79,7 +94,12 @@
 					<%for(Board b : list) {%>
 						<tr>
 							<td><%=b.getBoardNo()%></td>
-							<td><%=b.getProductNo()%></td>
+							<td>
+							<%if(b.getProductNo() == null) {%>
+							기타 문의
+							<%}else {%>
+								<%=b.getProductNo() %>
+							<%} %></td>
 							<td><%=b.getBoardTitle() %></td>
 							<td><%=b.getBoardContent() %></td>
 							<td><%=b.getMemberNo() %></td>
@@ -89,8 +109,9 @@
 								<%=b.getBoardAnswered() %>
 							<%} %>
 							</td>
-							<td><%=b.getCreateDate() %></td>
-							
+							<td>
+							<%=b.getCreateDate() %>
+							</td>
 							<%if(b.getBoardAnswered() != null) {%>
 								<td id="gba">Y</td>
 							<%}else {%>

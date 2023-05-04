@@ -322,7 +322,7 @@
             /* background-color: aqua; */
          	/*height: 2730px;*/
          	position: relative;
-         	left: 565px;
+         	left: 260px;
          	height: auto;
          	display: inline-block;
         }
@@ -375,7 +375,7 @@
 <body>
 	<%@include file = "../common/header.jsp" %>
 	
-      <div id="all_content">
+      <div id="all_content" >
         <div id="all_content_1">
             <div id="all_none"></div>
             <div id="all_cate">

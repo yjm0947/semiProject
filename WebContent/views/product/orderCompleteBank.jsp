@@ -26,7 +26,7 @@
         #context_text{
             /* background-color: aqua; */
             width: 600px;
-            height: 400px;
+            height: 420px;
             position: absolute;
             top: 50%;
             margin-top: -21%;
@@ -47,7 +47,7 @@
         }
         #con_info{
             border: 1px solid rgb(177, 177, 177);
-            height: 250px;
+            height: 270px;
             width: 80%;
             position: absolute;
             margin-top: 20%;
@@ -136,7 +136,8 @@
                             <div style="width: 180px; text-align: left;">입니다</div>
                         </div>
                     </div>
-                    <div id="con_info_4" >*주문내역 확인은 마이페이지의 "주문조회"에서 하실 수 있습니다.</div>
+                    <div id="con_info_4"><br>입금계좌 : 기업은행 281-016680-01-021 파랑서점<br>
+                    *주문내역 확인은 마이페이지의 "주문조회"에서 하실 수 있습니다.</div>
                 </div>
             </div>
         </div>

@@ -49,54 +49,18 @@ public class SearchByPwd extends HttpServlet {
 		String memberBirth = request.getParameter("memberBirth");
 		String phone = request.getParameter("phone");
 		String memberPwd = "";
-		/*
-		Member m = new Member();
-		m.setMemberId(memberId);
-		m.setMemberName(memberName);
-		m.setMemberBirth(memberBirth);
-		m.setPhone(phone);
-		*/
-		
 		Member srcPwdM = new Member(memberId,memberPwd,memberName,memberBirth,phone);
 		System.out.println(srcPwdM);
 		
 		Member pwdM = new MemberService().searchPwd(srcPwdM);
 		
-		//m.setMemberPwd(memberPwd);
-		
-		
-		request.setAttribute("member", pwdM);
-		//request.setAttribute("membeerId", memberId);
-		
-		
 		System.out.println(pwdM);
+		System.out.println(pwdM.getMemberPwd());
 		
 		
-		RequestDispatcher rd = request.getRequestDispatcher("views/member/searchMemberPwd.jsp");
-		rd.forward(request, response);
-		//response.setContentType("text/html; charset=UTF-8");
-		
-		//response.getWriter().print(memberPwd);
-		
-		//response.sendRedirect(request.getContextPath()+"/loginForm.me");
-		
-		
-		
-/*		
-		if(memberPwd == null || memberPwd.length() == 0) {
-	
-			
-			request.setAttribute("errorMsg", "조회 실패입니다. or null");
-			response.sendRedirect(request.getContextPath()+"/searchpwd.me");
-			
-			
-		}else {
-			request.getSession().setAttribute("member", m);
-			request.getSession().setAttribute("memberPwd", memberPwd);
-			response.sendRedirect(request.getContextPath()+"/login.me");
-		}
-		
- */
+		response.setContentType("text/html; charset=UTF-8");
+       		
+		response.getWriter().print(pwdM.getMemberPwd());
 	}
 
 }
